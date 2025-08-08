@@ -14,8 +14,26 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      flex-direction: column; /* Align content vertically */
+      flex-direction: column;
+      position: relative; /* Needed for positioning the icons */
+      overflow: hidden; /* Prevents icons from causing scrollbars */
     }
+
+    /* --- NEW: Floating Icon Styles --- */
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(15deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    .floating-icon {
+      position: absolute;
+      z-index: 0; /* Positioned behind the main content */
+      color: rgba(255, 0, 204, 0.2); /* Soft, semi-transparent pink */
+      animation: float 8s ease-in-out infinite;
+    }
+    /* --- End of New Styles --- */
+
 
     /* This container holds the two top boxes */
     .main-layout {
@@ -25,7 +43,9 @@
       width: 100%;
       max-width: 1100px;
       justify-content: center;
-      align-items: stretch; /* This makes the columns equal height */
+      align-items: stretch; 
+      position: relative; /* Ensure boxes are on top of icons */
+      z-index: 1;
     }
 
     .box {
@@ -36,16 +56,14 @@
       border-radius: 20px;
       padding: 2rem;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      display: flex; /* Enable flexbox for vertical content alignment */
-      flex-direction: column; /* Stack content vertically inside the box */
+      display: flex; 
+      flex-direction: column;
     }
 
     .box .content-wrapper {
-        flex-grow: 1; /* Allows this wrapper to fill available space */
+        flex-grow: 1; 
     }
 
-
-    /* --- Left Column: Video Box --- */
     .video-title {
       font-size: 1.8rem;
       font-weight: bold;
@@ -58,8 +76,8 @@
     video {
       width: 100%;
       border-radius: 15px;
-      flex-grow: 1; /* Allow video to fill space */
-      object-fit: cover; /* Ensure video covers the area nicely */
+      flex-grow: 1;
+      object-fit: cover;
     }
 
     .video-select {
@@ -73,7 +91,6 @@
       text-align: center;
     }
 
-    /* --- Right Column: CTA Box --- */
     .cta-title {
       text-align: center;
       font-size: 2rem;
@@ -117,7 +134,7 @@
       margin-bottom: 1.5rem;
       border-radius: 15px;
       overflow: hidden;
-      flex-grow: 1; /* Allow carousel to fill space */
+      flex-grow: 1;
     }
     .carousel img {
       position: absolute;
@@ -130,22 +147,23 @@
     }
     .carousel img.active { opacity: 1; }
     
-    /* --- Centered Buttons Container --- */
     .buttons-container {
         width: 100%;
-        max-width: 500px; /* Or adjust to your preference */
-        margin-top: 2rem; /* Space above the buttons */
+        max-width: 500px;
+        margin-top: 2rem;
+        position: relative; /* Ensure buttons are on top of icons */
+        z-index: 1;
     }
 
     .btn {
       display: block;
       width: 100%;
-      padding: 1rem; /* Slightly larger padding */
+      padding: 1rem;
       margin: 0.8rem 0;
       text-align: center;
       color: white;
       font-weight: bold;
-      font-size: 1.2rem; /* Larger font */
+      font-size: 1.2rem;
       border-radius: 30px;
       text-decoration: none;
       background: linear-gradient(to right, #ff00cc, #3333ff);
@@ -161,10 +179,7 @@
 </head>
 <body>
 
-  <!-- This container holds the two top boxes -->
   <div class="main-layout">
-    
-    <!-- LEFT COLUMN: Play Now Box -->
     <div class="box">
         <h2 class="video-title">Play Now</h2>
         <video id="teaserVideo" autoplay loop muted playsinline>
@@ -177,8 +192,6 @@
           <option value="video3.mp4">✨ Love Me</option>
         </select>
     </div>
-
-    <!-- RIGHT COLUMN: Original CTA Box with Carousel -->
     <div class="box">
         <h1 class="cta-title">Enter Her Private Playground</h1>
         <p class="cta-subtitle">18+ only. Tap below to unlock.</p>
@@ -193,10 +206,8 @@
           <img src="https://picsum.photos/id/1018/800/600" alt="Slide 3">
         </div>
     </div>
-
   </div>
 
-  <!-- This is the new, separate container for the buttons -->
   <div class="buttons-container">
       <a href="#" class="btn">Watch Her Live</a>
       <a href="#" class="btn">Join Her Fansly</a>
@@ -204,7 +215,7 @@
   </div>
 
   <script>
-    // --- RIGHT COLUMN SCRIPT: Caption and Image Carousels ---
+    // --- Carousels and Video Selector Scripts (No change here) ---
     let captions = document.querySelectorAll('.caption');
     let captionIndex = 0;
     setInterval(() => {
@@ -225,12 +236,45 @@
       }
     }, 4000);
 
-    // --- LEFT COLUMN SCRIPT: Video Selector ---
     document.getElementById('videoSelect').addEventListener('change', function() {
       let video = document.getElementById('teaserVideo');
       video.src = this.value;
       video.play();
     });
+
+    // --- NEW: Random Floating Icons Script ---
+    document.addEventListener('DOMContentLoaded', function() {
+      const iconCount = 20; // How many icons to create
+      const body = document.querySelector('body');
+      
+      // SVG paths for different icons (heart, sparkle, star)
+      const icons = [
+        'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z', // Heart
+        'M12 2l2.36 7.28H22l-6.06 4.48L18.3 22 12 17.25 5.7 22l2.36-8.24L2 9.28h7.64L12 2z', // Star
+        'M24 12L18 10L12 4L10 10L4 12L10 14L12 20L14 14L20 12L24 12Z' // Sparkle
+      ];
+
+      for (let i = 0; i < iconCount; i++) {
+        const iconWrapper = document.createElement('div');
+        iconWrapper.className = 'floating-icon';
+
+        const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+        
+        iconWrapper.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="${randomIcon}"></path></svg>`;
+
+        // Randomize position, size, and animation
+        const size = Math.random() * 25 + 15; // Size between 15px and 40px
+        iconWrapper.style.width = `${size}px`;
+        iconWrapper.style.height = `${size}px`;
+        iconWrapper.style.top = `${Math.random() * 100}%`;
+        iconWrapper.style.left = `${Math.random() * 100}%`;
+        iconWrapper.style.animationDelay = `${Math.random() * 8}s`;
+        iconWrapper.style.animationDuration = `${Math.random() * 5 + 5}s`; // Duration between 5s and 10s
+        
+        body.appendChild(iconWrapper);
+      }
+    });
+
   </script>
 
 </body>
