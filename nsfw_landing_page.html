@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Her Private Playground</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+    .background-video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+    .btn {
+      display: inline-block;
+      margin: 0.5rem;
+      padding: 1rem 2rem;
+      background: crimson;
+      color: white;
+      border: none;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .geo-block {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: black;
+      color: white;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 1.5rem;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div class="geo-block" id="geoBlock">
+    Sorry, this content isn’t available in your region.
+  </div>
+
+  <video class="background-video" autoplay muted loop>
+    <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="overlay" id="mainContent">
+    <h1>Enter Her Private Playground</h1>
+    <p>18+ only. Tap below to unlock everything.</p>
+    <a href="https://chaturbate.com/yourchannel" class="btn">Watch Her Live</a>
+    <a href="https://fansly.com/yourname" class="btn">Join Her Fansly</a>
+    <a href="https://t.me/joinchat/yourgroup" class="btn">Join the Inner Circle</a>
+  </div>
+
+  <script>
+    // Simple region block (requires Cloudflare Worker for accuracy)
+    fetch('https://cloudflare.com/cdn-cgi/trace')
+      .then(r => r.text())
+      .then(data => {
+        const ipData = Object.fromEntries(data.trim().split('\n').map(line => line.split('=')));
+        if (ipData.loc === 'US' && ipData.region === 'CA') {
+          document.getElementById('geoBlock').style.display = 'flex';
+          document.getElementById('mainContent').style.display = 'none';
+        }
+      });
+  </script>
+</body>
+</html>
