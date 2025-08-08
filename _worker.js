@@ -1,10 +1,18 @@
-// --- TEMPORARY DEBUG CODE ---
+// --- The Real Blocking Code ---
 export default {
-  async fetch(request) {
-    const cf = request.cf;
-    const responseText = `DEBUG INFO:\nYour Country: ${cf.country}\nYour State Code: ${cf.subdivision_1_iso_code}`;
-    return new Response(responseText, {
-      headers: { 'Content-Type': 'text/plain' },
-    });
+  async fetch(request, env) {
+    const locationData = request.cf;
+    const stateCode = locationData.subdivision_1_iso_code;
+
+    // Check if the visitor's state code is 'CA'
+    if (stateCode === 'CA') {
+      // If they are in California, show them a "Forbidden" message.
+      return new Response('Access from your region is not permitted.', {
+        status: 403,
+      });
+    }
+
+    // If not from California, load the website.
+    return env.ASSETS.fetch(request);
   },
 };
