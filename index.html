@@ -16,10 +16,69 @@
       min-height: 100vh;
       flex-direction: column;
       position: relative; 
-      overflow-x: hidden; /* THE FIX: Only hide horizontal overflow, allows vertical scroll */
+      overflow-x: hidden;
     }
 
-    /* --- Floating Icon Styles --- */
+    /* --- NEW: Age Gate Modal Styles --- */
+    .age-gate-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .age-gate-modal {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 400px;
+      margin: 1rem;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+    }
+
+    .age-gate-modal h2 {
+      margin-top: 0;
+      font-size: 1.8rem;
+      color: #333;
+    }
+
+    .age-gate-modal p {
+      color: #555;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    .age-gate-button {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background: linear-gradient(to right, #ff00cc, #3333ff);
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    
+    .age-gate-button:hover {
+        transform: scale(1.05);
+    }
+    
+    .hidden {
+      display: none;
+    }
+    /* --- End of Age Gate Styles --- */
+
+
     @keyframes float {
       0% { transform: translateY(0px) rotate(0deg); }
       50% { transform: translateY(-15px) rotate(15deg); }
@@ -33,7 +92,6 @@
       animation: float 8s ease-in-out infinite;
     }
 
-    /* This container holds the two top boxes */
     .main-layout {
       display: flex;
       flex-wrap: wrap;
@@ -47,135 +105,41 @@
     }
 
     .box {
-      flex: 1;
-      min-width: 320px;
-      max-width: 500px;
-      background: white;
-      border-radius: 20px;
-      padding: 2rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      display: flex; 
-      flex-direction: column;
+      flex: 1; min-width: 320px; max-width: 500px; background: white; border-radius: 20px; padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1); display: flex; flex-direction: column;
     }
 
-    .box .content-wrapper {
-        flex-grow: 1; 
-    }
+    .video-title { font-size: 1.8rem; font-weight: bold; text-align: center; color: #cc00cc; margin-top: 0; margin-bottom: 1rem; }
+    video { width: 100%; border-radius: 15px; flex-grow: 1; object-fit: cover; }
+    .video-select { width: 100%; padding: 0.8rem; font-size: 1rem; font-weight: bold; margin-top: 1rem; border-radius: 10px; border: 1px solid #ccc; text-align: center; }
 
-    .video-title {
-      font-size: 1.8rem;
-      font-weight: bold;
-      text-align: center;
-      color: #cc00cc;
-      margin-top: 0;
-      margin-bottom: 1rem;
-    }
+    .cta-title { text-align: center; font-size: 2rem; background: linear-gradient(to right, #ff00cc, #3333ff); -webkit-background-clip: text; color: transparent; margin-top: 0; margin-bottom: 0.5rem; }
+    .cta-subtitle { text-align: center; color: #555; margin-bottom: 1.5rem; }
 
-    video {
-      width: 100%;
-      border-radius: 15px;
-      flex-grow: 1;
-      object-fit: cover;
-    }
-
-    .video-select {
-      width: 100%;
-      padding: 0.8rem;
-      font-size: 1rem;
-      font-weight: bold;
-      margin-top: 1rem;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      text-align: center;
-    }
-
-    .cta-title {
-      text-align: center;
-      font-size: 2rem;
-      background: linear-gradient(to right, #ff00cc, #3333ff);
-      -webkit-background-clip: text;
-      color: transparent;
-      margin-top: 0;
-      margin-bottom: 0.5rem;
-    }
-
-    .cta-subtitle {
-      text-align: center;
-      color: #555;
-      margin-bottom: 1.5rem;
-    }
-
-    .caption-container {
-      height: 30px;
-      margin-bottom: 1rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      position: relative;
-    }
-    .caption {
-      position: absolute;
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: #cc00cc;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-      text-align: center;
-    }
+    .caption-container { height: 30px; margin-bottom: 1rem; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; }
+    .caption { position: absolute; font-size: 1.4rem; font-weight: 600; color: #cc00cc; opacity: 0; transition: opacity 1s ease-in-out; text-align: center; }
     .caption.active { opacity: 1; }
 
-    .carousel {
-      position: relative;
-      width: 100%;
-      height: 250px;
-      margin-bottom: 1.5rem;
-      border-radius: 15px;
-      overflow: hidden;
-      flex-grow: 1;
-    }
-    .carousel img {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
+    .carousel { position: relative; width: 100%; height: 250px; margin-bottom: 1.5rem; border-radius: 15px; overflow: hidden; flex-grow: 1; }
+    .carousel img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out; }
     .carousel img.active { opacity: 1; }
     
-    .buttons-container {
-        width: 100%;
-        max-width: 500px;
-        margin-top: 2rem;
-        position: relative; 
-        z-index: 1;
-    }
-
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 1rem;
-      margin: 0.8rem 0;
-      text-align: center;
-      color: white;
-      font-weight: bold;
-      font-size: 1.2rem;
-      border-radius: 30px;
-      text-decoration: none;
-      background: linear-gradient(to right, #ff00cc, #3333ff);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-    }
-
+    .buttons-container { width: 100%; max-width: 500px; margin-top: 2rem; position: relative; z-index: 1; }
+    .btn { display: block; width: 100%; padding: 1rem; margin: 0.8rem 0; text-align: center; color: white; font-weight: bold; font-size: 1.2rem; border-radius: 30px; text-decoration: none; background: linear-gradient(to right, #ff00cc, #3333ff); box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
   </style>
 </head>
 <body>
+
+  <!-- NEW: Age Gate Modal HTML -->
+  <div id="ageGate" class="age-gate-overlay">
+    <div class="age-gate-modal">
+      <h2>Age Verification</h2>
+      <p>This website contains age-restricted materials. By entering, you affirm that you are 18 years of age or older and you agree to our terms.</p>
+      <div id="enterButton" class="age-gate-button">I am 18 or Older</div>
+    </div>
+  </div>
+
 
   <div class="main-layout">
     <div class="box">
@@ -207,68 +171,56 @@
   </div>
 
   <div class="buttons-container">
-      <a href="#" class="btn">Watch Her Live</a>
-      <a href="#" class="btn">Join Her Fansly</a>
-      <a href="#" class="btn">Join the Inner Circle</a>
+      <a href="#" class="btn" target="_blank">Watch Her Live</a>
+      <a href="#" class="btn" target="_blank">Join Her Fansly</a>
+      <a href="#" class="btn" target="_blank">Join the Inner Circle</a>
   </div>
 
   <script>
     // --- Carousels and Video Selector Scripts ---
-    let captions = document.querySelectorAll('.caption');
-    let captionIndex = 0;
-    setInterval(() => {
-      if (captions.length > 0) {
-        captions[captionIndex].classList.remove('active');
-        captionIndex = (captionIndex + 1) % captions.length;
-        captions[captionIndex].classList.add('active');
-      }
-    }, 3000);
-
-    let slides = document.querySelectorAll('.carousel img');
-    let slideIndex = 0;
-    setInterval(() => {
-      if (slides.length > 0) {
-        slides[slideIndex].classList.remove('active');
-        slideIndex = (slideIndex + 1) % slides.length;
-        slides[slideIndex].classList.add('active');
-      }
-    }, 4000);
-
-    document.getElementById('videoSelect').addEventListener('change', function() {
-      let video = document.getElementById('teaserVideo');
-      video.src = this.value;
-      video.play();
-    });
+    let captions = document.querySelectorAll('.caption'); let captionIndex = 0;
+    setInterval(() => { if (captions.length > 0) { captions[captionIndex].classList.remove('active'); captionIndex = (captionIndex + 1) % captions.length; captions[captionIndex].classList.add('active'); } }, 3000);
+    let slides = document.querySelectorAll('.carousel img'); let slideIndex = 0;
+    setInterval(() => { if (slides.length > 0) { slides[slideIndex].classList.remove('active'); slideIndex = (slideIndex + 1) % slides.length; slides[slideIndex].classList.add('active'); } }, 4000);
+    document.getElementById('videoSelect').addEventListener('change', function() { let video = document.getElementById('teaserVideo'); video.src = this.value; video.play(); });
 
     // --- Random Floating Icons Script ---
     document.addEventListener('DOMContentLoaded', function() {
-      const iconCount = 20; 
-      const body = document.querySelector('body');
-      
-      const icons = [
-        'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z',
-        'M12 2l2.36 7.28H22l-6.06 4.48L18.3 22 12 17.25 5.7 22l2.36-8.24L2 9.28h7.64L12 2z', 
-        'M24 12L18 10L12 4L10 10L4 12L10 14L12 20L14 14L20 12L24 12Z' 
-      ];
-
+      const iconCount = 20; const body = document.querySelector('body');
+      const icons = [ 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z', 'M12 2l2.36 7.28H22l-6.06 4.48L18.3 22 12 17.25 5.7 22l2.36-8.24L2 9.28h7.64L12 2z', 'M24 12L18 10L12 4L10 10L4 12L10 14L12 20L14 14L20 12L24 12Z' ];
       for (let i = 0; i < iconCount; i++) {
-        const iconWrapper = document.createElement('div');
-        iconWrapper.className = 'floating-icon';
-
+        const iconWrapper = document.createElement('div'); iconWrapper.className = 'floating-icon';
         const randomIcon = icons[Math.floor(Math.random() * icons.length)];
-        
         iconWrapper.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="${randomIcon}"></path></svg>`;
-
-        const size = Math.random() * 25 + 15;
-        iconWrapper.style.width = `${size}px`;
-        iconWrapper.style.height = `${size}px`;
-        iconWrapper.style.top = `${Math.random() * 100}%`;
-        iconWrapper.style.left = `${Math.random() * 100}%`;
-        iconWrapper.style.animationDelay = `${Math.random() * 8}s`;
-        iconWrapper.style.animationDuration = `${Math.random() * 5 + 5}s`;
-        
+        const size = Math.random() * 25 + 15; iconWrapper.style.width = `${size}px`; iconWrapper.style.height = `${size}px`;
+        iconWrapper.style.top = `${Math.random() * 100}%`; iconWrapper.style.left = `${Math.random() * 100}%`;
+        iconWrapper.style.animationDelay = `${Math.random() * 8}s`; iconWrapper.style.animationDuration = `${Math.random() * 5 + 5}s`;
         body.appendChild(iconWrapper);
       }
+    });
+
+    // --- NEW: Age Gate Script ---
+    document.addEventListener('DOMContentLoaded', function() {
+        const ageGate = document.getElementById('ageGate');
+        const enterButton = document.getElementById('enterButton');
+
+        // Check if the user has already verified their age
+        if (document.cookie.includes('ageVerified=true')) {
+            ageGate.classList.add('hidden');
+        } else {
+            ageGate.classList.remove('hidden');
+        }
+
+        enterButton.addEventListener('click', function() {
+            // Set a cookie that expires in 30 days
+            const d = new Date();
+            d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = "ageVerified=true;" + expires + ";path=/";
+
+            // Hide the modal
+            ageGate.classList.add('hidden');
+        });
     });
   </script>
 
