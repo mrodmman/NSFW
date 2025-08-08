@@ -1,144 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Private Playground</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background: #fff;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-    padding: 2rem;
-  }
-  .container {
-    width: 100%;
-    max-width: 500px;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    padding: 2rem;
-  }
-  h1 {
-    text-align: center;
-    font-size: 2rem;
-    background: linear-gradient(to right, #ff00cc, #3333ff);
-    -webkit-background-clip: text;
-    color: transparent;
-    margin-bottom: 0.5rem;
-  }
-  p {
-    text-align: center;
-    color: #555;
-    margin-bottom: 1.5rem;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Private Playground</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: white;
+      margin: 0;
+      padding: 0;
+    }
 
-  /* Caption */
-  .caption-container {
-    height: 30px;
-    margin-bottom: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    position: relative;
-  }
-  .caption {
-    position: absolute;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #cc00cc;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    text-align: center;
-  }
-  .caption.active { opacity: 1; }
+    .main-layout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: auto;
+      padding: 2rem;
+      justify-content: center;
+    }
 
-  /* Carousel */
-  .carousel {
-    position: relative;
-    width: 100%;
-    height: 250px;
-    margin-bottom: 1.5rem;
-    border-radius: 15px;
-    overflow: hidden;
-  }
-  .carousel img {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-  }
-  .carousel img.active { opacity: 1; }
+    .box {
+      flex: 1;
+      min-width: 320px;
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
 
-  /* Buttons */
-  .btn {
-    display: block;
-    width: 100%;
-    padding: 0.8rem;
-    margin: 0.5rem 0;
-    text-align: center;
-    color: white;
-    font-weight: bold;
-    border-radius: 25px;
-    text-decoration: none;
-    background: linear-gradient(to right, #ff00cc, #3333ff);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    transition: transform 0.2s ease;
-  }
-  .btn:hover { transform: scale(1.05); }
-</style>
+    .video-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      text-align: center;
+      color: #cc00cc;
+      margin-bottom: 1rem;
+    }
+
+    video {
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    .video-select {
+      width: 100%;
+      padding: 0.6rem;
+      font-size: 1rem;
+      margin-top: 1rem;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .cta-title {
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+      background: linear-gradient(90deg, #ff0080, #7928ca);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cta-subtitle {
+      text-align: center;
+      color: #555;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-image {
+      display: block;
+      max-width: 100%;
+      border-radius: 12px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .cta-button {
+      display: block;
+      width: 100%;
+      background: linear-gradient(90deg, #ff0080, #7928ca);
+      color: white;
+      text-align: center;
+      padding: 0.8rem;
+      margin-bottom: 0.8rem;
+      font-size: 1rem;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .cta-button:hover {
+      opacity: 0.9;
+    }
+  </style>
 </head>
 <body>
 
-<div class="container">
-  <h1>Enter Her Private Playground</h1>
-  <p>18+ only. Tap below to unlock everything.</p>
+  <div class="main-layout">
+    
+    <!-- LEFT COLUMN: Play Now Box -->
+    <div class="box">
+      <h2 class="video-title">Play Now</h2>
+      <video id="teaserVideo" autoplay loop muted playsinline>
+        <source src="video1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <select id="videoSelect" class="video-select">
+        <option value="video1.mp4">🔥 Fuck Me</option>
+        <option value="video2.mp4">💋 Suck Me</option>
+        <option value="video3.mp4">✨ Love Me</option>
+      </select>
+    </div>
 
-  <div class="caption-container">
-    <div class="caption active">Ready for a wild ride?</div>
-    <div class="caption">Exclusive content awaits.</div>
-    <div class="caption">Step inside...</div>
+    <!-- RIGHT COLUMN: Existing CTA Box -->
+    <div class="box">
+      <h1 class="cta-title">Enter Her Private Playground</h1>
+      <p class="cta-subtitle">18+ only. Tap below to unlock everything.</p>
+      <img src="https://via.placeholder.com/400x250" alt="Preview" class="cta-image">
+      <a href="#" class="cta-button">Watch Her Live</a>
+      <a href="#" class="cta-button">Join Her Fansly</a>
+      <a href="#" class="cta-button">Join the Inner Circle</a>
+    </div>
+
   </div>
 
-  <div class="carousel">
-    <img src="https://picsum.photos/id/1015/800/600" class="active" alt="Slide 1">
-    <img src="https://picsum.photos/id/1016/800/600" alt="Slide 2">
-    <img src="https://picsum.photos/id/1018/800/600" alt="Slide 3">
-  </div>
-
-  <a href="#" class="btn">Watch Her Live</a>
-  <a href="#" class="btn">Join Her Fansly</a>
-  <a href="#" class="btn">Join the Inner Circle</a>
-</div>
-
-<script>
-  // Caption rotation
-  let captions = document.querySelectorAll('.caption');
-  let captionIndex = 0;
-  setInterval(() => {
-    captions[captionIndex].classList.remove('active');
-    captionIndex = (captionIndex + 1) % captions.length;
-    captions[captionIndex].classList.add('active');
-  }, 3000);
-
-  // Image rotation
-  let slides = document.querySelectorAll('.carousel img');
-  let slideIndex = 0;
-  setInterval(() => {
-    slides[slideIndex].classList.remove('active');
-    slideIndex = (slideIndex + 1) % slides.length;
-    slides[slideIndex].classList.add('active');
-  }, 4000);
-</script>
+  <script>
+    document.getElementById('videoSelect').addEventListener('change', function() {
+      let video = document.getElementById('teaserVideo');
+      video.src = this.value;
+      video.play();
+    });
+  </script>
 
 </body>
 </html>
