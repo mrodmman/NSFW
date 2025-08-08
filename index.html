@@ -1,66 +1,46 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Her Private Playground</title>
   <style>
-    /* Reset and base */
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     body, html {
       margin: 0; padding: 0;
       height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: black;
-      color: white;
+      background: white;
+      color: black;
       overflow: hidden;
       position: relative;
     }
-    /* Background Video */
-    .background-video {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      z-index: -2;
-      filter: brightness(0.6);
-      animation: slowZoom 60s ease-in-out infinite;
-    }
-    @keyframes slowZoom {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-    /* Dark overlay blur */
+
     .overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(6px);
+      background: rgba(255,255,255,0.8);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
       padding: 2rem;
-      z-index: 10;
     }
-    /* Headline & sub */
+
     h1 {
       font-size: 3.5rem;
       margin: 0 0 0.3rem 0;
       letter-spacing: 1.5px;
-      text-shadow: 0 0 10px #ff0077;
+      color: #cc00cc;
+      text-shadow: 0 0 6px rgba(204,0,204,0.3);
     }
     p.subtitle {
       font-size: 1.25rem;
       margin-bottom: 2rem;
-      color: #ff77aa;
-      text-shadow: 0 0 8px #ff77aa;
+      color: #666;
     }
-    /* Buttons */
+
     .btn {
       background: linear-gradient(45deg, #ff0077, #7700ff);
       border: none;
@@ -71,24 +51,16 @@
       margin: 0 1rem 1rem 1rem;
       padding: 1rem 3rem;
       cursor: pointer;
-      box-shadow: 0 0 15px #ff00aa;
       text-decoration: none;
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
-      user-select: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       display: inline-block;
     }
     .btn:hover {
-      box-shadow: 0 0 30px #ff00aa, 0 0 40px #aa00ff;
+      box-shadow: 0 0 15px rgba(119,0,255,0.4);
       transform: scale(1.05);
-      animation: pulse 1.5s infinite;
     }
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 30px #ff00aa, 0 0 40px #aa00ff; }
-      50% { box-shadow: 0 0 40px #ff33cc, 0 0 50px #cc33ff; }
-    }
-    /* Caption cycling */
+
     .caption-container {
-      position: relative;
       height: 40px;
       margin-bottom: 2rem;
       overflow: hidden;
@@ -99,15 +71,11 @@
       opacity: 0;
       font-size: 2rem;
       font-weight: 700;
-      color: #ff33bb;
-      text-shadow: 0 0 10px #ff33bb;
+      color: #cc00cc;
       transition: opacity 1s ease-in-out;
-      user-select: none;
     }
-    .caption.active {
-      opacity: 1;
-    }
-    /* Photo Carousel */
+    .caption.active { opacity: 1; }
+
     .carousel {
       position: relative;
       width: 320px;
@@ -115,7 +83,7 @@
       margin-bottom: 2rem;
       border-radius: 15px;
       overflow: hidden;
-      box-shadow: 0 0 15px #ff33bb;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
       cursor: pointer;
     }
     .carousel img {
@@ -125,89 +93,44 @@
       object-fit: cover;
       opacity: 0;
       transition: opacity 1s ease-in-out;
-      user-select: none;
-      border-radius: 15px;
     }
-    .carousel img.active {
-      opacity: 1;
-    }
-    /* Geo block overlay */
-    .geo-block {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: black;
-      color: white;
-      font-size: 1.5rem;
-      font-weight: 700;
-      text-align: center;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
-      z-index: 9999;
-      user-select: none;
-    }
-    .geo-block.active {
-      display: flex;
-    }
-    /* Responsive */
+    .carousel img.active { opacity: 1; }
+
     @media (max-width: 400px) {
-      .carousel {
-        width: 90vw;
-        height: 160px;
-      }
-      h1 {
-        font-size: 2.5rem;
-      }
-      p.subtitle {
-        font-size: 1rem;
-      }
-      .btn {
-        font-size: 1rem;
-        padding: 0.8rem 2rem;
-        margin: 0.5rem;
-      }
-      .caption {
-        font-size: 1.5rem;
-      }
+      .carousel { width: 90vw; height: 160px; }
+      h1 { font-size: 2.5rem; }
+      p.subtitle { font-size: 1rem; }
+      .btn { font-size: 1rem; padding: 0.8rem 2rem; margin: 0.5rem; }
+      .caption { font-size: 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <video class="background-video" autoplay muted loop playsinline>
-    <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
-
   <div class="overlay" id="mainContent">
     <h1>Enter Her Private Playground</h1>
     <p class="subtitle">18+ only. Tap below to unlock everything.</p>
 
-    <div class="caption-container" aria-live="polite" aria-atomic="true">
+    <div class="caption-container">
       <span class="caption active">Raw</span>
       <span class="caption">Horny</span>
       <span class="caption">Real</span>
       <span class="caption">Unfiltered</span>
     </div>
 
-    <div class="carousel" aria-label="Photo carousel, click to view next">
-      <img src="https://placekitten.com/640/360" alt="Teaser photo 1" class="active" />
-      <img src="https://placekitten.com/641/360" alt="Teaser photo 2" />
-      <img src="https://placekitten.com/642/360" alt="Teaser photo 3" />
+    <div class="carousel">
+      <img src="https://picsum.photos/640/360?random=1" alt="Teaser 1" class="active" />
+      <img src="https://picsum.photos/640/360?random=2" alt="Teaser 2" />
+      <img src="https://picsum.photos/640/360?random=3" alt="Teaser 3" />
     </div>
 
-    <a href="https://chaturbate.com/yourchannel" class="btn" target="_blank" rel="noopener noreferrer">Watch Her Live</a>
-    <a href="https://fansly.com/yourname" class="btn" target="_blank" rel="noopener noreferrer">Join Her Fansly</a>
-    <a href="https://t.me/joinchat/yourgroup" class="btn" target="_blank" rel="noopener noreferrer">Join the Inner Circle</a>
-  </div>
-
-  <div class="geo-block" id="geoBlock">
-    Sorry, this content isn’t available in your region.
+    <a href="#" class="btn">Watch Her Live</a>
+    <a href="#" class="btn">Join Her Fansly</a>
+    <a href="#" class="btn">Join the Inner Circle</a>
   </div>
 
   <script>
-    // Caption cycle logic
+    // Caption cycle
     const captions = document.querySelectorAll('.caption');
     let currentCaption = 0;
     setInterval(() => {
@@ -216,7 +139,7 @@
       captions[currentCaption].classList.add('active');
     }, 4000);
 
-    // Carousel logic
+    // Carousel cycle
     const carouselImages = document.querySelectorAll('.carousel img');
     let currentImage = 0;
     document.querySelector('.carousel').addEventListener('click', () => {
@@ -228,17 +151,7 @@
       carouselImages[currentImage].classList.remove('active');
       currentImage = (currentImage + 1) % carouselImages.length;
       carouselImages[currentImage].classList.add('active');
-    }, 8000);
-
-    // Geo-block logic (simple client check)
-    fetch('https://cloudflare.com/cdn-cgi/trace').then(r => r.text()).then(data => {
-      const info = Object.fromEntries(data.trim().split('\n').map(l => l.split('=')));
-      if (info.loc === 'US' && info.region === 'CA') {
-        document.getElementById('geoBlock').classList.add('active');
-        document.getElementById('mainContent').style.display = 'none';
-      }
-    });
+    }, 5000);
   </script>
-
 </body>
 </html>
