@@ -1,103 +1,244 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Her Private Playground</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0; padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: black;
       color: white;
-      font-family: Arial, sans-serif;
       overflow: hidden;
+      position: relative;
     }
+    /* Background Video */
     .background-video {
       position: fixed;
       top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -2;
+      filter: brightness(0.6);
+      animation: slowZoom 60s ease-in-out infinite;
+    }
+    @keyframes slowZoom {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    /* Dark overlay blur */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(6px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      z-index: 10;
+    }
+    /* Headline & sub */
+    h1 {
+      font-size: 3.5rem;
+      margin: 0 0 0.3rem 0;
+      letter-spacing: 1.5px;
+      text-shadow: 0 0 10px #ff0077;
+    }
+    p.subtitle {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      color: #ff77aa;
+      text-shadow: 0 0 8px #ff77aa;
+    }
+    /* Buttons */
+    .btn {
+      background: linear-gradient(45deg, #ff0077, #7700ff);
+      border: none;
+      border-radius: 30px;
+      color: white;
+      font-weight: 600;
+      font-size: 1.25rem;
+      margin: 0 1rem 1rem 1rem;
+      padding: 1rem 3rem;
+      cursor: pointer;
+      box-shadow: 0 0 15px #ff00aa;
+      text-decoration: none;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      user-select: none;
+      display: inline-block;
+    }
+    .btn:hover {
+      box-shadow: 0 0 30px #ff00aa, 0 0 40px #aa00ff;
+      transform: scale(1.05);
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 30px #ff00aa, 0 0 40px #aa00ff; }
+      50% { box-shadow: 0 0 40px #ff33cc, 0 0 50px #cc33ff; }
+    }
+    /* Caption cycling */
+    .caption-container {
+      position: relative;
+      height: 40px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+    .caption {
+      position: absolute;
+      width: 100%;
+      opacity: 0;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ff33bb;
+      text-shadow: 0 0 10px #ff33bb;
+      transition: opacity 1s ease-in-out;
+      user-select: none;
+    }
+    .caption.active {
+      opacity: 1;
+    }
+    /* Photo Carousel */
+    .carousel {
+      position: relative;
+      width: 320px;
+      height: 180px;
+      margin-bottom: 2rem;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 15px #ff33bb;
+      cursor: pointer;
+    }
+    .carousel img {
+      position: absolute;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      z-index: -1;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      user-select: none;
+      border-radius: 15px;
     }
-    .overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
+    .carousel img.active {
+      opacity: 1;
     }
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
-    }
-    p {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-    }
-    .btn {
-      display: inline-block;
-      margin: 0.5rem;
-      padding: 1rem 2rem;
-      background: crimson;
-      color: white;
-      border: none;
-      font-size: 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-    }
+    /* Geo block overlay */
     .geo-block {
       display: none;
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      inset: 0;
       background: black;
       color: white;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: center;
       justify-content: center;
       align-items: center;
-      text-align: center;
-      font-size: 1.5rem;
-      z-index: 1000;
+      padding: 2rem;
+      z-index: 9999;
+      user-select: none;
+    }
+    .geo-block.active {
+      display: flex;
+    }
+    /* Responsive */
+    @media (max-width: 400px) {
+      .carousel {
+        width: 90vw;
+        height: 160px;
+      }
+      h1 {
+        font-size: 2.5rem;
+      }
+      p.subtitle {
+        font-size: 1rem;
+      }
+      .btn {
+        font-size: 1rem;
+        padding: 0.8rem 2rem;
+        margin: 0.5rem;
+      }
+      .caption {
+        font-size: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="geo-block" id="geoBlock">
-    Sorry, this content isn’t available in your region.
-  </div>
 
-  <video class="background-video" autoplay muted loop>
-    <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
+  <video class="background-video" autoplay muted loop playsinline>
+    <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
 
   <div class="overlay" id="mainContent">
     <h1>Enter Her Private Playground</h1>
-    <p>18+ only. Tap below to unlock everything.</p>
-    <a href="https://chaturbate.com/yourchannel" class="btn">Watch Her Live</a>
-    <a href="https://fansly.com/yourname" class="btn">Join Her Fansly</a>
-    <a href="https://t.me/joinchat/yourgroup" class="btn">Join the Inner Circle</a>
+    <p class="subtitle">18+ only. Tap below to unlock everything.</p>
+
+    <div class="caption-container" aria-live="polite" aria-atomic="true">
+      <span class="caption active">Raw</span>
+      <span class="caption">Horny</span>
+      <span class="caption">Real</span>
+      <span class="caption">Unfiltered</span>
+    </div>
+
+    <div class="carousel" aria-label="Photo carousel, click to view next">
+      <img src="https://placekitten.com/640/360" alt="Teaser photo 1" class="active" />
+      <img src="https://placekitten.com/641/360" alt="Teaser photo 2" />
+      <img src="https://placekitten.com/642/360" alt="Teaser photo 3" />
+    </div>
+
+    <a href="https://chaturbate.com/yourchannel" class="btn" target="_blank" rel="noopener noreferrer">Watch Her Live</a>
+    <a href="https://fansly.com/yourname" class="btn" target="_blank" rel="noopener noreferrer">Join Her Fansly</a>
+    <a href="https://t.me/joinchat/yourgroup" class="btn" target="_blank" rel="noopener noreferrer">Join the Inner Circle</a>
+  </div>
+
+  <div class="geo-block" id="geoBlock">
+    Sorry, this content isn’t available in your region.
   </div>
 
   <script>
-    // Simple region block (requires Cloudflare Worker for accuracy)
-    fetch('https://cloudflare.com/cdn-cgi/trace')
-      .then(r => r.text())
-      .then(data => {
-        const ipData = Object.fromEntries(data.trim().split('\n').map(line => line.split('=')));
-        if (ipData.loc === 'US' && ipData.region === 'CA') {
-          document.getElementById('geoBlock').style.display = 'flex';
-          document.getElementById('mainContent').style.display = 'none';
-        }
-      });
+    // Caption cycle logic
+    const captions = document.querySelectorAll('.caption');
+    let currentCaption = 0;
+    setInterval(() => {
+      captions[currentCaption].classList.remove('active');
+      currentCaption = (currentCaption + 1) % captions.length;
+      captions[currentCaption].classList.add('active');
+    }, 4000);
+
+    // Carousel logic
+    const carouselImages = document.querySelectorAll('.carousel img');
+    let currentImage = 0;
+    document.querySelector('.carousel').addEventListener('click', () => {
+      carouselImages[currentImage].classList.remove('active');
+      currentImage = (currentImage + 1) % carouselImages.length;
+      carouselImages[currentImage].classList.add('active');
+    });
+    setInterval(() => {
+      carouselImages[currentImage].classList.remove('active');
+      currentImage = (currentImage + 1) % carouselImages.length;
+      carouselImages[currentImage].classList.add('active');
+    }, 8000);
+
+    // Geo-block logic (simple client check)
+    fetch('https://cloudflare.com/cdn-cgi/trace').then(r => r.text()).then(data => {
+      const info = Object.fromEntries(data.trim().split('\n').map(l => l.split('=')));
+      if (info.loc === 'US' && info.region === 'CA') {
+        document.getElementById('geoBlock').classList.add('active');
+        document.getElementById('mainContent').style.display = 'none';
+      }
+    });
   </script>
+
 </body>
 </html>
