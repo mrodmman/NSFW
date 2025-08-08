@@ -7,59 +7,81 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: white;
+      background: #fff;
       margin: 0;
-      padding: 0;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column; /* Align content vertically */
     }
 
+    /* This container holds the two top boxes */
     .main-layout {
       display: flex;
       flex-wrap: wrap;
       gap: 2rem;
-      max-width: 1200px;
-      margin: auto;
-      padding: 2rem;
+      width: 100%;
+      max-width: 1100px;
       justify-content: center;
+      align-items: stretch; /* This makes the columns equal height */
     }
 
     .box {
       flex: 1;
       min-width: 320px;
+      max-width: 500px;
       background: white;
       border-radius: 20px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      display: flex; /* Enable flexbox for vertical content alignment */
+      flex-direction: column; /* Stack content vertically inside the box */
     }
 
+    .box .content-wrapper {
+        flex-grow: 1; /* Allows this wrapper to fill available space */
+    }
+
+
+    /* --- Left Column: Video Box --- */
     .video-title {
       font-size: 1.8rem;
       font-weight: bold;
       text-align: center;
       color: #cc00cc;
+      margin-top: 0;
       margin-bottom: 1rem;
     }
 
     video {
       width: 100%;
-      border-radius: 12px;
+      border-radius: 15px;
+      flex-grow: 1; /* Allow video to fill space */
+      object-fit: cover; /* Ensure video covers the area nicely */
     }
 
     .video-select {
       width: 100%;
-      padding: 0.6rem;
+      padding: 0.8rem;
       font-size: 1rem;
+      font-weight: bold;
       margin-top: 1rem;
       border-radius: 10px;
       border: 1px solid #ccc;
+      text-align: center;
     }
 
+    /* --- Right Column: CTA Box --- */
     .cta-title {
-      font-size: 2rem;
-      font-weight: bold;
       text-align: center;
-      background: linear-gradient(90deg, #ff0080, #7928ca);
+      font-size: 2rem;
+      background: linear-gradient(to right, #ff00cc, #3333ff);
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: transparent;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
     }
 
     .cta-subtitle {
@@ -68,169 +90,147 @@
       margin-bottom: 1.5rem;
     }
 
-    .cta-image {
-      display: block;
-      max-width: 100%;
-      border-radius: 12px;
-      margin: 0 auto 1.5rem;
+    .caption-container {
+      height: 30px;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
     }
-
-    .cta-button {
-      display: block;
-      width: 100%;
-      background: linear-gradient(90deg, #ff0080, #7928ca);
-      color: white;
+    .caption {
+      position: absolute;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #cc00cc;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
       text-align: center;
-      padding: 0.8rem;
-      margin-bottom: 0.8rem;
-      font-size: 1rem;
-      border-radius: 25px;
-      text-decoration: none;
-      font-weight: bold;
     }
+    .caption.active { opacity: 1; }
 
-    .cta-button:hover {
-      opacity: 0.9;
-    }
-
-    /* Carousel styles */
     .carousel {
       position: relative;
       width: 100%;
-      max-width: 500px;
-      margin: 0 auto;
-    }
-    
-    .carousel-inner {
-      position: relative;
-      width: 100%;
+      height: 250px;
+      margin-bottom: 1.5rem;
+      border-radius: 15px;
       overflow: hidden;
-      border-radius: 12px;
+      flex-grow: 1; /* Allow carousel to fill space */
     }
-    
-    .carousel-item {
-      position: relative;
-      display: none;
+    .carousel img {
+      position: absolute;
+      top: 0; left: 0;
       width: 100%;
-      transition: transform 0.6s ease;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
     }
+    .carousel img.active { opacity: 1; }
     
-    .carousel-item.active {
+    /* --- Centered Buttons Container --- */
+    .buttons-container {
+        width: 100%;
+        max-width: 500px; /* Or adjust to your preference */
+        margin-top: 2rem; /* Space above the buttons */
+    }
+
+    .btn {
       display: block;
-    }
-    
-    .carousel-caption {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 15px;
-      background: rgba(0, 0, 0, 0.5);
-      color: white;
+      width: 100%;
+      padding: 1rem; /* Slightly larger padding */
+      margin: 0.8rem 0;
       text-align: center;
-    }
-    
-    .carousel-control {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
-      background: rgba(0, 0, 0, 0.5);
       color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 10;
+      font-weight: bold;
+      font-size: 1.2rem; /* Larger font */
+      border-radius: 30px;
+      text-decoration: none;
+      background: linear-gradient(to right, #ff00cc, #3333ff);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    
-    .carousel-control.prev {
-      left: 10px;
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
     }
-    
-    .carousel-control.next {
-      right: 10px;
-    }
+
   </style>
 </head>
 <body>
 
+  <!-- This container holds the two top boxes -->
   <div class="main-layout">
     
     <!-- LEFT COLUMN: Play Now Box -->
     <div class="box">
-      <h2 class="video-title">Play Now</h2>
-      <video id="teaserVideo" autoplay loop muted playsinline>
-        <source src="video1.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      <select id="videoSelect" class="video-select">
-        <option value="video1.mp4">🔥 Fuck Me</option>
-        <option value="video2.mp4">💋 Suck Me</option>
-        <option value="video3.mp4">✨ Love Me</option>
-      </select>
+        <h2 class="video-title">Play Now</h2>
+        <video id="teaserVideo" autoplay loop muted playsinline>
+          <source src="video1.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <select id="videoSelect" class="video-select">
+          <option value="video1.mp4">🔥 Fuck Me</option>
+          <option value="video2.mp4">💋 Suck Me</option>
+          <option value="video3.mp4">✨ Love Me</option>
+        </select>
     </div>
 
-    <!-- RIGHT COLUMN: CTA Box with Carousel -->
+    <!-- RIGHT COLUMN: Original CTA Box with Carousel -->
     <div class="box">
-      <h1 class="cta-title">Enter Her Private Playground</h1>
-      <p class="cta-subtitle">18+ only. Tap below to unlock everything.</p>
-      
-      <div class="carousel">
-        <div class="carousel-inner">
-          <!-- Carousel Items -->
-          <div class="carousel-item active">
-            <img src="preview1.jpg" alt="Preview 1" class="cta-image">
-            <div class="carousel-caption">Exclusive Content Preview</div>
-          </div>
-          <div class="carousel-item">
-            <img src="preview2.jpg" alt="Preview 2" class="cta-image">
-            <div class="carousel-caption">Live Shows Available</div>
-          </div>
-          <div class="carousel-item">
-            <img src="preview3.jpg" alt="Preview 3" class="cta-image">
-            <div class="carousel-caption">Join the Inner Circle</div>
-          </div>
-          
-          <!-- Carousel Controls -->
-          <div class="carousel-control prev" onclick="moveSlide(-1)">❮</div>
-          <div class="carousel-control next" onclick="moveSlide(1)">❯</div>
+        <h1 class="cta-title">Enter Her Private Playground</h1>
+        <p class="cta-subtitle">18+ only. Tap below to unlock.</p>
+        <div class="caption-container">
+          <div class="caption active">Ready for a wild ride?</div>
+          <div class="caption">Exclusive content awaits.</div>
+          <div class="caption">Step inside...</div>
         </div>
-      </div>
-      
-      <a href="#" class="cta-button">Watch Her Live</a>
-      <a href="#" class="cta-button">Join Her Fansly</a>
-      <a href="#" class="cta-button">Join the Inner Circle</a>
+        <div class="carousel">
+          <img src="https://picsum.photos/id/1015/800/600" class="active" alt="Slide 1">
+          <img src="https://picsum.photos/id/1016/800/600" alt="Slide 2">
+          <img src="https://picsum.photos/id/1018/800/600" alt="Slide 3">
+        </div>
     </div>
 
   </div>
 
+  <!-- This is the new, separate container for the buttons -->
+  <div class="buttons-container">
+      <a href="#" class="btn">Watch Her Live</a>
+      <a href="#" class="btn">Join Her Fansly</a>
+      <a href="#" class="btn">Join the Inner Circle</a>
+  </div>
+
   <script>
-    // Video selector functionality
+    // --- RIGHT COLUMN SCRIPT: Caption and Image Carousels ---
+    let captions = document.querySelectorAll('.caption');
+    let captionIndex = 0;
+    setInterval(() => {
+      if (captions.length > 0) {
+        captions[captionIndex].classList.remove('active');
+        captionIndex = (captionIndex + 1) % captions.length;
+        captions[captionIndex].classList.add('active');
+      }
+    }, 3000);
+
+    let slides = document.querySelectorAll('.carousel img');
+    let slideIndex = 0;
+    setInterval(() => {
+      if (slides.length > 0) {
+        slides[slideIndex].classList.remove('active');
+        slideIndex = (slideIndex + 1) % slides.length;
+        slides[slideIndex].classList.add('active');
+      }
+    }, 4000);
+
+    // --- LEFT COLUMN SCRIPT: Video Selector ---
     document.getElementById('videoSelect').addEventListener('change', function() {
       let video = document.getElementById('teaserVideo');
       video.src = this.value;
       video.play();
     });
-
-    // Carousel functionality
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.carousel-item');
-    
-    function showSlide(n) {
-      slides.forEach(slide => slide.classList.remove('active'));
-      currentSlide = (n + slides.length) % slides.length;
-      slides[currentSlide].classList.add('active');
-    }
-    
-    function moveSlide(n) {
-      showSlide(currentSlide + n);
-    }
-    
-    // Auto-advance carousel every 5 seconds
-    setInterval(() => moveSlide(1), 5000);
   </script>
 
 </body>
