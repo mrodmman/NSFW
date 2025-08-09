@@ -1,26 +1,42 @@
-// --- PERFORMANCE TEST CODE ---
-// This version blocks TEXAS to let you experience the site speed with the API call.
+// --- FINAL CODE WITH KILL SWITCH ---
+// This version can be turned on/off from the Cloudflare dashboard.
 
 export default {
   async fetch(request, env) {
-    // Get the visitor's IP address from the Cloudflare headers
-    const clientIp = request.headers.get('CF-Connecting-IP');
+    // --- Step 1: Check for the Kill Switch ---
+    // Reads an environment variable named BLOCKING_MODE from your dashboard.
+    // If the variable is set to 'off', skip all blocking and load the site.
+    if (env.BLOCKING_MODE === 'off') {
+      return env.ASSETS.fetch(request);
+    }
 
-    // Call the external service to get location data.
-    // THIS IS THE STEP THAT ADDS DELAY.
-    const geoResponse = await fetch(`http://ip-api.com/json/${clientIp}?fields=status,region`);
-    const geoData = await geoResponse.json();
+    // --- Step 2: If the switch is on, proceed with the hybrid blocking logic ---
+    const nativeStateCode = request.cf?.subdivision_1_iso_code;
 
-    // Check if the API call was successful and the region is Texas ('TX')
-    if (geoData.status === 'success' && geoData.region === 'TX') {
-      // This block will only run for visitors in Texas.
-      return new Response('Access from your region (Texas) is not permitted.', {
+    if (nativeStateCode === 'CA') {
+      return new Response('Access from your region is not permitted. (Native)', {
         status: 403,
       });
     }
-    
-    // If you are not in Texas, or the API fails, it will load the normal website.
-    // You will experience the delay from the 'await fetch' call above.
+
+    const clientIp = request.headers.get('CF-Connecting-IP');
+
+    if (clientIp) {
+      try {
+        const geoResponse = await fetch(`http://ip-api.com/json/${clientIp}?fields=status,region`);
+        const geoData = await geoResponse.json();
+
+        if (geoData.status === 'success' && geoData.region === 'CA') {
+          return new Response('Access from your region is not permitted. (API)', {
+            status: 403,
+          });
+        }
+      } catch (error) {
+        console.error("External GeoIP API failed:", error);
+      }
+    }
+
+    // --- Step 3: If not blocked, let the user through. ---
     return env.ASSETS.fetch(request);
   },
 };
