@@ -84,7 +84,7 @@
     /* --- Standalone Video Section Styling --- */
     .video-container {
       width: 100%;
-      aspect-ratio: 9 / 16; /* This enforces the tall 9:16 shape */
+      aspect-ratio: 16 / 9; /* THE FIX: Changed from 9/16 to match the video's shape */
       border-radius: 15px;
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(0,0,0,0.15);
@@ -131,7 +131,7 @@
         </div>
     </div>
   
-    <!-- 2. The Standalone 9:16 Video -->
+    <!-- 2. The Standalone 16:9 Video -->
     <div class="video-container">
       <iframe id="teaserFrame" 
               src="https://iframe.mediadelivery.net/play/478680/d6beef61-6da6-47ad-8925-d10ab1d7ee2e?autoplay=true&loop=true&muted=true" 
@@ -154,59 +154,4 @@
     let captions = document.querySelectorAll('.caption'); 
     let captionIndex = 0;
     setInterval(() => { 
-      if (captions.length > 0) {
-        captions[captionIndex].classList.remove('active'); 
-        captionIndex = (captionIndex + 1) % captions.length; 
-        captions[captionIndex].classList.add('active'); 
-      }
-    }, 3000);
-
-    let slides = document.querySelectorAll('.carousel img'); 
-    let slideIndex = 0;
-    setInterval(() => { 
-      if (slides.length > 0) {
-        slides[slideIndex].classList.remove('active'); 
-        slideIndex = (slideIndex + 1) % slides.length; 
-        slides[slideIndex].classList.add('active'); 
-      }
-    }, 4000);
-
-    // --- Age Gate Script ---
-    document.addEventListener('DOMContentLoaded', function() {
-        const ageGate = document.getElementById('ageGate');
-        const enterButton = document.getElementById('enterButton');
-        if (document.cookie.includes('ageVerified=true')) {
-            ageGate.classList.add('hidden');
-        } else {
-            ageGate.classList.remove('hidden');
-        }
-        enterButton.addEventListener('click', function() {
-            const d = new Date();
-            d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
-            let expires = "expires=" + d.toUTCString();
-            document.cookie = "ageVerified=true;" + expires + ";path=/";
-            ageGate.classList.add('hidden');
-        });
-    });
-
-    // --- Floating Icons Script --- (RESTORED)
-    document.addEventListener('DOMContentLoaded', function() {
-      const iconCount = 20; const body = document.querySelector('body');
-      const icons = [ 
-        'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z', // Heart
-        'M13.4,12.6c-0.4-0.4-0.8-0.7-1.3-0.9c-0.2-0.1-0.5-0.2-0.8-0.2c-0.2,0-0.4,0.1-0.6,0.1c-0.5,0.2-1,0.5-1.4,0.9c-1,0.9-1.6,2.3-1.6,3.7c0,1.1,0.4,2.2,1.1,3c0.2,0.2,0.4,0.5,0.6,0.7c-1.8-0.2-3.5-1-4.8-2.2c-1.1-1-1.9-2.3-2.1-3.7c-0.3-2,0.3-4.1,1.6-5.7c0.8-1,1.9-1.8,3.1-2.4C8.6,5.3,10.3,5,12,5c1.1,0,2.2,0.2,3.2,0.6c0.5,0.2,1,0.5,1.5,0.8c0.4,0.3,0.8,0.7,1.1,1.1c1.2,1.6,1.8,3.5,1.5,5.4c-0.2,1.4-0.9,2.8-1.9,3.8c-0.2,0.2-0.4,0.4-0.6,0.5c0.8-0.7,1.3-1.6,1.4-2.6C20,13.1,19.2,11.3,18,10c-0.5-0.5-1.1-1-1.8-1.3c-0.4-0.2-0.8-0.3-1.2-0.3s-0.8,0.1-1.2,0.3c-0.7,0.3-1.3,0.7-1.8,1.3c-1.2,1.3-1.9,3-1.7,4.8c0.1,1.1,0.6,2.1,1.4,2.8c-0.2-0.2-0.4-0.4-0.6-0.6c-0.7-0.8-1.1-1.9-1.1-3C11.8,14.9,12.4,13.5,13.4,12.6z' // Kiss / Lips
-      ];
-      for (let i = 0; i < iconCount; i++) {
-        const iconWrapper = document.createElement('div'); iconWrapper.className = 'floating-icon';
-        const randomIcon = icons[Math.floor(Math.random() * icons.length)];
-        iconWrapper.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="${randomIcon}"></path></svg>`;
-        const size = Math.random() * 25 + 15; iconWrapper.style.width = `${size}px`; iconWrapper.style.height = `${size}px`;
-        iconWrapper.style.top = `${Math.random() * 100}%`; iconWrapper.style.left = `${Math.random() * 100}%`;
-        iconWrapper.style.animationDelay = `${Math.random() * 8}s`; iconWrapper.style.animationDuration = `${Math.random() * 5 + 5}s`;
-        body.appendChild(iconWrapper);
-      }
-    });
-  </script>
-
-</body>
-</html>
+      
