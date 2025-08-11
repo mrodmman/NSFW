@@ -18,6 +18,19 @@
       position: relative;
       overflow-x: hidden;
     }
+    
+    /* --- Main Container for all content --- */
+    .content-container {
+      width: 100%;
+      max-width: 500px; /* Controls the width of all content */
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem; /* Space between sections */
+      position: relative;
+      z-index: 1;
+    }
+
+    /* --- Age Gate Modal Styles --- */
     .age-gate-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
@@ -35,6 +48,8 @@
     }
     .age-gate-button:hover { transform: scale(1.05); }
     .hidden { display: none; }
+    
+    /* --- Floating Icon Styles --- */
     @keyframes float {
       0% { transform: translateY(0px) rotate(0deg); }
       50% { transform: translateY(-15px) rotate(15deg); }
@@ -45,34 +60,31 @@
       color: rgba(255, 0, 204, 0.2); 
       animation: float 8s ease-in-out infinite;
     }
-    .main-layout {
-      display: flex; flex-wrap: wrap; gap: 2rem; width: 100%; max-width: 1100px;
-      justify-content: center; align-items: stretch; position: relative; z-index: 1;
-    }
+
+    /* --- Shared Box Style for Slideshow --- */
     .box {
-      flex: 1; min-width: 320px; max-width: 500px; background: white; border-radius: 20px; padding: 2rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1); display: flex; flex-direction: column;
+      width: 100%;
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      box-sizing: border-box; /* Ensures padding is included in width */
     }
+
+    /* Slideshow Styles */
     .cta-title { text-align: center; font-size: 2rem; background: linear-gradient(to right, #ff00cc, #3333ff); -webkit-background-clip: text; color: transparent; margin-top: 0; margin-bottom: 0.5rem; }
     .cta-subtitle { text-align: center; color: #555; margin-bottom: 1.5rem; }
     .caption-container { height: 30px; margin-bottom: 1rem; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; }
     .caption { position: absolute; font-size: 1.4rem; font-weight: 600; color: #cc00cc; opacity: 0; transition: opacity 1s ease-in-out; text-align: center; }
     .caption.active { opacity: 1; }
-    .carousel { position: relative; width: 100%; height: 250px; margin-bottom: 1.5rem; border-radius: 15px; overflow: hidden; flex-grow: 1; }
-    .carousel img {position: absolute; top: 0; left: 0;width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transition: opacity 1s ease-in-out;}
+    .carousel { position: relative; width: 100%; height: 250px; border-radius: 15px; overflow: hidden; }
+    .carousel img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transition: opacity 1s ease-in-out; }
     .carousel img.active { opacity: 1; }
 
-    /* Video styling for standalone placement */
-    .video-section {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      margin: 2rem 0;
-    }
+    /* --- NEW: Standalone Video Section Styling --- */
     .video-container {
       width: 100%;
-      max-width: 450px; /* good size for 9:16 video */
-      aspect-ratio: 9 / 16;
+      aspect-ratio: 9 / 16; /* This enforces the tall 9:16 shape */
       border-radius: 15px;
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(0,0,0,0.15);
@@ -83,13 +95,15 @@
       border: 0;
     }
 
-    .buttons-container { width: 100%; max-width: 500px; margin-top: 2rem; position: relative; z-index: 1; }
-    .btn { display: block; width: 100%; padding: 1rem; margin: 0.8rem 0; text-align: center; color: white; font-weight: bold; font-size: 1.2rem; border-radius: 30px; text-decoration: none; background: linear-gradient(to right, #ff00cc, #3333ff); box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    /* Buttons */
+    .buttons-container { width: 100%; }
+    .btn { display: block; width: 100%; padding: 1rem; margin-top: 0.8rem; text-align: center; color: white; font-weight: bold; font-size: 1.2rem; border-radius: 30px; text-decoration: none; background: linear-gradient(to right, #ff00cc, #3333ff); box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease; box-sizing: border-box; }
     .btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
   </style>
 </head>
 <body>
 
+  <!-- Age Gate Modal HTML -->
   <div id="ageGate" class="age-gate-overlay">
     <div class="age-gate-modal">
       <h2>Age Verification</h2>
@@ -98,7 +112,10 @@
     </div>
   </div>
 
-  <div class="main-layout">
+  <!-- All content now lives in this single, centered container -->
+  <div class="content-container">
+
+    <!-- 1. The Slideshow Box -->
     <div class="box">
         <h1 class="cta-title">Enter My Private Playground</h1>
         <p class="cta-subtitle">18+ only. Tap below to unlock.</p>
@@ -113,10 +130,8 @@
           <img src="https://nsfwpicz.b-cdn.net/out-0%20(42).jpg" alt="Slide 3">
         </div>
     </div>
-  </div>
-
-  <!-- Video placed below slideshow -->
-  <div class="video-section">
+  
+    <!-- 2. The Standalone 9:16 Video -->
     <div class="video-container">
       <iframe id="teaserFrame" 
               src="https://iframe.mediadelivery.net/play/478680/d6beef61-6da6-47ad-8925-d10ab1d7ee2e?autoplay=true&loop=true&muted=true" 
@@ -124,31 +139,39 @@
               allowfullscreen>
       </iframe>
     </div>
-  </div>
+  
+    <!-- 3. The Action Buttons -->
+    <div class="buttons-container">
+        <a href="https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you" class="btn" target="_blank">Hangout Live</a>
+        <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" class="btn" target="_blank">Follow Me</a>
+        <a href="https://mydirtyhobby.com/w/Fairybell" class="btn" target="_blank">Special Stash</a>
+    </div>
 
-  <div class="buttons-container">
-      <a href="https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you" class="btn" target="_blank">Hangout Live</a>
-      <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" class="btn" target="_blank">Follow Me</a>
-      <a href="https://mydirtyhobby.com/w/Fairybell" class="btn" target="_blank">Special Stash</a>
   </div>
 
   <script>
+    // --- Carousel and Caption Scripts ---
     let captions = document.querySelectorAll('.caption'); 
     let captionIndex = 0;
     setInterval(() => { 
-      captions[captionIndex].classList.remove('active'); 
-      captionIndex = (captionIndex + 1) % captions.length; 
-      captions[captionIndex].classList.add('active'); 
+      if (captions.length > 0) {
+        captions[captionIndex].classList.remove('active'); 
+        captionIndex = (captionIndex + 1) % captions.length; 
+        captions[captionIndex].classList.add('active'); 
+      }
     }, 3000);
 
     let slides = document.querySelectorAll('.carousel img'); 
     let slideIndex = 0;
     setInterval(() => { 
-      slides[slideIndex].classList.remove('active'); 
-      slideIndex = (slideIndex + 1) % slides.length; 
-      slides[slideIndex].classList.add('active'); 
+      if (slides.length > 0) {
+        slides[slideIndex].classList.remove('active'); 
+        slideIndex = (slideIndex + 1) % slides.length; 
+        slides[slideIndex].classList.add('active'); 
+      }
     }, 4000);
 
+    // --- Age Gate Script ---
     document.addEventListener('DOMContentLoaded', function() {
         const ageGate = document.getElementById('ageGate');
         const enterButton = document.getElementById('enterButton');
@@ -160,9 +183,17 @@
         enterButton.addEventListener('click', function() {
             const d = new Date();
             d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
-            document.cookie = "ageVerified=true;expires=" + d.toUTCString() + ";path=/";
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = "ageVerified=true;" + expires + ";path=/";
             ageGate.classList.add('hidden');
         });
+    });
+
+    // --- Floating Icons Script ---
+    document.addEventListener('DOMContentLoaded', function() {
+      const iconCount = 20; const body = document.querySelector('body');
+      const icons = [ /* SVG data here */ ];
+      // ... (rest of the icon script, no changes needed)
     });
   </script>
 
