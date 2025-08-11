@@ -1,170 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Private Playground</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #fff;
-      margin: 0;
-      padding: 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      flex-direction: column;
-      position: relative;
-      overflow-x: hidden;
-    }
-    .age-gate-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      z-index: 100; display: flex; justify-content: center; align-items: center;
-    }
-    .age-gate-modal {
-      background: white; padding: 2.5rem; border-radius: 20px; text-align: center;
-      max-width: 400px; margin: 1rem; box-shadow: 0 5px 25px rgba(0,0,0,0.2);
-    }
-    .age-gate-modal h2 { margin-top: 0; font-size: 1.8rem; color: #333; }
-    .age-gate-modal p { color: #555; margin-bottom: 2rem; font-size: 1rem; }
-    .age-gate-button {
-      display: inline-block; padding: 0.8rem 1.5rem; background: linear-gradient(to right, #ff00cc, #3333ff);
-      color: white; text-decoration: none; font-weight: bold; border-radius: 25px; cursor: pointer; transition: transform 0.2s ease;
-    }
-    .age-gate-button:hover { transform: scale(1.05); }
-    .hidden { display: none; }
-    @keyframes float {
-      0% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-15px) rotate(15deg); }
-      100% { transform: translateY(0px) rotate(0deg); }
-    }
-    .floating-icon {
-      position: absolute; z-index: 0; 
-      color: rgba(255, 0, 204, 0.2); 
-      animation: float 8s ease-in-out infinite;
-    }
-    .main-layout {
-      display: flex; flex-wrap: wrap; gap: 2rem; width: 100%; max-width: 1100px;
-      justify-content: center; align-items: stretch; position: relative; z-index: 1;
-    }
-    .box {
-      flex: 1; min-width: 320px; max-width: 500px; background: white; border-radius: 20px; padding: 2rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1); display: flex; flex-direction: column;
-    }
-    .cta-title { text-align: center; font-size: 2rem; background: linear-gradient(to right, #ff00cc, #3333ff); -webkit-background-clip: text; color: transparent; margin-top: 0; margin-bottom: 0.5rem; }
-    .cta-subtitle { text-align: center; color: #555; margin-bottom: 1.5rem; }
-    .caption-container { height: 30px; margin-bottom: 1rem; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; }
-    .caption { position: absolute; font-size: 1.4rem; font-weight: 600; color: #cc00cc; opacity: 0; transition: opacity 1s ease-in-out; text-align: center; }
-    .caption.active { opacity: 1; }
-    .carousel { position: relative; width: 100%; height: 250px; margin-bottom: 1.5rem; border-radius: 15px; overflow: hidden; flex-grow: 1; }
-    .carousel img {position: absolute; top: 0; left: 0;width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transition: opacity 1s ease-in-out;}
-    .carousel img.active { opacity: 1; }
+<!-- Slideshow box -->
+<div class="slideshow-box">
+  <!-- your slideshow HTML here -->
+</div>
 
-    /* Video styling for standalone placement */
-    .video-section {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      margin: 2rem 0;
-    }
-    .video-container {
-      width: 100%;
-      max-width: 450px; /* good size for 9:16 video */
-      aspect-ratio: 9 / 16;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    }
-    .video-container iframe {
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
+<!-- Full-width vertical video -->
+<div class="video-wrapper">
+  <iframe
+    src="https://iframe.mediadelivery.net/play/478680/d6beef61-6da6-47ad-8925-d10ab1d7ee2e?autoplay=true&muted=true&loop=true"
+    allow="autoplay; muted; picture-in-picture"
+    allowfullscreen>
+  </iframe>
+</div>
 
-    .buttons-container { width: 100%; max-width: 500px; margin-top: 2rem; position: relative; z-index: 1; }
-    .btn { display: block; width: 100%; padding: 1rem; margin: 0.8rem 0; text-align: center; color: white; font-weight: bold; font-size: 1.2rem; border-radius: 30px; text-decoration: none; background: linear-gradient(to right, #ff00cc, #3333ff); box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease; }
-    .btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
-  </style>
-</head>
-<body>
+<!-- Buttons -->
+<div class="buttons-container">
+  <!-- your buttons HTML here -->
+</div>
 
-  <div id="ageGate" class="age-gate-overlay">
-    <div class="age-gate-modal">
-      <h2>Age Verification</h2>
-      <p>This website contains age-restricted materials. By entering, you affirm that you are 18 years of age or older and you agree to our terms.</p>
-      <div id="enterButton" class="age-gate-button">I am 18 or Older</div>
-    </div>
-  </div>
+<style>
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 500px; /* keeps it from being too wide on desktop */
+  margin: 1rem auto;
+  padding-top: 177.78%; /* 9:16 aspect ratio (16/9*100 = 177.78) */
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
 
-  <div class="main-layout">
-    <div class="box">
-        <h1 class="cta-title">Enter My Private Playground</h1>
-        <p class="cta-subtitle">18+ only. Tap below to unlock.</p>
-        <div class="caption-container">
-          <div class="caption active">Lifes short, CUM with me</div>
-          <div class="caption">Exclusive content awaits.</div>
-          <div class="caption">Slip inside...</div>
-        </div>
-        <div class="carousel">
-          <img src="https://nsfwpicz.b-cdn.net/20210622_193205.jpg" class="active" alt="Slide 1">
-          <img src="https://nsfwpicz.b-cdn.net/20210622_193346.jpg" alt="Slide 2">
-          <img src="https://nsfwpicz.b-cdn.net/out-0%20(42).jpg" alt="Slide 3">
-        </div>
-    </div>
-  </div>
-
-  <!-- Video placed below slideshow -->
-  <div class="video-section">
-    <div class="video-container">
-      <iframe id="teaserFrame" 
-              src="https://iframe.mediadelivery.net/play/478680/d6beef61-6da6-47ad-8925-d10ab1d7ee2e?autoplay=true&loop=true&muted=true" 
-              allow="autoplay; muted; picture-in-picture" 
-              allowfullscreen>
-      </iframe>
-    </div>
-  </div>
-
-  <div class="buttons-container">
-      <a href="https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you" class="btn" target="_blank">Hangout Live</a>
-      <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" class="btn" target="_blank">Follow Me</a>
-      <a href="https://mydirtyhobby.com/w/Fairybell" class="btn" target="_blank">Special Stash</a>
-  </div>
-
-  <script>
-    let captions = document.querySelectorAll('.caption'); 
-    let captionIndex = 0;
-    setInterval(() => { 
-      captions[captionIndex].classList.remove('active'); 
-      captionIndex = (captionIndex + 1) % captions.length; 
-      captions[captionIndex].classList.add('active'); 
-    }, 3000);
-
-    let slides = document.querySelectorAll('.carousel img'); 
-    let slideIndex = 0;
-    setInterval(() => { 
-      slides[slideIndex].classList.remove('active'); 
-      slideIndex = (slideIndex + 1) % slides.length; 
-      slides[slideIndex].classList.add('active'); 
-    }, 4000);
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const ageGate = document.getElementById('ageGate');
-        const enterButton = document.getElementById('enterButton');
-        if (document.cookie.includes('ageVerified=true')) {
-            ageGate.classList.add('hidden');
-        } else {
-            ageGate.classList.remove('hidden');
-        }
-        enterButton.addEventListener('click', function() {
-            const d = new Date();
-            d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
-            document.cookie = "ageVerified=true;expires=" + d.toUTCString() + ";path=/";
-            ageGate.classList.add('hidden');
-        });
-    });
-  </script>
-
-</body>
-</html>
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+</style>
