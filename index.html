@@ -81,7 +81,7 @@
     .carousel img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transition: opacity 1s ease-in-out; }
     .carousel img.active { opacity: 1; }
 
-    /* --- NEW: Standalone Video Section Styling --- */
+    /* --- Standalone Video Section Styling --- */
     .video-container {
       width: 100%;
       aspect-ratio: 9 / 16; /* This enforces the tall 9:16 shape */
@@ -189,11 +189,22 @@
         });
     });
 
-    // --- Floating Icons Script ---
+    // --- Floating Icons Script --- (RESTORED)
     document.addEventListener('DOMContentLoaded', function() {
       const iconCount = 20; const body = document.querySelector('body');
-      const icons = [ /* SVG data here */ ];
-      // ... (rest of the icon script, no changes needed)
+      const icons = [ 
+        'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z', // Heart
+        'M13.4,12.6c-0.4-0.4-0.8-0.7-1.3-0.9c-0.2-0.1-0.5-0.2-0.8-0.2c-0.2,0-0.4,0.1-0.6,0.1c-0.5,0.2-1,0.5-1.4,0.9c-1,0.9-1.6,2.3-1.6,3.7c0,1.1,0.4,2.2,1.1,3c0.2,0.2,0.4,0.5,0.6,0.7c-1.8-0.2-3.5-1-4.8-2.2c-1.1-1-1.9-2.3-2.1-3.7c-0.3-2,0.3-4.1,1.6-5.7c0.8-1,1.9-1.8,3.1-2.4C8.6,5.3,10.3,5,12,5c1.1,0,2.2,0.2,3.2,0.6c0.5,0.2,1,0.5,1.5,0.8c0.4,0.3,0.8,0.7,1.1,1.1c1.2,1.6,1.8,3.5,1.5,5.4c-0.2,1.4-0.9,2.8-1.9,3.8c-0.2,0.2-0.4,0.4-0.6,0.5c0.8-0.7,1.3-1.6,1.4-2.6C20,13.1,19.2,11.3,18,10c-0.5-0.5-1.1-1-1.8-1.3c-0.4-0.2-0.8-0.3-1.2-0.3s-0.8,0.1-1.2,0.3c-0.7,0.3-1.3,0.7-1.8,1.3c-1.2,1.3-1.9,3-1.7,4.8c0.1,1.1,0.6,2.1,1.4,2.8c-0.2-0.2-0.4-0.4-0.6-0.6c-0.7-0.8-1.1-1.9-1.1-3C11.8,14.9,12.4,13.5,13.4,12.6z' // Kiss / Lips
+      ];
+      for (let i = 0; i < iconCount; i++) {
+        const iconWrapper = document.createElement('div'); iconWrapper.className = 'floating-icon';
+        const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+        iconWrapper.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="${randomIcon}"></path></svg>`;
+        const size = Math.random() * 25 + 15; iconWrapper.style.width = `${size}px`; iconWrapper.style.height = `${size}px`;
+        iconWrapper.style.top = `${Math.random() * 100}%`; iconWrapper.style.left = `${Math.random() * 100}%`;
+        iconWrapper.style.animationDelay = `${Math.random() * 8}s`; iconWrapper.style.animationDuration = `${Math.random() * 5 + 5}s`;
+        body.appendChild(iconWrapper);
+      }
     });
   </script>
 
