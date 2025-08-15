@@ -7,37 +7,39 @@
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <meta name="description" content="Exclusive content awaits. Enter my private playground for live hangouts, special stashes, and more. 18+ only.">
   <style>
-    /* --- Base & Typography --- */
+    /* --- Base & Typography (Light Theme) --- */
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #121212;
-      color: #fff;
+      background-color: #ffffff;
+      color: #333333;
       margin: 0;
       overflow-x: hidden;
     }
 
     a {
-      color: #00aaff;
+      color: #0077cc;
       text-decoration: none;
     }
     
-    /* --- Age Gate --- */
+    /* --- Age Gate (Light Theme) --- */
     .age-gate-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
       z-index: 1000; display: flex; justify-content: center; align-items: center;
     }
     .age-gate-modal {
-      background: #2b2b2b; color: #fff; padding: 2.5rem; border-radius: 20px; text-align: center;
-      max-width: 400px; margin: 1rem; box-shadow: 0 5px 25px rgba(0,0,0,0.5); border: 1px solid #444;
+      background: #ffffff;
+      color: #333333;
+      padding: 2.5rem; border-radius: 20px; text-align: center;
+      max-width: 400px; margin: 1rem; box-shadow: 0 5px 25px rgba(0,0,0,0.2);
     }
     .age-gate-modal h2 { margin-top: 0; font-size: 1.8rem; }
-    .age-gate-modal p { color: #ccc; margin-bottom: 2rem; font-size: 1rem; line-height: 1.5; }
+    .age-gate-modal p { color: #555555; margin-bottom: 2rem; font-size: 1rem; line-height: 1.5; }
     .age-gate-button {
-      display: inline-block; padding: 0.8rem 1.5rem; background: #00aaff;
+      display: inline-block; padding: 0.8rem 1.5rem; background: #0077cc;
       color: white; text-decoration: none; font-weight: bold; border-radius: 25px; cursor: pointer; transition: transform 0.2s ease, background-color 0.2s ease;
     }
-    .age-gate-button:hover { transform: scale(1.05); background-color: #0088cc; text-decoration: none; }
+    .age-gate-button:hover { transform: scale(1.05); background-color: #0055aa; text-decoration: none; }
     .hidden { display: none; }
 
     /* --- Floating Icons --- */
@@ -58,7 +60,7 @@
         opacity: 0.05;
     }
 
-    /* --- Main Layout & Header/Footer --- */
+    /* --- Main Layout & Header/Footer (Light Theme) --- */
     .site-wrapper {
         max-width: 1400px;
         margin: 0 auto;
@@ -69,33 +71,33 @@
       justify-content: space-between;
       align-items: center;
       padding: 1rem 0;
-      border-bottom: 1px solid #333;
+      border-bottom: 1px solid #eeeeee;
       margin-bottom: 2rem;
     }
-    .site-header .logo {
-        font-size: 1.5rem;
-        font-weight: bold;
+    .site-header .logo img {
+        height: 40px;
+        display: block;
     }
     .site-header .join-btn {
-        background: #00aaff;
+        background: #0077cc;
         color: #fff;
         padding: 0.6rem 1.2rem;
         border-radius: 20px;
         font-weight: bold;
     }
     .site-header .join-btn:hover {
-        background-color: #0088cc;
+        background-color: #0055aa;
         text-decoration: none;
     }
     .site-footer {
         text-align: center;
         padding: 2rem 0;
         margin-top: 2rem;
-        border-top: 1px solid #333;
+        border-top: 1px solid #eeeeee;
     }
     .site-footer .full-access-btn {
         display: inline-block;
-        background: #00aaff;
+        background: #0077cc;
         color: #fff;
         padding: 1rem 2.5rem;
         font-size: 1.2rem;
@@ -110,7 +112,7 @@
     }
     .site-footer .footer-nav a {
         margin: 0 1rem;
-        color: #888;
+        color: #888888;
     }
 
     /* --- Masonry Grid --- */
@@ -123,9 +125,9 @@
       position: relative;
       overflow: hidden;
       border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       transition: transform 0.2s ease-in-out;
-      background-color: #222;
+      background-color: #f0f0f0;
     }
     .grid-item:hover {
       transform: scale(1.03);
@@ -185,7 +187,9 @@
   <div class="site-wrapper">
 
     <header class="site-header">
-      <div class="logo">PLAYGROUND</div>
+      <div class="logo">
+        <img src="https://nsfwpicz.b-cdn.net/Untitled%20design.png" alt="Playground Logo">
+      </div>
       <nav>
         <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" target="_blank" class="join-btn">Join Now</a>
       </nav>
@@ -206,7 +210,6 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // --- Grid Content ---
       const mediaItems = [
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/20210622_193205.jpg' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/20210622_193346.jpg' },
@@ -215,18 +218,20 @@
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/ljnonoknok.webp' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/IMG_7883.jpg' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/95360937-ffab-49bb-9f51-98f6ca94f9af.jpg' },
-        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/13703d91-d21d-4247-8240-635575556a47.jpeg' },
+        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/13703d91-d21d-4247-8240-65575556a47.jpeg' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/Bondstill.png' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/IMG_7090.jpg' },
-        { type: 'video', src: 'https://iframe.mediadelivery.net/play/478680/d6beef61-6da6-47ad-8925-d10ab1d7ee2e' },
-        { type: 'video', src: 'https://iframe.mediadelivery.net/play/478680/0552d44d-381f-4c72-8a6f-4a2cad16b301' },
-        { type: 'video', src: 'https://iframe.mediadelivery.net/play/478680/04e17463-03a1-4344-bcf4-f7d93c346399' },
+        // CORRECTED: Video links now use the /embed/ format
+        { type: 'video', src: 'https://iframe.mediadelivery.net/embed/478680/d6beef61-6da6-47ad-8925-d10ab1d7ee2e' },
+        { type: 'video', src: 'https://iframe.mediadelivery.net/embed/478680/0552d44d-381f-4c72-8a6f-4a2cad16b301' },
+        { type: 'video', src: 'https://iframe.mediadelivery.net/embed/478680/04e17463-03a1-4344-bcf4-f7d93c346399' },
       ];
 
+      // CORRECTED: Graphics and links are now mapped correctly
       const ctaItems = [
-        { type: 'promo-cta', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', background: 'linear-gradient(45deg, #e11f8c, #0d58ee)' },
-        { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(1).png', background: 'linear-gradient(45deg, #0d58ee, #1f9ce1)' },
-        { type: 'promo-cta', link: 'https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9', graphic: 'https://nsfwpicz.b-cdn.net/SOME.png', background: 'linear-gradient(45deg, #1f9ce1, #e11f8c)' }
+        { type: 'promo-cta', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you', graphic: 'https://nsfwpicz.b-cdn.net/Untitled%20design%20(2).png', background: 'linear-gradient(45deg, #e11f8c, #0d58ee)' },
+        { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', background: 'linear-gradient(45deg, #0d58ee, #1f9ce1)' },
+        { type: 'promo-cta', link: 'https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(1).png', background: 'linear-gradient(45deg, #1f9ce1, #e11f8c)' }
       ];
 
       function generateGridItems(media, ctas) {
@@ -260,8 +265,9 @@
         } 
         else if (item.type === 'video') {
           gridElement.className = 'grid-item video-item';
-          const videoSrc = `${item.src}?autoplay=true&loop=true&muted=true`;
-          gridElement.innerHTML = `<iframe src="${videoSrc}" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true"></iframe>`;
+          // Parameters ensure muted autoplay
+          const videoSrc = `${item.src}?autoplay=true&loop=true&muted=true&preload=true`;
+          gridElement.innerHTML = `<iframe src="${videoSrc}" loading="lazy" allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;" allowfullscreen="true"></iframe>`;
         } 
         else if (item.type === 'promo-cta') {
           gridElement.className = 'grid-item promo-cta';
@@ -293,7 +299,6 @@
 
     // --- Floating Icons Script ---
     document.addEventListener('DOMContentLoaded', function() {
-      // Your two custom icon URLs are placed in this array
       const customIconUrls = [
         'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(2).png',
         'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(3).png'
@@ -308,9 +313,7 @@
       const body = document.querySelector('body');
       
       for (let i = 0; i < iconCount; i++) {
-        // Randomly select one of your icons for each new element
         const randomIconUrl = customIconUrls[Math.floor(Math.random() * customIconUrls.length)];
-
         const iconWrapper = document.createElement('div');
         iconWrapper.className = 'floating-icon';
         iconWrapper.innerHTML = `<img src="${randomIconUrl}" alt="">`;
