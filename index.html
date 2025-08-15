@@ -3,105 +3,209 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cum</title>
+  <title>Private Playground</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <meta name="description" content="Exclusive content awaits. Enter my private playground for live hangouts, special stashes, and more. 18+ only.">
   <style>
+    /* --- Base & Typography --- */
     body {
-      font-family: Arial, sans-serif;
-      background: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #121212;
+      color: #fff;
       margin: 0;
-      padding: 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      flex-direction: column;
-      position: relative;
       overflow-x: hidden;
     }
-    
-    .content-container {
-      width: 100%;
-      max-width: 500px;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      position: relative;
-      z-index: 1;
+
+    a {
+      color: #00aaff;
+      text-decoration: none;
     }
 
+    a:hover {
+      text-decoration: underline;
+    }
+    
+    /* --- Age Gate (Unchanged) --- */
     .age-gate-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      z-index: 100; display: flex; justify-content: center; align-items: center;
+      z-index: 1000; display: flex; justify-content: center; align-items: center;
     }
     .age-gate-modal {
-      background: white; padding: 2.5rem; border-radius: 20px; text-align: center;
-      max-width: 400px; margin: 1rem; box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+      background: #2b2b2b; color: #fff; padding: 2.5rem; border-radius: 20px; text-align: center;
+      max-width: 400px; margin: 1rem; box-shadow: 0 5px 25px rgba(0,0,0,0.5); border: 1px solid #444;
     }
-    .age-gate-modal h2 { margin-top: 0; font-size: 1.8rem; color: #333; }
-    .age-gate-modal p { color: #555; margin-bottom: 2rem; font-size: 1rem; }
+    .age-gate-modal h2 { margin-top: 0; font-size: 1.8rem; }
+    .age-gate-modal p { color: #ccc; margin-bottom: 2rem; font-size: 1rem; line-height: 1.5; }
     .age-gate-button {
-      display: inline-block; padding: 0.8rem 1.5rem; background: linear-gradient(to right, #ff00cc, #3333ff);
-      color: white; text-decoration: none; font-weight: bold; border-radius: 25px; cursor: pointer; transition: transform 0.2s ease;
+      display: inline-block; padding: 0.8rem 1.5rem; background: #00aaff;
+      color: white; text-decoration: none; font-weight: bold; border-radius: 25px; cursor: pointer; transition: transform 0.2s ease, background-color 0.2s ease;
     }
-    .age-gate-button:hover { transform: scale(1.05); }
+    .age-gate-button:hover { transform: scale(1.05); background-color: #0088cc; text-decoration: none; }
     .hidden { display: none; }
-    
+
+    /* --- Floating Icons (Unchanged) --- */
     @keyframes float {
-      0% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-15px) rotate(15deg); }
-      100% { transform: translateY(0px) rotate(0deg); }
+      0% { transform: translateY(0px); opacity: 0; }
+      10%, 90% { opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
     }
     .floating-icon {
-      position: absolute; z-index: 0; 
-      color: rgba(255, 0, 204, 0.2); 
-      animation: float 8s ease-in-out infinite;
+      position: fixed; z-index: -1; 
+      color: rgba(255, 255, 255, 0.05); 
+      animation: float 15s linear infinite;
+      bottom: -150px;
     }
 
-    .box {
-      width: 100%;
-      background: white;
-      border-radius: 20px;
-      padding: 2rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      box-sizing: border-box;
+    /* --- Main Layout & Header/Footer --- */
+    .site-wrapper {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 1rem;
     }
 
-    .cta-title { text-align: center; font-size: 2rem; background: linear-gradient(to right, #ff00cc, #3333ff); -webkit-background-clip: text; color: transparent; margin-top: 0; margin-bottom: 0.5rem; }
-    .cta-subtitle { text-align: center; color: #555; margin-bottom: 1.5rem; }
-    .caption-container { height: 30px; margin-bottom: 1rem; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; }
-    .caption { position: absolute; font-size: 1.4rem; font-weight: 600; color: #cc00cc; opacity: 0; transition: opacity 1s ease-in-out; text-align: center; }
-    .caption.active { opacity: 1; }
-    .carousel { position: relative; width: 100%; height: 250px; border-radius: 15px; overflow: hidden; }
-    .carousel img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transition: opacity 1s ease-in-out; }
-    .carousel img.active { opacity: 1; }
+    .site-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid #333;
+      margin-bottom: 2rem;
+    }
+    .site-header .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        /* Replace with your logo if you have one */
+    }
+    .site-header nav a {
+        margin-left: 1.5rem;
+        font-weight: 500;
+    }
+    .site-header .join-btn {
+        background: #00aaff;
+        color: #fff;
+        padding: 0.6rem 1.2rem;
+        border-radius: 20px;
+        font-weight: bold;
+    }
+    .site-header .join-btn:hover {
+        background-color: #0088cc;
+        text-decoration: none;
+    }
 
-    /* --- THE FIX: Using the robust padding-top method for the video container --- */
-    .video-container {
+    .site-footer {
+        text-align: center;
+        padding: 2rem 0;
+        margin-top: 2rem;
+        border-top: 1px solid #333;
+    }
+    .site-footer .full-access-btn {
+        display: inline-block;
+        background: #00aaff;
+        color: #fff;
+        padding: 1rem 2.5rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-radius: 30px;
+        margin-bottom: 2rem;
+        transition: transform 0.2s ease;
+    }
+    .site-footer .full-access-btn:hover {
+        transform: scale(1.05);
+        text-decoration: none;
+    }
+    .site-footer .footer-nav a {
+        margin: 0 1rem;
+        color: #888;
+    }
+
+    /* --- Masonry Grid --- */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .grid-item {
       position: relative;
-      padding-top: 56.25%; /* 16:9 Aspect Ratio (divides height by width) */
-      width: 100%;
-      border-radius: 15px;
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease-in-out;
+      background-color: #222;
     }
-    .video-container iframe {
+
+    .grid-item:hover {
+      transform: scale(1.03);
+      z-index: 10;
+    }
+
+    .grid-item img,
+    .grid-item iframe {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+      object-fit: cover;
       border: 0;
     }
+    
+    /* Aspect ratio for items */
+    .grid-item::before {
+        content: "";
+        display: block;
+        padding-top: 100%; /* Default 1:1 aspect ratio */
+    }
+    
+    /* CTA Tile Styles */
+    .grid-item.cta {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 1.5rem;
+        background: #1a1a1a;
+        color: #fff;
+    }
+    .grid-item.cta a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0; left: 0;
+        z-index: 5;
+    }
+    .cta-content {
+      position: relative;
+      z-index: 6;
+    }
+    .cta-title {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin: 0 0 0.5rem 0;
+        color: #fff;
+    }
+    .cta-button {
+        display: inline-block;
+        background-color: #00aaff;
+        color: #fff;
+        padding: 0.7rem 1.5rem;
+        border-radius: 25px;
+        margin-top: 1rem;
+        font-weight: bold;
+        transition: background-color 0.2s ease;
+    }
+    .grid-item.cta:hover .cta-button {
+      background-color: #0088cc;
+    }
 
-    .buttons-container { width: 100%; }
-    .btn { display: block; width: 100%; padding: 1rem; margin-top: 0.8rem; text-align: center; color: white; font-weight: bold; font-size: 1.2rem; border-radius: 30px; text-decoration: none; background: linear-gradient(to right, #ff00cc, #3333ff); box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.2s ease, box-shadow 0.2s ease; box-sizing: border-box; }
-    .btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
   </style>
 </head>
+<body>
 
-
+  <!-- Age Gate Overlay -->
   <div id="ageGate" class="age-gate-overlay">
     <div class="age-gate-modal">
       <h2>Age Verification</h2>
@@ -110,57 +214,98 @@
     </div>
   </div>
 
-  <div class="content-container">
+  <!-- Main Site Content -->
+  <div class="site-wrapper">
 
-    <div class="box">
-        <h1 class="cta-title">Enter My Private Playground</h1>
-        <p class="cta-subtitle">18+ only. Tap below to unlock.</p>
-        <div class="caption-container">
-          <div class="caption active">Lifes short, CUM with me</div>
-          <div class="caption">Exclusive content awaits.</div>
-          <div class="caption">Slip inside...</div>
-        </div>
-        <div class="carousel">
-          <img src="https://nsfwpicz.b-cdn.net/20210622_193205.jpg" class="active" alt="Slide 1">
-          <img src="https://nsfwpicz.b-cdn.net/20210622_193346.jpg" alt="Slide 2">
-          <img src="https://nsfwpicz.b-cdn.net/out-0%20(42).jpg" alt="Slide 3">
-        </div>
-    </div>
-  
-    <!-- Using the correct and robust embed method you provided -->
-    <div class="video-container">
-      <iframe src="https://iframe.mediadelivery.net/embed/478680/d6beef61-6da6-47ad-8925-d10ab1d7ee2e?autoplay=true&loop=true&muted=true&preload=true&responsive=true" loading="lazy" allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;" allowfullscreen="true"></iframe>
-    </div>
-  
-    <div class="buttons-container">
-        <a href="https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you" class="btn" target="_blank">Hangout Live</a>
-        <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" class="btn" target="_blank">Follow Me</a>
-        <a href="https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9" class="btn" target="_blank">Special Stash</a>
-    </div>
+    <!-- Header -->
+    <header class="site-header">
+      <div class="logo">PLAYGROUND</div>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Scenes</a>
+        <a href="#">Models</a>
+        <a href="#" class="join-btn">Join Now</a>
+      </nav>
+    </header>
+
+    <!-- Masonry Grid (Content will be injected by JavaScript) -->
+    <main id="grid-container" class="grid-container"></main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <a href="#" class="full-access-btn">Get Full Access</a>
+      <div class="footer-nav">
+        <a href="#">Terms & Conditions</a>
+        <a href="#">Privacy Notice</a>
+        <a href="#">Support</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </footer>
 
   </div>
 
   <script>
-    // --- Carousel and Caption Scripts ---
-    let captions = document.querySelectorAll('.caption'); 
-    let captionIndex = 0;
-    setInterval(() => { 
-      if (captions.length > 0) {
-        captions[captionIndex].classList.remove('active'); 
-        captionIndex = (captionIndex + 1) % captions.length; 
-        captions[captionIndex].classList.add('active'); 
-      }
-    }, 3000);
+    // --- Grid Content Generation ---
+    document.addEventListener('DOMContentLoaded', function() {
+      const gridItems = [
+        // Your Images
+        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/20210622_193205.jpg' },
+        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/20210622_193346.jpg' },
+        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/out-0%20(42).jpg' },
+        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/out-0%20(33).webp' },
+        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/ljnonoknok.webp' },
+        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/IMG_7883.jpg' },
+        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/95360937-ffab-49bb-9f51-98f6ca94f9af.jpg' },
+        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/13703d91-d21d-4247-8240-635575556a47.jpeg' },
 
-    let slides = document.querySelectorAll('.carousel img'); 
-    let slideIndex = 0;
-    setInterval(() => { 
-      if (slides.length > 0) {
-        slides[slideIndex].classList.remove('active'); 
-        slideIndex = (slideIndex + 1) % slides.length; 
-        slides[slideIndex].classList.add('active'); 
+        // Your Videos
+        { type: 'video', src: 'https://iframe.mediadelivery.net/play/478680/d6beef61-6da6-47ad-8925-d10ab1d7ee2e?autoplay=true&loop=true&muted=true' },
+        { type: 'video', src: 'https://iframe.mediadelivery.net/play/478680/0552d44d-381f-4c72-8a6f-4a2cad16b301?autoplay=true&loop=true&muted=true' },
+        { type: 'video', src: 'https://iframe.mediadelivery.net/play/478680/04e17463-03a1-4344-bcf4-f7d93c346399?autoplay=true&loop=true&muted=true' },
+
+        // Your CTA Buttons
+        { type: 'cta', title: 'Hangout Live', buttonText: 'Enter Now', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you' },
+        { type: 'cta', title: 'Follow Me', buttonText: 'See More', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm' },
+        { type: 'cta', title: 'Special Stash', buttonText: 'Unlock', link: 'https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9' }
+      ];
+
+      // Function to shuffle the array randomly
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
       }
-    }, 4000);
+
+      shuffleArray(gridItems);
+      
+      const container = document.getElementById('grid-container');
+      
+      gridItems.forEach(item => {
+        const gridElement = document.createElement('div');
+        
+        if (item.type === 'image') {
+          gridElement.className = 'grid-item';
+          gridElement.innerHTML = `<img src="${item.src}" alt="Content Image" loading="lazy">`;
+        } 
+        else if (item.type === 'video') {
+          gridElement.className = 'grid-item';
+          gridElement.innerHTML = `<iframe src="${item.src}" loading="lazy" allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;" allowfullscreen="true"></iframe>`;
+        } 
+        else if (item.type === 'cta') {
+          gridElement.className = 'grid-item cta';
+          gridElement.innerHTML = `
+            <a href="${item.link}" target="_blank"></a>
+            <div class="cta-content">
+              <div class="cta-title">${item.title}</div>
+              <div class="cta-button">${item.buttonText}</div>
+            </div>
+          `;
+        }
+        
+        container.appendChild(gridElement);
+      });
+    });
 
     // --- Age Gate Script ---
     document.addEventListener('DOMContentLoaded', function() {
@@ -182,21 +327,27 @@
 
     // --- Floating Icons Script ---
     document.addEventListener('DOMContentLoaded', function() {
-      const iconCount = 20; const body = document.querySelector('body');
+      const iconCount = 20;
+      const body = document.querySelector('body');
       const icons = [ 
         'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z', // Heart
-        'M13.4,12.6c-0.4-0.4-0.8-0.7-1.3-0.9c-0.2-0.1-0.5-0.2-0.8-0.2c-0.2,0-0.4,0.1-0.6,0.1c-0.5,0.2-1,0.5-1.4,0.9c-1,0.9-1.6,2.3-1.6,3.7c0,1.1,0.4,2.2,1.1,3c0.2,0.2,0.4,0.5,0.6,0.7c-1.8-0.2-3.5-1-4.8-2.2c-1.1-1-1.9-2.3-2.1-3.7c-0.3-2,0.3-4.1,1.6-5.7c0.8-1,1.9-1.8,3.1-2.4C8.6,5.3,10.3,5,12,5c1.1,0,2.2,0.2,3.2,0.6c0.5,0.2,1,0.5,1.5,0.8c0.4,0.3,0.8,0.7,1.1,1.1c1.2,1.6,1.8,3.5,1.5,5.4c-0.2,1.4-0.9,2.8-1.9,3.8c-0.2,0.2-0.4,0.4-0.6,0.5c0.8-0.7,1.3-1.6,1.4-2.6C20,13.1,19.2,11.3,18,10c-0.5-0.5-1.1-1-1.8-1.3c-0.4-0.2-0.8-0.3-1.2-0.3s-0.8,0.1-1.2,0.3c-0.7,0.3-1.3,0.7-1.8,1.3c-1.2,1.3-1.9,3-1.7,4.8c0.1,1.1,0.6,2.1,1.4,2.8c-0.2-0.2-0.4-0.4-0.6-0.6c-0.7-0.8-1.1-1.9-1.1-3C11.8,14.9,12.4,13.5,13.4,12.6z' // Kiss / Lips
+        'M13.4,12.6c-0.4-0.4-0.8-0.7-1.3-0.9c-0.2-0.1-0.5-0.2-0.8-0.2c-0.2,0-0.4,0.1-0.6,0.1c-0.5,0.2-1,0.5-1.4,0.9c-1,0.9-1.6,2.3-1.6,3.7c0,1.1,0.4,2.2,1.1,3c0.2,0.2,0.4,0.5,0.6,0.7c-1.8-0.2-3.5-1-4.8-2.2c-1.1-1-1.9-2.3-2.1-3.7c-0.3-2,0.3-4.1,1.6-5.7c0.8-1,1.9-1.8,3.1-2.4C8.6,5.3,10.3,5,12,5c1.1,0,2.2,0.2,3.2,0.6c0.5,0.2,1,0.5,1.5,0.8c0.4,0.3,0.8,0.7,1.1,1.1c1.2,1.6,1.8,3.5,1.5,5.4c-0.2,1.4-0.9,2.8-1.9,3.8c-0.2,0.2-0.4,0.4-0.6,0.5c0.8-0.7,1.3-1.6,1.4-2.6C20,13.1,19.2,11.3,18,10c-0.5-0.5-1.1-1-1.8-1.3c-0.4-0.2-0.8-0.3-1.2-0.3s-0.8,0.1-1.2,0.3c-0.7,0.3-1.3,0.7-1.8,1.3c-1.2,1.3-1.9,3-1.7,4.8c0.1,1.1,0.6,2.1,1.4,2.8c-0.2-0.2-0.4-0.4-0.6-0.6c-0.7-0.8-1.1-1.9-1.1-3C11.8,14.9,12.4,13.5,13.4,12.6z' // Kiss
       ];
       for (let i = 0; i < iconCount; i++) {
-        const iconWrapper = document.createElement('div'); iconWrapper.className = 'floating-icon';
+        const iconWrapper = document.createElement('div');
+        iconWrapper.className = 'floating-icon';
         const randomIcon = icons[Math.floor(Math.random() * icons.length)];
         iconWrapper.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="${randomIcon}"></path></svg>`;
-        const size = Math.random() * 25 + 15; iconWrapper.style.width = `${size}px`; iconWrapper.style.height = `${size}px`;
-        iconWrapper.style.top = `${Math.random() * 100}%`; iconWrapper.style.left = `${Math.random() * 100}%`;
-        iconWrapper.style.animationDelay = `${Math.random() * 8}s`; iconWrapper.style.animationDuration = `${Math.random() * 5 + 5}s`;
+        const size = Math.random() * 40 + 20;
+        iconWrapper.style.width = `${size}px`;
+        iconWrapper.style.height = `${size}px`;
+        iconWrapper.style.left = `${Math.random() * 100}%`;
+        iconWrapper.style.animationDelay = `${Math.random() * 15}s`;
+        iconWrapper.style.animationDuration = `${Math.random() * 10 + 10}s`;
         body.appendChild(iconWrapper);
       }
     });
   </script>
+
 </body>
 </html>
