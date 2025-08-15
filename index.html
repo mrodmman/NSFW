@@ -115,26 +115,28 @@ document.addEventListener('DOMContentLoaded', function() {
     { type:'promo-cta', link:'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic:'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', class:'cta-4' }
   ];
 
-  // Custom positions: top-left, bottom-right, col4 row2, col1 row3
-  const gridItems = [];
-  // Simple way: we push items in order, then insert CTA at exact positions
-  let mediaIndex = 0;
+  // Start with all media items
+  const allItems = [...mediaItems];
 
-  for(let i=0;i<mediaItems.length+ctaItems.length;i++){
-    if(i===0) gridItems.push(ctaItems[0]); // top-left
-    else if(i===4) gridItems.push(ctaItems[2]); // col4 row2
-    else if(i===7) gridItems.push(ctaItems[1]); // col1 row3
-    else if(i===11) gridItems.push(ctaItems[3]); // bottom-right
-    else gridItems.push(mediaItems[mediaIndex++]||null);
-  }
+  // Insert CTAs at exact positions
+  allItems.splice(0, 0, ctaItems[0]);   // Top-left
+  allItems.splice(4, 0, ctaItems[2]);   // Column 4, row 2
+  allItems.splice(7, 0, ctaItems[1]);   // Column 1, row 3
+  allItems.push(ctaItems[3]);           // Bottom-right
 
   const container = document.getElementById('grid-container');
-  gridItems.forEach(item=>{
-    if(!item) return;
+  allItems.forEach(item=>{
     const el = document.createElement('div');
-    if(item.type==='image'){ el.className='grid-item image-item'; el.innerHTML=`<img src="${item.src}" loading="lazy">`; }
-    else if(item.type==='video'){ el.className='grid-item video-item'; el.innerHTML=`<iframe src="${item.src}?autoplay=true&loop=true&muted=true&preload=true" loading="lazy" allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture" allowfullscreen></iframe>`; }
-    else if(item.type==='promo-cta'){ el.className=`grid-item promo-cta ${item.class}`; el.innerHTML=`<a href="${item.link}" target="_blank" rel="noopener noreferrer"></a><img src="${item.graphic}" class="graphic" alt="Promotion">`; }
+    if(item.type==='image'){ 
+      el.className='grid-item image-item'; 
+      el.innerHTML=`<img src="${item.src}" loading="lazy">`; 
+    } else if(item.type==='video'){ 
+      el.className='grid-item video-item'; 
+      el.innerHTML=`<iframe src="${item.src}?autoplay=true&loop=true&muted=true&preload=true" loading="lazy" allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture" allowfullscreen></iframe>`; 
+    } else if(item.type==='promo-cta'){ 
+      el.className=`grid-item promo-cta ${item.class}`; 
+      el.innerHTML=`<a href="${item.link}" target="_blank" rel="noopener noreferrer"></a><img src="${item.graphic}" class="graphic" alt="Promotion">`; 
+    }
     container.appendChild(el);
   });
 
