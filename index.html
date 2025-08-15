@@ -43,10 +43,10 @@
     .age-gate-button {
       display: block; padding: 0.8rem 1.5rem;
       text-decoration: none; font-weight: bold; border-radius: 25px; cursor: pointer; transition: all 0.2s ease;
-      border: none; /* remove default border */
+      border: none;
     }
     .age-gate-button.primary {
-      background-color: #e11f8c; /* Fallback */
+      background-color: #e11f8c;
       background-image: linear-gradient(45deg, #e11f8c, #0d58ee);
       color: white;
     }
@@ -89,24 +89,14 @@
         padding: 1.5rem;
     }
     .site-header {
-      position: relative; 
       padding: 1rem 0 2rem 0;
+      text-align: center;
     }
     .main-title {
       max-width: 450px;
       width: 100%;
       height: auto;
-      display: block;
-      margin: 0 auto;
-    }
-    .subtitle-image {
-      position: absolute;
-      top: 50%;
-      right: 0;
-      transform: translateY(-50%);
-      max-width: 200px;
-      width: 100%;
-      height: auto;
+      display: inline-block;
     }
     .site-footer {
         text-align: center;
@@ -117,13 +107,18 @@
         text-align: center;
         padding: 2rem 0;
         display: flex;
-        justify-content: center;
-        gap: 1rem;
-        flex-wrap: wrap;
+        flex-direction: column; /* Stack items vertically */
+        align-items: center;   /* Center items horizontally */
+        gap: 1.5rem;           /* Space between image and button */
+    }
+    .pre-action-image {
+      max-width: 350px;
+      width: 100%;
+      height: auto;
     }
     .action-button {
         display: inline-block;
-        background-color: #e11f8c; /* Fallback */
+        background-color: #e11f8c;
         background-image: linear-gradient(45deg, #e11f8c, #0d58ee);
         color: #fff;
         padding: 1rem 3rem;
@@ -158,17 +153,12 @@
       transform: scale(1.03);
       z-index: 10;
     }
-    .grid-item img {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      border: 0;
-    }
+    .grid-item img,
     .grid-item iframe {
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
+      object-fit: cover;
       border: 0;
     }
     
@@ -198,18 +188,10 @@
         pointer-events: none;
     }
 
-    /* --- Responsive Grid & Header --- */
+    /* --- Responsive Grid --- */
     @media (max-width: 900px) {
       .grid-container {
         grid-template-columns: repeat(2, 1fr);
-      }
-    }
-    @media (max-width: 768px) {
-      .subtitle-image {
-        position: static;
-        transform: none;
-        display: block;
-        margin: 1rem auto 0;
       }
     }
     @media (max-width: 480px) {
@@ -237,12 +219,12 @@
 
     <header class="site-header">
       <img src="https://nsfwpicz.b-cdn.net/Fairy%20Bell.png" alt="Fairy Bell Title" class="main-title">
-      <img src="https://nsfwpicz.b-cdn.net/Untitled%20design%20(4).png" alt="Welcome to my playground" class="subtitle-image">
     </header>
 
     <main id="grid-container" class="grid-container"></main>
 
     <div class="action-buttons">
+      <img src="https://nsfwpicz.b-cdn.net/Untitled%20design%20(4).png" alt="Welcome to my playground" class="pre-action-image">
       <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" target="_blank" class="action-button">Follow</a>
     </div>
     
