@@ -246,6 +246,7 @@
 
       // --- Grid Generation Script ---
       const mediaItems = [
+        // FIXED: The one broken image link has been removed from this list.
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/95360937-ffab-49bb-9f51-98f6ca94f9af.jpg' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/20210622_193205.jpg' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/20210622_193346.jpg' },
@@ -253,7 +254,6 @@
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/out-0%20(33).webp' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/ljnonoknok.webp' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/IMG_7883.jpg' },
-        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/13703d91-d21d-4247-8240-65575556a47.jpeg' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/Bondstill.png' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/IMG_7090.jpg' },
         { type: 'video', src: 'https://iframe.mediadelivery.net/embed/478680/d6beef61-6da6-47ad-8925-d10ab1d7ee2e' },
@@ -276,7 +276,6 @@
         const combined = [...media];
         const quarter = Math.floor(combined.length / 4);
         
-        // Insert CTAs at guaranteed separate intervals
         combined.splice(quarter, 0, ctas[0]);
         combined.splice(quarter * 2 + 1, 0, ctas[1]);
         combined.splice(quarter * 3 + 2, 0, ctas[2]);
@@ -308,7 +307,7 @@
       });
 
 
-      // --- Floating Icons Script (RESTORED) ---
+      // --- Floating Icons Script ---
       const customIconUrls = [
         'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(2).png',
         'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(3).png'
