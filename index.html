@@ -25,7 +25,7 @@
       text-decoration: underline;
     }
     
-    /* --- Age Gate (Unchanged) --- */
+    /* --- Age Gate --- */
     .age-gate-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
@@ -44,7 +44,7 @@
     .age-gate-button:hover { transform: scale(1.05); background-color: #0088cc; text-decoration: none; }
     .hidden { display: none; }
 
-    /* --- Floating Icons (Unchanged) --- */
+    /* --- Floating Icons --- */
     @keyframes float {
       0% { transform: translateY(0px); opacity: 0; }
       10%, 90% { opacity: 1; }
@@ -75,7 +75,6 @@
     .site-header .logo {
         font-size: 1.5rem;
         font-weight: bold;
-        /* Replace with your logo if you have one */
     }
     .site-header nav a {
         margin-left: 1.5rem;
@@ -151,54 +150,59 @@
       border: 0;
     }
     
-    /* Aspect ratio for items */
     .grid-item::before {
         content: "";
         display: block;
         padding-top: 100%; /* Default 1:1 aspect ratio */
     }
     
-    /* CTA Tile Styles */
-    .grid-item.cta {
+    /* --- NEW: Featured Promo CTA Tile Styles --- */
+    .grid-item.promo-cta {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         text-align: center;
         padding: 1.5rem;
-        background: #1a1a1a;
+        background: linear-gradient(45deg, #e11f8c, #0d58ee);
         color: #fff;
     }
-    .grid-item.cta a {
-        display: block;
-        width: 100%;
-        height: 100%;
+
+    .promo-cta a {
         position: absolute;
         top: 0; left: 0;
+        width: 100%; height: 100%;
         z-index: 5;
     }
-    .cta-content {
-      position: relative;
-      z-index: 6;
+    
+    .promo-cta .promo-content {
+        position: relative;
+        z-index: 6;
+        pointer-events: none; /* Allows clicks to go to the link behind */
     }
-    .cta-title {
-        font-size: 1.8rem;
-        font-weight: bold;
-        margin: 0 0 0.5rem 0;
-        color: #fff;
+
+    .promo-cta .promo-title {
+        font-size: 2.2rem;
+        font-weight: 900;
+        margin: 0;
+        line-height: 1.1;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
     }
-    .cta-button {
+
+    .promo-cta .promo-button {
         display: inline-block;
-        background-color: #00aaff;
-        color: #fff;
-        padding: 0.7rem 1.5rem;
+        background-color: rgba(255, 255, 255, 0.9);
+        color: #111;
+        padding: 0.7rem 1.8rem;
         border-radius: 25px;
         margin-top: 1rem;
         font-weight: bold;
-        transition: background-color 0.2s ease;
+        transition: transform 0.2s ease, background-color 0.2s ease;
     }
-    .grid-item.cta:hover .cta-button {
-      background-color: #0088cc;
+
+    .grid-item.promo-cta:hover .promo-button {
+      background-color: #fff;
+      transform: scale(1.05);
     }
 
   </style>
@@ -228,7 +232,7 @@
       </nav>
     </header>
 
-    <!-- Masonry Grid (Content will be injected by JavaScript) -->
+    <!-- Masonry Grid -->
     <main id="grid-container" class="grid-container"></main>
 
     <!-- Footer -->
@@ -263,13 +267,12 @@
         { type: 'video', src: 'https://iframe.mediadelivery.net/play/478680/0552d44d-381f-4c72-8a6f-4a2cad16b301?autoplay=true&loop=true&muted=true' },
         { type: 'video', src: 'https://iframe.mediadelivery.net/play/478680/04e17463-03a1-4344-bcf4-f7d93c346399?autoplay=true&loop=true&muted=true' },
 
-        // Your CTA Buttons
-        { type: 'cta', title: 'Hangout Live', buttonText: 'Enter Now', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you' },
-        { type: 'cta', title: 'Follow Me', buttonText: 'See More', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm' },
-        { type: 'cta', title: 'Special Stash', buttonText: 'Unlock', link: 'https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9' }
+        // NEW: Featured Promo CTA Buttons
+        { type: 'promo-cta', title: 'Hangout Live', buttonText: 'Enter Now', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you' },
+        { type: 'promo-cta', title: 'Follow Me', buttonText: 'See More', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm' },
+        { type: 'promo-cta', title: 'Special Stash', buttonText: 'Unlock', link: 'https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9' }
       ];
 
-      // Function to shuffle the array randomly
       function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -292,13 +295,13 @@
           gridElement.className = 'grid-item';
           gridElement.innerHTML = `<iframe src="${item.src}" loading="lazy" allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;" allowfullscreen="true"></iframe>`;
         } 
-        else if (item.type === 'cta') {
-          gridElement.className = 'grid-item cta';
+        else if (item.type === 'promo-cta') {
+          gridElement.className = 'grid-item promo-cta';
           gridElement.innerHTML = `
-            <a href="${item.link}" target="_blank"></a>
-            <div class="cta-content">
-              <div class="cta-title">${item.title}</div>
-              <div class="cta-button">${item.buttonText}</div>
+            <a href="${item.link}" target="_blank" rel="noopener noreferrer"></a>
+            <div class="promo-content">
+              <div class="promo-title">${item.title}</div>
+              <div class="promo-button">${item.buttonText}</div>
             </div>
           `;
         }
