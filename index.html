@@ -6,14 +6,6 @@
   <title>Private Playground</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <meta name="description" content="Exclusive content awaits. Enter my private playground for live hangouts, special stashes, and more. 18+ only.">
-  <style><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Private Playground</title>
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <meta name="description" content="Exclusive content awaits. Enter my private playground for live hangouts, special stashes, and more. 18+ only.">
   <style>
     /* --- Base & Typography --- */
     body {
@@ -33,7 +25,7 @@
     .age-gate-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      z-index: 1000; display: flex; justify-content: center; align-items: center;
+      z-index: 1000; display: flex; justify-content: center; align-items: center; transition: opacity 0.3s ease;
     }
     .age-gate-modal {
       background: #ffffff;
@@ -43,12 +35,29 @@
     }
     .age-gate-modal h2 { margin-top: 0; font-size: 1.8rem; }
     .age-gate-modal p { color: #555555; margin-bottom: 2rem; font-size: 1rem; line-height: 1.5; }
-    .age-gate-button {
-      display: inline-block; padding: 0.8rem 1.5rem; background: #007bff;
-      color: white; text-decoration: none; font-weight: bold; border-radius: 25px; cursor: pointer; transition: transform 0.2s ease, background-color 0.2s ease;
+    .age-gate-buttons { /* NEW: Container for buttons */
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
     }
-    .age-gate-button:hover { transform: scale(1.05); background-color: #0056b3; text-decoration: none; }
-    .hidden { display: none; }
+    .age-gate-button {
+      display: block; padding: 0.8rem 1.5rem;
+      text-decoration: none; font-weight: bold; border-radius: 25px; cursor: pointer; transition: all 0.2s ease;
+    }
+    .age-gate-button.primary { /* Style for Enter button */
+      background: #007bff;
+      color: white;
+    }
+    .age-gate-button.primary:hover { transform: scale(1.05); background-color: #0056b3; }
+    .age-gate-button.secondary { /* Style for Leave button */
+      background-color: #e9ecef;
+      color: #495057;
+    }
+    .age-gate-button.secondary:hover { background-color: #ced4da; }
+    .hidden { 
+      opacity: 0;
+      pointer-events: none;
+    }
 
     /* --- Floating Icons --- */
     @keyframes float {
@@ -82,13 +91,13 @@
       margin-bottom: 1.5rem;
     }
     .site-header .logo img {
-        height: 35px; /* Adjusted logo size */
+        height: 35px;
         display: block;
     }
     .site-header .join-btn {
         background-color: #007bff;
         color: #fff;
-        padding: 0.7rem 1.4rem; /* Adjusted button size */
+        padding: 0.7rem 1.4rem;
         border-radius: 25px;
         font-weight: bold;
         transition: all 0.2s ease;
@@ -119,22 +128,17 @@
         background-color: #0056b3;
         text-decoration: none;
     }
-    .site-footer .footer-nav a {
-        margin: 0 1rem;
-        color: #888888;
-        font-size: 0.9rem;
-    }
 
     /* --- Masonry Grid --- */
     .grid-container {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 1.5rem; /* Increased gap */
+      gap: 1.5rem;
     }
     .grid-item {
       position: relative;
       overflow: hidden;
-      border-radius: 16px; /* More rounded corners */
+      border-radius: 16px;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
       transition: transform 0.2s ease-in-out;
       background-color: #f0f0f0;
@@ -154,10 +158,10 @@
     
     .grid-item.image-item::before,
     .grid-item.promo-cta::before {
-        content: ""; display: block; padding-top: 125%; /* Taller aspect ratio for images */
+        content: ""; display: block; padding-top: 125%;
     }
     .grid-item.video-item::before {
-        content: ""; display: block; padding-top: 56.25%; /* 16:9 for videos */
+        content: ""; display: block; padding-top: 56.25%;
     }
     
     .grid-item.promo-cta {
@@ -189,8 +193,12 @@
   <div id="ageGate" class="age-gate-overlay">
     <div class="age-gate-modal">
       <h2>Age Verification</h2>
-      <p>This website contains age-restricted materials. By entering, you affirm that you are 18 years of age or older and you agree to our terms.</p>
-      <div id="enterButton" class="age-gate-button">I am 18 or Older</div>
+      <p>This website may contain age-restricted materials. By entering, you affirm that you are 18 years of age or older.</p>
+      <!-- NEW: Button container and Leave button -->
+      <div class="age-gate-buttons">
+        <div id="enterButton" class="age-gate-button primary">I am 18 or Older</div>
+        <div id="leaveButton" class="age-gate-button secondary">No, I'm not 18</div>
+      </div>
     </div>
   </div>
 
@@ -209,18 +217,37 @@
 
     <footer class="site-footer">
       <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" target="_blank" class="full-access-btn">Follow</a>
-      <div class="footer-nav">
-        <a href="#">Terms & Conditions</a>
-        <a href="#">Privacy Notice</a>
-        <a href="#">Support</a>
-      </div>
+      <!-- REMOVED: Footer nav links are gone -->
     </footer>
 
   </div>
 
   <script>
+    // FIXED: All scripts are now inside one DOMContentLoaded listener to prevent conflicts
     document.addEventListener('DOMContentLoaded', function() {
-      // The broken image link has been removed
+      
+      // --- Age Gate Script ---
+      const ageGate = document.getElementById('ageGate');
+      const enterButton = document.getElementById('enterButton');
+      const leaveButton = document.getElementById('leaveButton'); // NEW
+
+      if (sessionStorage.getItem('ageVerified') === 'true') {
+          ageGate.classList.add('hidden');
+      } else {
+          ageGate.classList.remove('hidden');
+      }
+
+      enterButton.addEventListener('click', function() {
+          sessionStorage.setItem('ageVerified', 'true'); // Using sessionStorage is often better for this
+          ageGate.classList.add('hidden');
+      });
+
+      leaveButton.addEventListener('click', function() { // NEW
+          window.location.href = 'https://www.google.com/search?q=safe+search'; // Safe redirect
+      });
+
+
+      // --- Grid Generation Script ---
       const mediaItems = [
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/20210622_193205.jpg' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/20210622_193346.jpg' },
@@ -236,11 +263,10 @@
         { type: 'video', src: 'https://iframe.mediadelivery.net/embed/478680/04e17463-03a1-4344-bcf4-f7d93c346399' },
       ];
 
-      // ACTION: Replace these placeholder graphic URLs with your real ones if you have them.
       const ctaItems = [
-        { type: 'promo-cta', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you', graphic: 'https://i.imgur.com/uV2a2eW.png' }, // Placeholder for LIVE STREAMS
-        { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://i.imgur.com/w42dM4H.png' }, // Placeholder for CHAT
-        { type: 'promo-cta', link: 'https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9', graphic: 'https://i.imgur.com/dJ8jDqw.png' } // Placeholder for EXCLUSIVE CONTENT
+        { type: 'promo-cta', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you', graphic: 'https://i.imgur.com/uV2a2eW.png' },
+        { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://i.imgur.com/w42dM4H.png' },
+        { type: 'promo-cta', link: 'https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9', graphic: 'https://i.imgur.com/dJ8jDqw.png' }
       ];
 
       function generateGridItems(media, ctas) {
@@ -249,7 +275,7 @@
           [media[i], media[j]] = [media[j], media[i]];
         }
         const combined = [...media];
-        const insertionPoints = [2, 6, 10]; // Spaced out insertion points
+        const insertionPoints = [2, 6, 10];
         ctas.forEach((cta, index) => {
             const position = insertionPoints[index];
             if (position < combined.length) {
@@ -283,358 +309,15 @@
         
         container.appendChild(gridElement);
       });
-    });
 
-    // --- Age Gate Script ---
-    document.addEventListener('DOMContentLoaded', function() {
-        const ageGate = document.getElementById('ageGate');
-        const enterButton = document.getElementById('enterButton');
-        if (document.cookie.includes('ageVerified=true')) {
-            ageGate.classList.add('hidden');
-        } else {
-            ageGate.classList.remove('hidden');
-        }
-        enterButton.addEventListener('click', function() {
-            const d = new Date();
-            d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
-            let expires = "expires=" + d.toUTCString();
-            document.cookie = "ageVerified=true;" + expires + ";path=/";
-            ageGate.classList.add('hidden');
-        });
-    });
 
-    // --- Floating Icons Script ---
-    document.addEventListener('DOMContentLoaded', function() {
+      // --- Floating Icons Script ---
       const customIconUrls = [
         'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(2).png',
         'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(3).png'
       ];
 
       if (!customIconUrls || customIconUrls.length === 0) { return; }
-
-      const iconCount = 20; 
-      const body = document.querySelector('body');
-      
-      for (let i = 0; i < iconCount; i++) {
-        const randomIconUrl = customIconUrls[Math.floor(Math.random() * customIconUrls.length)];
-        const iconWrapper = document.createElement('div');
-        iconWrapper.className = 'floating-icon';
-        iconWrapper.innerHTML = `<img src="${randomIconUrl}" alt="">`;
-        
-        const size = Math.random() * 40 + 20;
-        iconWrapper.style.width = `${size}px`;
-        iconWrapper.style.height = `${size}px`;
-        iconWrapper.style.left = `${Math.random() * 100}%`;
-        iconWrapper.style.animationDelay = `${Math.random() * 15}s`;
-        iconWrapper.style.animationDuration = `${Math.random() * 10 + 10}s`;
-        body.appendChild(iconWrapper);
-      }
-    });
-  </script>
-
-</body>
-</html>
-    /* --- Base & Typography (Light Theme) --- */
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #ffffff;
-      color: #333333;
-      margin: 0;
-      overflow-x: hidden;
-    }
-
-    a {
-      color: #0077cc;
-      text-decoration: none;
-    }
-    
-    /* --- Age Gate (Light Theme) --- */
-    .age-gate-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      z-index: 1000; display: flex; justify-content: center; align-items: center;
-    }
-    .age-gate-modal {
-      background: #ffffff;
-      color: #333333;
-      padding: 2.5rem; border-radius: 20px; text-align: center;
-      max-width: 400px; margin: 1rem; box-shadow: 0 5px 25px rgba(0,0,0,0.2);
-    }
-    .age-gate-modal h2 { margin-top: 0; font-size: 1.8rem; }
-    .age-gate-modal p { color: #555555; margin-bottom: 2rem; font-size: 1rem; line-height: 1.5; }
-    .age-gate-button {
-      display: inline-block; padding: 0.8rem 1.5rem; background: #0077cc;
-      color: white; text-decoration: none; font-weight: bold; border-radius: 25px; cursor: pointer; transition: transform 0.2s ease, background-color 0.2s ease;
-    }
-    .age-gate-button:hover { transform: scale(1.05); background-color: #0055aa; text-decoration: none; }
-    .hidden { display: none; }
-
-    /* --- Floating Icons --- */
-    @keyframes float {
-      0% { transform: translateY(0px); opacity: 0; }
-      10%, 90% { opacity: 0.8; }
-      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-    }
-    .floating-icon {
-      position: fixed; z-index: -1; 
-      animation: float 15s linear infinite;
-      bottom: -150px;
-      pointer-events: none;
-    }
-    .floating-icon img {
-        width: 100%;
-        height: 100%;
-        opacity: 0.05;
-    }
-
-    /* --- Main Layout & Header/Footer (Light Theme) --- */
-    .site-wrapper {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 1rem;
-    }
-    .site-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 0;
-      border-bottom: 1px solid #eeeeee;
-      margin-bottom: 2rem;
-    }
-    .site-header .logo img {
-        height: 40px;
-        display: block;
-    }
-    .site-header .join-btn {
-        background: #0077cc;
-        color: #fff;
-        padding: 0.6rem 1.2rem;
-        border-radius: 20px;
-        font-weight: bold;
-    }
-    .site-header .join-btn:hover {
-        background-color: #0055aa;
-        text-decoration: none;
-    }
-    .site-footer {
-        text-align: center;
-        padding: 2rem 0;
-        margin-top: 2rem;
-        border-top: 1px solid #eeeeee;
-    }
-    .site-footer .full-access-btn {
-        display: inline-block;
-        background: #0077cc;
-        color: #fff;
-        padding: 1rem 2.5rem;
-        font-size: 1.2rem;
-        font-weight: bold;
-        border-radius: 30px;
-        margin-bottom: 2rem;
-        transition: transform 0.2s ease;
-    }
-    .site-footer .full-access-btn:hover {
-        transform: scale(1.05);
-        text-decoration: none;
-    }
-    .site-footer .footer-nav a {
-        margin: 0 1rem;
-        color: #888888;
-    }
-
-    /* --- Masonry Grid --- */
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 1rem;
-    }
-    .grid-item {
-      position: relative;
-      overflow: hidden;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s ease-in-out;
-      background-color: #f0f0f0;
-    }
-    .grid-item:hover {
-      transform: scale(1.03);
-      z-index: 10;
-    }
-    .grid-item img,
-    .grid-item iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      border: 0;
-    }
-    
-    .grid-item.image-item::before,
-    .grid-item.promo-cta::before {
-        content: ""; display: block; padding-top: 100%;
-    }
-    .grid-item.video-item::before {
-        content: ""; display: block; padding-top: 56.25%;
-    }
-    
-    .grid-item.promo-cta {
-        background-size: cover;
-        background-position: center;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .promo-cta a {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-    }
-    .promo-cta .graphic {
-        width: 90%;
-        height: 90%;
-        object-fit: contain;
-        position: relative;
-        z-index: 5;
-        pointer-events: none;
-    }
-
-  </style>
-</head>
-<body>
-
-  <div id="ageGate" class="age-gate-overlay">
-    <div class="age-gate-modal">
-      <h2>Age Verification</h2>
-      <p>This website contains age-restricted materials. By entering, you affirm that you are 18 years of age or older and you agree to our terms.</p>
-      <div id="enterButton" class="age-gate-button">I am 18 or Older</div>
-    </div>
-  </div>
-
-  <div class="site-wrapper">
-
-    <header class="site-header">
-      <div class="logo">
-        <img src="https://nsfwpicz.b-cdn.net/Untitled%20design.png" alt="Playground Logo">
-      </div>
-      <nav>
-        <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" target="_blank" class="join-btn">Join Now</a>
-      </nav>
-    </header>
-
-    <main id="grid-container" class="grid-container"></main>
-
-    <footer class="site-footer">
-      <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" target="_blank" class="full-access-btn">Follow</a>
-      <div class="footer-nav">
-        <a href="#">Terms & Conditions</a>
-        <a href="#">Privacy Notice</a>
-        <a href="#">Support</a>
-      </div>
-    </footer>
-
-  </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const mediaItems = [
-        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/20210622_193205.jpg' },
-        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/20210622_193346.jpg' },
-        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/out-0%20(42).jpg' },
-        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/out-0%20(33).webp' },
-        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/ljnonoknok.webp' },
-        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/IMG_7883.jpg' },
-        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/95360937-ffab-49bb-9f51-98f6ca94f9af.jpg' },
-        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/13703d91-d21d-4247-8240-65575556a47.jpeg' },
-        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/Bondstill.png' },
-        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/IMG_7090.jpg' },
-        // CORRECTED: Video links now use the /embed/ format
-        { type: 'video', src: 'https://iframe.mediadelivery.net/embed/478680/d6beef61-6da6-47ad-8925-d10ab1d7ee2e' },
-        { type: 'video', src: 'https://iframe.mediadelivery.net/embed/478680/0552d44d-381f-4c72-8a6f-4a2cad16b301' },
-        { type: 'video', src: 'https://iframe.mediadelivery.net/embed/478680/04e17463-03a1-4344-bcf4-f7d93c346399' },
-      ];
-
-      // CORRECTED: Graphics and links are now mapped correctly
-      const ctaItems = [
-        { type: 'promo-cta', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you', graphic: 'https://nsfwpicz.b-cdn.net/Untitled%20design%20(2).png', background: 'linear-gradient(45deg, #e11f8c, #0d58ee)' },
-        { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', background: 'linear-gradient(45deg, #0d58ee, #1f9ce1)' },
-        { type: 'promo-cta', link: 'https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(1).png', background: 'linear-gradient(45deg, #1f9ce1, #e11f8c)' }
-      ];
-
-      function generateGridItems(media, ctas) {
-        for (let i = media.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [media[i], media[j]] = [media[j], media[i]];
-        }
-        
-        const combined = [...media];
-        const insertionPoints = [3, 7, 11];
-        ctas.forEach((cta, index) => {
-            const position = insertionPoints[index];
-            if (position < combined.length) {
-                combined.splice(position, 0, cta);
-            } else {
-                combined.push(cta);
-            }
-        });
-        return combined;
-      }
-
-      const gridItems = generateGridItems(mediaItems, ctaItems);
-      const container = document.getElementById('grid-container');
-      
-      gridItems.forEach(item => {
-        const gridElement = document.createElement('div');
-        
-        if (item.type === 'image') {
-          gridElement.className = 'grid-item image-item';
-          gridElement.innerHTML = `<img src="${item.src}" alt="Content" loading="lazy">`;
-        } 
-        else if (item.type === 'video') {
-          gridElement.className = 'grid-item video-item';
-          // Parameters ensure muted autoplay
-          const videoSrc = `${item.src}?autoplay=true&loop=true&muted=true&preload=true`;
-          gridElement.innerHTML = `<iframe src="${videoSrc}" loading="lazy" allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;" allowfullscreen="true"></iframe>`;
-        } 
-        else if (item.type === 'promo-cta') {
-          gridElement.className = 'grid-item promo-cta';
-          gridElement.style.background = item.background;
-          gridElement.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener noreferrer"></a><img src="${item.graphic}" class="graphic" alt="Promotion">`;
-        }
-        
-        container.appendChild(gridElement);
-      });
-    });
-
-    // --- Age Gate Script ---
-    document.addEventListener('DOMContentLoaded', function() {
-        const ageGate = document.getElementById('ageGate');
-        const enterButton = document.getElementById('enterButton');
-        if (document.cookie.includes('ageVerified=true')) {
-            ageGate.classList.add('hidden');
-        } else {
-            ageGate.classList.remove('hidden');
-        }
-        enterButton.addEventListener('click', function() {
-            const d = new Date();
-            d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
-            let expires = "expires=" + d.toUTCString();
-            document.cookie = "ageVerified=true;" + expires + ";path=/";
-            ageGate.classList.add('hidden');
-        });
-    });
-
-    // --- Floating Icons Script ---
-    document.addEventListener('DOMContentLoaded', function() {
-      const customIconUrls = [
-        'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(2).png',
-        'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(3).png'
-      ];
-
-      if (!customIconUrls || customIconUrls.length === 0) {
-          console.warn('Floating icon URLs are not set.');
-          return;
-      }
 
       const iconCount = 20; 
       const body = document.querySelector('body');
