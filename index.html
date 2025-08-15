@@ -101,10 +101,6 @@
     .action-buttons {
         text-align: center;
         padding: 2rem 0;
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-        flex-wrap: wrap;
     }
     .action-button {
         display: inline-block;
@@ -150,15 +146,17 @@
       border: 0;
     }
     
-    .grid-item.image-item::before,
-    .grid-item.promo-cta::before {
-        content: ""; display: block; padding-top: 125%;
+    .grid-item::before {
+        content: ""; 
+        display: block; 
+        padding-top: 125%;
     }
+    
     .grid-item.video-item {
         background-color: #f0f0f0;
     }
     .grid-item.video-item::before {
-        content: ""; display: block; padding-top: 56.25%;
+        padding-top: 56.25%;
     }
     
     .grid-item.promo-cta {
@@ -168,6 +166,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: #f0f0f0;
     }
     .promo-cta a {
         position: absolute;
@@ -177,10 +176,12 @@
     .promo-cta .graphic {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
         position: relative;
         z-index: 5;
         pointer-events: none;
+        padding: 20px;
+        box-sizing: border-box;
     }
 
   </style>
@@ -207,7 +208,6 @@
     <main id="grid-container" class="grid-container"></main>
 
     <div class="action-buttons">
-      <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" target="_blank" class="action-button">Join Now</a>
       <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" target="_blank" class="action-button">Follow</a>
     </div>
     
@@ -258,24 +258,39 @@
       ];
 
       const ctaItems = [
-        { type: 'promo-cta', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you', graphic: 'https://nsfwpicz.b-cdn.net/Untitled%20design%20(2).png', background: 'linear-gradient(45deg, #e11f8c, #0d58ee)' },
-        { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', background: 'linear-gradient(45deg, #0d58ee, #1f9ce1)' },
-        { type: 'promo-cta', link: 'https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(1).png', background: 'linear-gradient(45deg, #1f9ce1, #e11f8c)' },
-        { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', background: 'linear-gradient(45deg, #0d58ee, #1f9ce1)' }
+        { type: 'promo-cta', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you', graphic: 'https://nsfwpicz.b-cdn.net/Untitled%20design%20(2).png' },
+        { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png' },
+        { type: 'promo-cta', link: 'https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(1).png' },
+        { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png' }
       ];
       
       function generateGridItems(media, ctas) {
+        // Shuffle media items
         for (let i = media.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
           [media[i], media[j]] = [media[j], media[i]];
         }
         
+        // Distribute CTAs evenly among media items
         const finalGrid = [];
-        const mediaPerChunk = Math.ceil(media.length / ctas.length);
-
+        const spacing = Math.ceil(media.length / ctas.length);
+        
+        let mediaIndex = 0;
         for (let i = 0; i < ctas.length; i++) {
-          const mediaChunk = media.slice(i * mediaPerChunk, (i + 1) * mediaPerChunk);
-          finalGrid.push(...mediaChunk, ctas[i]);
+          // Add media items before this CTA
+          const itemsBefore = i === ctas.length - 1 ? 
+            media.length - mediaIndex : // Last CTA gets all remaining items
+            Math.min(spacing, media.length - mediaIndex - (ctas.length - i - 1));
+            
+          for (let j = 0; j < itemsBefore; j++) {
+            if (mediaIndex < media.length) {
+              finalGrid.push(media[mediaIndex]);
+              mediaIndex++;
+            }
+          }
+          
+          // Add the CTA
+          finalGrid.push(ctas[i]);
         }
         
         return finalGrid;
@@ -298,7 +313,6 @@
         } 
         else if (item.type === 'promo-cta') {
           gridElement.className = 'grid-item promo-cta';
-          gridElement.style.background = item.background;
           gridElement.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener noreferrer"></a><img src="${item.graphic}" class="graphic" alt="Promotion">`;
         }
         
