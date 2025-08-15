@@ -126,7 +126,7 @@
     /* --- Masonry Grid --- */
     .grid-container {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       gap: 1.5rem;
     }
     .grid-item {
@@ -141,22 +141,22 @@
       transform: scale(1.03);
       z-index: 10;
     }
-    .grid-item img,
-    .grid-item iframe {
+    .grid-item img {
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
       object-fit: cover;
       border: 0;
     }
-    
-    .grid-item.image-item::before,
-    .grid-item.promo-cta::before,
-    .grid-item.video-item::before {
-        content: ""; display: block; padding-top: 125%;
+    .grid-item iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
     }
-    .grid-item.video-item {
-        background-color: #f0f0f0;
+    
+    .grid-item::before {
+        content: ""; display: block; padding-top: 125%;
     }
     
     .grid-item.promo-cta {
@@ -179,6 +179,18 @@
         position: relative;
         z-index: 5;
         pointer-events: none;
+    }
+
+    /* --- Responsive Grid --- */
+    @media (max-width: 900px) {
+      .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 480px) {
+      .grid-container {
+        grid-template-columns: 1fr;
+      }
     }
 
   </style>
@@ -262,6 +274,7 @@
       ];
       
       function generateGridItems(media, ctas) {
+        // Shuffle the media items for variety
         for (let i = media.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
           [media[i], media[j]] = [media[j], media[i]];
@@ -290,6 +303,7 @@
         } 
         else if (item.type === 'video') {
           gridElement.className = 'grid-item video-item';
+          // Parameters for autoplay, loop, mute are added here
           const videoSrc = `${item.src}?autoplay=true&loop=true&muted=true&preload=true`;
           gridElement.innerHTML = `<iframe src="${videoSrc}" loading="lazy" allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;" allowfullscreen="true"></iframe>`;
         } 
@@ -308,6 +322,7 @@
         'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(3).png'
       ];
 
+      // Don't run if there are no icons
       if (!customIconUrls || customIconUrls.length === 0) { return; }
 
       const iconCount = 20; 
