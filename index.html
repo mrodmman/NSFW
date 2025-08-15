@@ -16,10 +16,7 @@
       overflow-x: hidden;
     }
 
-    a {
-      color: #007bff;
-      text-decoration: none;
-    }
+    a { color: #007bff; text-decoration: none; }
     
     /* --- Age Gate --- */
     .age-gate-overlay {
@@ -45,19 +42,14 @@
       text-decoration: none; font-weight: bold; border-radius: 25px; cursor: pointer; transition: all 0.2s ease;
     }
     .age-gate-button.primary {
-      background: #007bff;
-      color: white;
+      background: #007bff; color: white;
     }
     .age-gate-button.primary:hover { transform: scale(1.05); background-color: #0056b3; }
     .age-gate-button.secondary {
-      background-color: #e9ecef;
-      color: #495057;
+      background-color: #e9ecef; color: #495057;
     }
     .age-gate-button.secondary:hover { background-color: #ced4da; }
-    .hidden { 
-      opacity: 0;
-      pointer-events: none;
-    }
+    .hidden { opacity: 0; pointer-events: none; }
 
     /* --- Floating Icons --- */
     @keyframes float {
@@ -72,52 +64,29 @@
       pointer-events: none;
     }
     .floating-icon img {
-        width: 100%;
-        height: 100%;
-        opacity: 0.2; 
+      width: 100%;
+      height: 100%;
+      opacity: 0.2; 
     }
 
     /* --- Main Layout & Header/Footer --- */
-    .site-wrapper {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 1.5rem;
-    }
-    .site-header {
-      text-align: center;
-      padding: 1rem 0 2rem 0;
-    }
-    .site-header img {
-        max-width: 450px;
-        width: 100%;
-        height: auto;
-        display: inline-block;
-    }
-    .site-footer {
-        text-align: center;
-        padding: 2.5rem 0 1rem 0;
-        margin-top: 1.5rem;
-    }
-    .action-buttons {
-        text-align: center;
-        padding: 2rem 0;
-    }
+    .site-wrapper { max-width: 1400px; margin: 0 auto; padding: 1.5rem; }
+    .site-header { text-align: center; padding: 1rem 0 2rem 0; }
+    .site-header img { max-width: 450px; width: 100%; height: auto; display: inline-block; }
+    .site-footer { text-align: center; padding: 2.5rem 0 1rem 0; margin-top: 1.5rem; }
+    .action-buttons { text-align: center; padding: 2rem 0; }
     .action-button {
-        display: inline-block;
-        background: #007bff;
-        color: #fff;
-        padding: 1rem 3rem;
-        font-size: 1.1rem;
-        font-weight: bold;
-        border-radius: 30px;
-        transition: all 0.2s ease;
-        text-decoration: none;
+      display: inline-block;
+      background: #007bff;
+      color: #fff;
+      padding: 1rem 3rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 30px;
+      transition: all 0.2s ease;
+      text-decoration: none;
     }
-    .action-button:hover {
-        transform: scale(1.05);
-        background-color: #0056b3;
-        text-decoration: none;
-    }
+    .action-button:hover { transform: scale(1.05); background-color: #0056b3; }
 
     /* --- Masonry Grid --- */
     .grid-container {
@@ -132,62 +101,40 @@
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
       transition: transform 0.2s ease-in-out;
     }
-    .grid-item:hover {
-      transform: scale(1.03);
-      z-index: 10;
-    }
+    .grid-item:hover { transform: scale(1.03); z-index: 10; }
+
+    /* Videos and images fill tiles completely */
     .grid-item img,
     .grid-item iframe {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       position: absolute;
       top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
       border: 0;
     }
-    
-    .grid-item::before {
-        content: ""; 
-        display: block; 
-        padding-top: 125%;
-    }
-    
-    .grid-item.video-item::before {
-        padding-top: 56.25%;
-    }
-    
+
     /* Gradient backgrounds for all tiles */
-    .grid-item {
-        background: linear-gradient(45deg, #e11f8c, #0d58ee);
-    }
-    
-    /* Specific gradients for CTA tiles */
+    .grid-item { background: linear-gradient(45deg, #e11f8c, #0d58ee); }
     .grid-item.cta-1 { background: linear-gradient(45deg, #e11f8c, #0d58ee); }
     .grid-item.cta-2 { background: linear-gradient(45deg, #0d58ee, #1f9ce1); }
     .grid-item.cta-3 { background: linear-gradient(45deg, #1f9ce1, #e11f8c); }
     .grid-item.cta-4 { background: linear-gradient(45deg, #0d58ee, #1f9ce1); }
-    
-    .grid-item.promo-cta {
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+
+    .grid-item.promo-cta { cursor: pointer; display: flex; justify-content: center; align-items: center; }
     .promo-cta a {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
     }
     .promo-cta .graphic {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        position: relative;
-        z-index: 5;
-        pointer-events: none;
-        padding: 20px;
-        box-sizing: border-box;
+      width: 100%; height: 100%;
+      object-fit: contain;
+      position: relative; z-index: 5;
+      pointer-events: none;
+      padding: 20px;
+      box-sizing: border-box;
     }
-
   </style>
 </head>
 <body>
@@ -204,7 +151,6 @@
   </div>
 
   <div class="site-wrapper">
-
     <header class="site-header">
       <img src="https://nsfwpicz.b-cdn.net/Fairy%20Bell.png" alt="Fairy Bell Title">
     </header>
@@ -215,25 +161,19 @@
       <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" target="_blank" class="action-button">Follow</a>
     </div>
     
-    <footer class="site-footer">
-      <!-- Footer is now empty but provides spacing -->
-    </footer>
-
+    <footer class="site-footer"></footer>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      
-      // --- Age Gate Script ---
+
+      // --- Age Gate ---
       const ageGate = document.getElementById('ageGate');
       const enterButton = document.getElementById('enterButton');
       const leaveButton = document.getElementById('leaveButton');
 
-      if (sessionStorage.getItem('ageVerified') === 'true') {
-          ageGate.classList.add('hidden');
-      } else {
-          ageGate.classList.remove('hidden');
-      }
+      if (sessionStorage.getItem('ageVerified') === 'true') { ageGate.classList.add('hidden'); }
+      else { ageGate.classList.remove('hidden'); }
 
       enterButton.addEventListener('click', function() {
           sessionStorage.setItem('ageVerified', 'true');
@@ -244,8 +184,7 @@
           window.location.href = 'https://www.google.com';
       });
 
-
-      // --- Grid Generation Script ---
+      // --- Grid Content ---
       const mediaItems = [
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/AI%20girl%20Content/out-0%20(1).webp' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/95360937-ffab-49bb-9f51-98f6ca94f9af.jpg' },
@@ -267,40 +206,36 @@
         { type: 'promo-cta', link: 'https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(1).png', class: 'cta-3' },
         { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', class: 'cta-4' }
       ];
-      
+
       function generateGridItems(media, ctas) {
-        const finalGrid = [];
-        const totalItems = media.length + ctas.length;
-        
-        // Calculate positions where CTAs should be placed
-        const ctaPositions = [
-          0, // First position
-          Math.floor(totalItems * 0.25), // ~25% position
-          Math.floor(totalItems * 0.75), // ~75% position
-          totalItems - 1 // Last position
-        ];
-        
+        const finalGrid = [...media]; // start with media
+
+        // Define CTA positions by index in finalGrid
+        // Example logic for 4-column layout:
+        const positions = {
+          0: ctas[0],                // top-left
+          7: ctas[3],                // column 1 row 3
+          10: ctas[2],               // column 4 row 2
+          finalGrid.length: ctas[1]  // bottom-right
+        };
+
+        // Insert CTAs at specified indexes
+        const adjustedGrid = [];
         let mediaIndex = 0;
-        let ctaIndex = 0;
-        
-        for (let i = 0; i < totalItems; i++) {
-          if (ctaPositions.includes(i) && ctaIndex < ctas.length) {
-            // Place a CTA at predetermined positions
-            finalGrid.push(ctas[ctaIndex]);
-            ctaIndex++;
+        for (let i = 0; i <= finalGrid.length; i++) {
+          if (positions[i]) {
+            adjustedGrid.push(positions[i]);
           } else if (mediaIndex < media.length) {
-            // Place a media item
-            finalGrid.push(media[mediaIndex]);
+            adjustedGrid.push(media[mediaIndex]);
             mediaIndex++;
           }
         }
-        
-        return finalGrid;
+        return adjustedGrid;
       }
 
       const gridItems = generateGridItems(mediaItems, ctaItems);
       const container = document.getElementById('grid-container');
-      
+
       gridItems.forEach(item => {
         const gridElement = document.createElement('div');
         
@@ -321,13 +256,11 @@
         container.appendChild(gridElement);
       });
 
-      // --- Floating Icons Script ---
+      // --- Floating Icons ---
       const customIconUrls = [
         'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(2).png',
         'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(3).png'
       ];
-
-      if (!customIconUrls || customIconUrls.length === 0) { return; }
 
       const iconCount = 20; 
       const body = document.querySelector('body');
@@ -348,6 +281,5 @@
       }
     });
   </script>
-
 </body>
 </html>
