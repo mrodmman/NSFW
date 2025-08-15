@@ -84,21 +84,23 @@
         padding: 1.5rem;
     }
     .site-header {
-      text-align: center;
       padding: 1rem 0 2rem 0;
     }
-    .site-header .main-title {
-        max-width: 450px;
-        width: 100%;
-        height: auto;
-        display: inline-block;
+    .header-content-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
     }
-    .site-header .subtitle-image {
-        max-width: 350px;
-        width: 100%;
-        height: auto;
-        display: block;
-        margin: 1rem auto 0;
+    .main-title {
+      max-width: 350px;
+      width: 100%;
+      height: auto;
+    }
+    .subtitle-image {
+      max-width: 200px; /* Reduced width to prevent upscaling and blurriness */
+      width: 100%;
+      height: auto;
     }
     .site-footer {
         text-align: center;
@@ -188,10 +190,16 @@
         pointer-events: none;
     }
 
-    /* --- Responsive Grid --- */
+    /* --- Responsive Grid & Header --- */
     @media (max-width: 900px) {
       .grid-container {
         grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .header-content-wrapper {
+        flex-direction: column; /* Stack header images */
+        gap: 1rem;
       }
     }
     @media (max-width: 480px) {
@@ -218,8 +226,10 @@
   <div class="site-wrapper">
 
     <header class="site-header">
-      <img src="https://nsfwpicz.b-cdn.net/Fairy%20Bell.png" alt="Fairy Bell Title" class="main-title">
-      <img src="https://nsfwpicz.b-cdn.net/Untitled%20design%20(4).png" alt="Welcome to my playground" class="subtitle-image">
+      <div class="header-content-wrapper">
+        <img src="https://nsfwpicz.b-cdn.net/Fairy%20Bell.png" alt="Fairy Bell Title" class="main-title">
+        <img src="https://nsfwpicz.b-cdn.net/Untitled%20design%20(4).png" alt="Welcome to my playground" class="subtitle-image">
+      </div>
     </header>
 
     <main id="grid-container" class="grid-container"></main>
