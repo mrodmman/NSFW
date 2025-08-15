@@ -131,7 +131,6 @@
       border-radius: 16px;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
       transition: transform 0.2s ease-in-out;
-      background-color: #f0f0f0;
     }
     .grid-item:hover {
       transform: scale(1.03);
@@ -152,21 +151,26 @@
         padding-top: 125%;
     }
     
-    .grid-item.video-item {
-        background-color: #f0f0f0;
-    }
     .grid-item.video-item::before {
         padding-top: 56.25%;
     }
     
+    /* Gradient backgrounds for all tiles */
+    .grid-item {
+        background: linear-gradient(45deg, #e11f8c, #0d58ee);
+    }
+    
+    /* Specific gradients for CTA tiles */
+    .grid-item.cta-1 { background: linear-gradient(45deg, #e11f8c, #0d58ee); }
+    .grid-item.cta-2 { background: linear-gradient(45deg, #0d58ee, #1f9ce1); }
+    .grid-item.cta-3 { background: linear-gradient(45deg, #1f9ce1, #e11f8c); }
+    .grid-item.cta-4 { background: linear-gradient(45deg, #0d58ee, #1f9ce1); }
+    
     .grid-item.promo-cta {
-        background-size: cover;
-        background-position: center;
         cursor: pointer;
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #f0f0f0;
     }
     .promo-cta a {
         position: absolute;
@@ -258,39 +262,37 @@
       ];
 
       const ctaItems = [
-        { type: 'promo-cta', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you', graphic: 'https://nsfwpicz.b-cdn.net/Untitled%20design%20(2).png' },
-        { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png' },
-        { type: 'promo-cta', link: 'https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(1).png' },
-        { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png' }
+        { type: 'promo-cta', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you', graphic: 'https://nsfwpicz.b-cdn.net/Untitled%20design%20(2).png', class: 'cta-1' },
+        { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', class: 'cta-2' },
+        { type: 'promo-cta', link: 'https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(1).png', class: 'cta-3' },
+        { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', class: 'cta-4' }
       ];
       
       function generateGridItems(media, ctas) {
-        // Shuffle media items
-        for (let i = media.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [media[i], media[j]] = [media[j], media[i]];
-        }
-        
-        // Distribute CTAs evenly among media items
         const finalGrid = [];
-        const spacing = Math.ceil(media.length / ctas.length);
+        const totalItems = media.length + ctas.length;
+        
+        // Calculate positions where CTAs should be placed
+        const ctaPositions = [
+          0, // First position
+          Math.floor(totalItems * 0.25), // ~25% position
+          Math.floor(totalItems * 0.75), // ~75% position
+          totalItems - 1 // Last position
+        ];
         
         let mediaIndex = 0;
-        for (let i = 0; i < ctas.length; i++) {
-          // Add media items before this CTA
-          const itemsBefore = i === ctas.length - 1 ? 
-            media.length - mediaIndex : // Last CTA gets all remaining items
-            Math.min(spacing, media.length - mediaIndex - (ctas.length - i - 1));
-            
-          for (let j = 0; j < itemsBefore; j++) {
-            if (mediaIndex < media.length) {
-              finalGrid.push(media[mediaIndex]);
-              mediaIndex++;
-            }
+        let ctaIndex = 0;
+        
+        for (let i = 0; i < totalItems; i++) {
+          if (ctaPositions.includes(i) && ctaIndex < ctas.length) {
+            // Place a CTA at predetermined positions
+            finalGrid.push(ctas[ctaIndex]);
+            ctaIndex++;
+          } else if (mediaIndex < media.length) {
+            // Place a media item
+            finalGrid.push(media[mediaIndex]);
+            mediaIndex++;
           }
-          
-          // Add the CTA
-          finalGrid.push(ctas[i]);
         }
         
         return finalGrid;
@@ -312,7 +314,7 @@
           gridElement.innerHTML = `<iframe src="${videoSrc}" loading="lazy" allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;" allowfullscreen="true"></iframe>`;
         } 
         else if (item.type === 'promo-cta') {
-          gridElement.className = 'grid-item promo-cta';
+          gridElement.className = `grid-item promo-cta ${item.class}`;
           gridElement.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener noreferrer"></a><img src="${item.graphic}" class="graphic" alt="Promotion">`;
         }
         
