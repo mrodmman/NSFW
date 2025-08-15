@@ -74,7 +74,7 @@
     .floating-icon img {
         width: 100%;
         height: 100%;
-        opacity: 0.5; /* MODIFIED - Increased from 0.2 */
+        opacity: 0.5;
     }
 
     /* --- Main Layout & Header/Footer --- */
@@ -273,10 +273,9 @@
         { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', background: 'linear-gradient(45deg, #0d58ee, #1f9ce1)' }
       ];
       
-      // --- Static Grid Layout (MODIFIED) ---
       const gridItems = [
         ctaItems[0],      // Position 1 (Row 1, Col 1)
-        mediaItems[10],   // Position 2 (Row 1, Col 2) <-- VIDEO
+        mediaItems[10],   // Position 2 (Row 1, Col 2)
         mediaItems[1],    // Position 3
         mediaItems[2],    // Position 4
         mediaItems[3],    // Position 5
@@ -289,7 +288,7 @@
         mediaItems[8],    // Position 12
         mediaItems[9],    // Position 13
         mediaItems[0],    // Position 14
-        mediaItems[11],   // Position 15 (Row 4, Col 3) <-- VIDEO
+        mediaItems[11],   // Position 15 (Row 4, Col 3)
         ctaItems[3]       // Position 16 (Row 4, Col 4)
       ];
 
@@ -320,7 +319,7 @@
       // --- Floating Icons Script ---
       const customIconUrls = [
         'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(2).png',
-        'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(3).png'
+        'https://nsfwpicz.b-cdn.net/Untitled%20design%20(3).png' // <-- REPLACED ICON
       ];
 
       if (!customIconUrls || customIconUrls.length === 0) { return; }
@@ -334,7 +333,7 @@
         iconWrapper.className = 'floating-icon';
         iconWrapper.innerHTML = `<img src="${randomIconUrl}" alt="">`;
         
-        const size = Math.random() * 60 + 40; // MODIFIED - Icons are now 40px to 100px
+        const size = Math.random() * 60 + 40;
         iconWrapper.style.width = `${size}px`;
         iconWrapper.style.height = `${size}px`;
         iconWrapper.style.left = `${Math.random() * 100}%`;
