@@ -74,7 +74,6 @@
     .floating-icon img {
         width: 100%;
         height: 100%;
-        /* FIXED: Increased opacity to be visible on white background */
         opacity: 0.2; 
     }
 
@@ -85,36 +84,29 @@
         padding: 1.5rem;
     }
     .site-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-bottom: 1.5rem;
-      margin-bottom: 1.5rem;
+      text-align: center;
+      padding: 1rem 0 2rem 0;
     }
-    .site-header .logo img {
-        height: 45px;
-        width: auto;
-        display: block;
-    }
-    .site-header .join-btn {
-        background-color: #007bff;
-        color: #fff;
-        padding: 0.7rem 1.4rem;
-        border-radius: 25px;
-        font-weight: bold;
-        transition: all 0.2s ease;
-    }
-    .site-header .join-btn:hover {
-        background-color: #0056b3;
-        text-decoration: none;
-        transform: scale(1.05);
+    .site-header img {
+        max-width: 450px;
+        width: 100%;
+        height: auto;
+        display: inline-block;
     }
     .site-footer {
         text-align: center;
         padding: 2.5rem 0 1rem 0;
         margin-top: 1.5rem;
     }
-    .site-footer .full-access-btn {
+    .action-buttons {
+        text-align: center;
+        padding: 2rem 0;
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+    .action-button {
         display: inline-block;
         background: #007bff;
         color: #fff;
@@ -122,10 +114,10 @@
         font-size: 1.1rem;
         font-weight: bold;
         border-radius: 30px;
-        margin-bottom: 2rem;
         transition: all 0.2s ease;
+        text-decoration: none;
     }
-    .site-footer .full-access-btn:hover {
+    .action-button:hover {
         transform: scale(1.05);
         background-color: #0056b3;
         text-decoration: none;
@@ -163,8 +155,7 @@
         content: ""; display: block; padding-top: 125%;
     }
     .grid-item.video-item {
-        /* FIXED: Added black background to seamlessly fill video bars */
-        background-color: #000000;
+        background-color: #f0f0f0;
     }
     .grid-item.video-item::before {
         content: ""; display: block; padding-top: 56.25%;
@@ -210,18 +201,18 @@
   <div class="site-wrapper">
 
     <header class="site-header">
-      <div class="logo">
-        <img src="https://nsfwpicz.b-cdn.net/AI%20girl%20Content/out-0%20(1).webp" alt="Logo">
-      </div>
-      <nav>
-        <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" target="_blank" class="join-btn">Join Now</a>
-      </nav>
+      <img src="https://nsfwpicz.b-cdn.net/Fairy%20Bell.png" alt="Fairy Bell Title">
     </header>
 
     <main id="grid-container" class="grid-container"></main>
 
+    <div class="action-buttons">
+      <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" target="_blank" class="action-button">Join Now</a>
+      <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" target="_blank" class="action-button">Follow</a>
+    </div>
+    
     <footer class="site-footer">
-      <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" target="_blank" class="full-access-btn">Follow</a>
+      <!-- Footer is now empty but provides spacing -->
     </footer>
 
   </div>
@@ -267,14 +258,12 @@
       ];
 
       const ctaItems = [
-        // FIXED: Re-added gradient backgrounds and added a 4th CTA for balance
         { type: 'promo-cta', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you', graphic: 'https://nsfwpicz.b-cdn.net/Untitled%20design%20(2).png', background: 'linear-gradient(45deg, #e11f8c, #0d58ee)' },
         { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', background: 'linear-gradient(45deg, #0d58ee, #1f9ce1)' },
         { type: 'promo-cta', link: 'https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(1).png', background: 'linear-gradient(45deg, #1f9ce1, #e11f8c)' },
-        { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', background: 'linear-gradient(45deg, #0d58ee, #1f9ce1)' } // Duplicate for balance
+        { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', background: 'linear-gradient(45deg, #0d58ee, #1f9ce1)' }
       ];
-
-      // FIXED: New, more robust function to guarantee CTAs are scattered
+      
       function generateGridItems(media, ctas) {
         for (let i = media.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -315,7 +304,6 @@
         
         container.appendChild(gridElement);
       });
-
 
       // --- Floating Icons Script ---
       const customIconUrls = [
