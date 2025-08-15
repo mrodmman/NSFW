@@ -35,7 +35,7 @@
     }
     .age-gate-modal h2 { margin-top: 0; font-size: 1.8rem; }
     .age-gate-modal p { color: #555555; margin-bottom: 2rem; font-size: 1rem; line-height: 1.5; }
-    .age-gate-buttons { /* NEW: Container for buttons */
+    .age-gate-buttons {
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
@@ -44,12 +44,12 @@
       display: block; padding: 0.8rem 1.5rem;
       text-decoration: none; font-weight: bold; border-radius: 25px; cursor: pointer; transition: all 0.2s ease;
     }
-    .age-gate-button.primary { /* Style for Enter button */
+    .age-gate-button.primary {
       background: #007bff;
       color: white;
     }
     .age-gate-button.primary:hover { transform: scale(1.05); background-color: #0056b3; }
-    .age-gate-button.secondary { /* Style for Leave button */
+    .age-gate-button.secondary {
       background-color: #e9ecef;
       color: #495057;
     }
@@ -194,7 +194,6 @@
     <div class="age-gate-modal">
       <h2>Age Verification</h2>
       <p>This website may contain age-restricted materials. By entering, you affirm that you are 18 years of age or older.</p>
-      <!-- NEW: Button container and Leave button -->
       <div class="age-gate-buttons">
         <div id="enterButton" class="age-gate-button primary">I am 18 or Older</div>
         <div id="leaveButton" class="age-gate-button secondary">No, I'm not 18</div>
@@ -217,19 +216,17 @@
 
     <footer class="site-footer">
       <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" target="_blank" class="full-access-btn">Follow</a>
-      <!-- REMOVED: Footer nav links are gone -->
     </footer>
 
   </div>
 
   <script>
-    // FIXED: All scripts are now inside one DOMContentLoaded listener to prevent conflicts
     document.addEventListener('DOMContentLoaded', function() {
       
       // --- Age Gate Script ---
       const ageGate = document.getElementById('ageGate');
       const enterButton = document.getElementById('enterButton');
-      const leaveButton = document.getElementById('leaveButton'); // NEW
+      const leaveButton = document.getElementById('leaveButton');
 
       if (sessionStorage.getItem('ageVerified') === 'true') {
           ageGate.classList.add('hidden');
@@ -238,12 +235,12 @@
       }
 
       enterButton.addEventListener('click', function() {
-          sessionStorage.setItem('ageVerified', 'true'); // Using sessionStorage is often better for this
+          sessionStorage.setItem('ageVerified', 'true');
           ageGate.classList.add('hidden');
       });
 
-      leaveButton.addEventListener('click', function() { // NEW
-          window.location.href = 'https://www.google.com/search?q=safe+search'; // Safe redirect
+      leaveButton.addEventListener('click', function() {
+          window.location.href = 'https://www.google.com'; // Safe redirect
       });
 
 
@@ -263,10 +260,11 @@
         { type: 'video', src: 'https://iframe.mediadelivery.net/embed/478680/04e17463-03a1-4344-bcf4-f7d93c346399' },
       ];
 
+      // CORRECTED: Using your actual b-cdn.net links for the promo tiles
       const ctaItems = [
-        { type: 'promo-cta', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you', graphic: 'https://i.imgur.com/uV2a2eW.png' },
-        { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://i.imgur.com/w42dM4H.png' },
-        { type: 'promo-cta', link: 'https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9', graphic: 'https://i.imgur.com/dJ8jDqw.png' }
+        { type: 'promo-cta', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you', graphic: 'https://nsfwpicz.b-cdn.net/Untitled%20design%20(2).png' },
+        { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png' },
+        { type: 'promo-cta', link: 'https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(1).png' }
       ];
 
       function generateGridItems(media, ctas) {
@@ -340,4 +338,4 @@
   </script>
 
 </body>
-</html>
+</html>```
