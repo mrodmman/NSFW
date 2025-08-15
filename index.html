@@ -43,7 +43,7 @@
     /* --- Floating Icons --- */
     @keyframes float {
       0% { transform: translateY(0px); opacity: 0; }
-      10%, 90% { opacity: 0.8; } /* Made slightly more visible */
+      10%, 90% { opacity: 0.8; }
       100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
     }
     .floating-icon {
@@ -52,11 +52,10 @@
       bottom: -150px;
       pointer-events: none;
     }
-    /* Style for the custom image icon */
     .floating-icon img {
         width: 100%;
         height: 100%;
-        opacity: 0.05; /* This controls the faintness */
+        opacity: 0.05;
     }
 
     /* --- Main Layout & Header/Footer --- */
@@ -143,10 +142,10 @@
     
     .grid-item.image-item::before,
     .grid-item.promo-cta::before {
-        content: ""; display: block; padding-top: 100%; /* 1:1 Square */
+        content: ""; display: block; padding-top: 100%;
     }
     .grid-item.video-item::before {
-        content: ""; display: block; padding-top: 56.25%; /* 16:9 Video */
+        content: ""; display: block; padding-top: 56.25%;
     }
     
     .grid-item.promo-cta {
@@ -175,7 +174,6 @@
 </head>
 <body>
 
-  <!-- Age Gate Overlay -->
   <div id="ageGate" class="age-gate-overlay">
     <div class="age-gate-modal">
       <h2>Age Verification</h2>
@@ -184,7 +182,6 @@
     </div>
   </div>
 
-  <!-- Main Site Content -->
   <div class="site-wrapper">
 
     <header class="site-header">
@@ -210,8 +207,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // --- Grid Content ---
-      const gridItems = [
-        // Images (with your new ones added)
+      const mediaItems = [
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/20210622_193205.jpg' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/20210622_193346.jpg' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/out-0%20(42).jpg' },
@@ -222,27 +218,37 @@
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/13703d91-d21d-4247-8240-635575556a47.jpeg' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/Bondstill.png' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/IMG_7090.jpg' },
-
-        // Videos
         { type: 'video', src: 'https://iframe.mediadelivery.net/play/478680/d6beef61-6da6-47ad-8925-d10ab1d7ee2e' },
         { type: 'video', src: 'https://iframe.mediadelivery.net/play/478680/0552d44d-381f-4c72-8a6f-4a2cad16b301' },
         { type: 'video', src: 'https://iframe.mediadelivery.net/play/478680/04e17463-03a1-4344-bcf4-f7d93c346399' },
+      ];
 
-        // Promo CTAs using your transparent images
+      const ctaItems = [
         { type: 'promo-cta', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', background: 'linear-gradient(45deg, #e11f8c, #0d58ee)' },
         { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(1).png', background: 'linear-gradient(45deg, #0d58ee, #1f9ce1)' },
         { type: 'promo-cta', link: 'https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9', graphic: 'https://nsfwpicz.b-cdn.net/SOME.png', background: 'linear-gradient(45deg, #1f9ce1, #e11f8c)' }
       ];
 
-      function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
+      function generateGridItems(media, ctas) {
+        for (let i = media.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
+          [media[i], media[j]] = [media[j], media[i]];
         }
+        
+        const combined = [...media];
+        const insertionPoints = [3, 7, 11];
+        ctas.forEach((cta, index) => {
+            const position = insertionPoints[index];
+            if (position < combined.length) {
+                combined.splice(position, 0, cta);
+            } else {
+                combined.push(cta);
+            }
+        });
+        return combined;
       }
 
-      shuffleArray(gridItems);
-      
+      const gridItems = generateGridItems(mediaItems, ctaItems);
       const container = document.getElementById('grid-container');
       
       gridItems.forEach(item => {
@@ -287,11 +293,14 @@
 
     // --- Floating Icons Script ---
     document.addEventListener('DOMContentLoaded', function() {
-      // ACTION REQUIRED: Replace this placeholder with the direct URL to your custom icon.
-      const customIconUrl = 'https://nsfwpicz.b-cdn.net/kisses-lip-love-svgrepo-com.svg'; // Using a placeholder for now
+      // Your two custom icon URLs are placed in this array
+      const customIconUrls = [
+        'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(2).png',
+        'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(3).png'
+      ];
 
-      if (!customIconUrl || customIconUrl.includes('your-icon-url-here')) {
-          console.warn('Floating icon URL is not set. Please update the customIconUrl variable.');
+      if (!customIconUrls || customIconUrls.length === 0) {
+          console.warn('Floating icon URLs are not set.');
           return;
       }
 
@@ -299,10 +308,12 @@
       const body = document.querySelector('body');
       
       for (let i = 0; i < iconCount; i++) {
+        // Randomly select one of your icons for each new element
+        const randomIconUrl = customIconUrls[Math.floor(Math.random() * customIconUrls.length)];
+
         const iconWrapper = document.createElement('div');
         iconWrapper.className = 'floating-icon';
-        // Create an img tag with your custom URL
-        iconWrapper.innerHTML = `<img src="${customIconUrl}" alt="">`;
+        iconWrapper.innerHTML = `<img src="${randomIconUrl}" alt="">`;
         
         const size = Math.random() * 40 + 20;
         iconWrapper.style.width = `${size}px`;
