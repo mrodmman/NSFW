@@ -145,9 +145,7 @@
       z-index: 10;
     }
 
-    /* === REVISED CODE START === */
-
-    /* Shared styles for both images and iframes */
+    /* --- Styles for Grid Media (FIXED) --- */
     .grid-item img,
     .grid-item iframe {
       position: absolute;
@@ -158,17 +156,16 @@
       border: 0;
     }
 
-    /* Specific style for images */
     .grid-item img {
-      object-fit: cover; /* This works perfectly for images */
+      /* This makes images fill the tile perfectly */
+      object-fit: cover;
     }
 
-    /* Specific style to make iframes mimic the "cover" effect */
     .grid-item iframe {
-      transform: scale(1.4); /* Scales the video up to fill the space */
+      /* This mimics the 'cover' effect for iframes by scaling the video up.
+         A scale of 1.5 is usually enough to hide any black bars. */
+      transform: scale(1.5);
     }
-
-    /* === REVISED CODE END === */
     
     .grid-item::before {
         content: ""; display: block; padding-top: 125%;
@@ -236,7 +233,7 @@
     </div>
     
     <footer class="site-footer">
-      </footer>
+    </footer>
 
   </div>
 
@@ -289,22 +286,22 @@
       ];
       
       const gridItems = [
-        ctaItems[0],      // Position 1 (Row 1, Col 1)
-        mediaItems[10],   // Position 2 (Row 1, Col 2)
-        mediaItems[1],    // Position 3
-        mediaItems[2],    // Position 4
-        mediaItems[3],    // Position 5
-        mediaItems[4],    // Position 6
-        mediaItems[5],    // Position 7
-        ctaItems[1],      // Position 8 (Row 2, Col 4)
-        ctaItems[2],      // Position 9 (Row 3, Col 1)
-        mediaItems[6],    // Position 10
-        mediaItems[7],    // Position 11
-        mediaItems[8],    // Position 12
-        mediaItems[9],    // Position 13
-        mediaItems[0],    // Position 14
-        mediaItems[11],   // Position 15 (Row 4, Col 3)
-        ctaItems[3]       // Position 16 (Row 4, Col 4)
+        ctaItems[0],     // Position 1 (Row 1, Col 1)
+        mediaItems[10],  // Position 2 (Row 1, Col 2)
+        mediaItems[1],   // Position 3
+        mediaItems[2],   // Position 4
+        mediaItems[3],   // Position 5
+        mediaItems[4],   // Position 6
+        mediaItems[5],   // Position 7
+        ctaItems[1],     // Position 8 (Row 2, Col 4)
+        ctaItems[2],     // Position 9 (Row 3, Col 1)
+        mediaItems[6],   // Position 10
+        mediaItems[7],   // Position 11
+        mediaItems[8],   // Position 12
+        mediaItems[9],   // Position 13
+        mediaItems[0],   // Position 14
+        mediaItems[11],  // Position 15 (Row 4, Col 3)
+        ctaItems[3]      // Position 16 (Row 4, Col 4)
       ];
 
       // --- Grid Generation Script ---
@@ -320,7 +317,8 @@
         else if (item.type === 'video') {
           gridElement.className = 'grid-item video-item';
           const videoSrc = `${item.src}?autoplay=true&loop=true&muted=true&preload=true`;
-          gridElement.innerHTML = `<iframe src="${videoSrc}" loading="lazy" allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;" allowfullscreen="true"></iframe>`;
+          // (FIXED) Added the 'muted' attribute to ensure silent autoplay
+          gridElement.innerHTML = `<iframe src="${videoSrc}" loading="lazy" allow="autoplay; picture-in-picture" allowfullscreen="true" muted></iframe>`;
         } 
         else if (item.type === 'promo-cta') {
           gridElement.className = 'grid-item promo-cta';
