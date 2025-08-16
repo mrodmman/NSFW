@@ -145,7 +145,7 @@
       z-index: 10;
     }
 
-    /* --- Styles for Grid Media (FIXED) --- */
+    /* === STYLES FOR GRID MEDIA (REVISED) === */
     .grid-item img,
     .grid-item iframe {
       position: absolute;
@@ -157,13 +157,16 @@
     }
 
     .grid-item img {
-      /* This makes images fill the tile perfectly */
       object-fit: cover;
     }
 
+    .grid-item.video-item {
+      /* Sets a black background for video tiles for a smoother look */
+      background: #000;
+    }
+
     .grid-item iframe {
-      /* This mimics the 'cover' effect for iframes by scaling the video up.
-         A scale of 1.5 is usually enough to hide any black bars. */
+      /* This is the key: It scales the video up to fill the space, hiding black bars */
       transform: scale(1.5);
     }
     
@@ -204,7 +207,6 @@
         grid-template-columns: 1fr;
       }
     }
-
   </style>
 </head>
 <body>
@@ -221,7 +223,6 @@
   </div>
 
   <div class="site-wrapper">
-
     <header class="site-header">
       <img src="https://nsfwpicz.b-cdn.net/Fairy%20Bell.png" alt="Fairy Bell Title" class="main-title">
     </header>
@@ -232,9 +233,7 @@
       <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" target="_blank" class="action-button">Follow</a>
     </div>
     
-    <footer class="site-footer">
-    </footer>
-
+    <footer class="site-footer"></footer>
   </div>
 
   <script>
@@ -260,7 +259,6 @@
           window.location.href = 'https://www.google.com';
       });
 
-
       // --- Grid Content Definition ---
       const mediaItems = [
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/photo_2025-08-16_12-46-05.jpg' },
@@ -277,7 +275,6 @@
         { type: 'video', src: 'https://iframe.mediadelivery.net/play/478680/3eafe472-73f2-40a2-86cd-a720e440ea7d' },
       ];
 
-
       const ctaItems = [
         { type: 'promo-cta', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you', graphic: 'https://nsfwpicz.b-cdn.net/Untitled%20design%20(2).png', background: 'linear-gradient(45deg, #e11f8c, #0d58ee)' },
         { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', background: 'linear-gradient(45deg, #0d58ee, #1f9ce1)' },
@@ -286,22 +283,10 @@
       ];
       
       const gridItems = [
-        ctaItems[0],     // Position 1 (Row 1, Col 1)
-        mediaItems[10],  // Position 2 (Row 1, Col 2)
-        mediaItems[1],   // Position 3
-        mediaItems[2],   // Position 4
-        mediaItems[3],   // Position 5
-        mediaItems[4],   // Position 6
-        mediaItems[5],   // Position 7
-        ctaItems[1],     // Position 8 (Row 2, Col 4)
-        ctaItems[2],     // Position 9 (Row 3, Col 1)
-        mediaItems[6],   // Position 10
-        mediaItems[7],   // Position 11
-        mediaItems[8],   // Position 12
-        mediaItems[9],   // Position 13
-        mediaItems[0],   // Position 14
-        mediaItems[11],  // Position 15 (Row 4, Col 3)
-        ctaItems[3]      // Position 16 (Row 4, Col 4)
+        ctaItems[0], mediaItems[10], mediaItems[1], mediaItems[2],
+        mediaItems[3], mediaItems[4], mediaItems[5], ctaItems[1],
+        ctaItems[2], mediaItems[6], mediaItems[7], mediaItems[8],
+        mediaItems[9], mediaItems[0], mediaItems[11], ctaItems[3]
       ];
 
       // --- Grid Generation Script ---
@@ -317,8 +302,8 @@
         else if (item.type === 'video') {
           gridElement.className = 'grid-item video-item';
           const videoSrc = `${item.src}?autoplay=true&loop=true&muted=true&preload=true`;
-          // (FIXED) Added the 'muted' attribute to ensure silent autoplay
-          gridElement.innerHTML = `<iframe src="${videoSrc}" loading="lazy" allow="autoplay; picture-in-picture" allowfullscreen="true" muted></iframe>`;
+          // (FIXED) Removed the 'muted' attribute from the tag, which was breaking autoplay.
+          gridElement.innerHTML = `<iframe src="${videoSrc}" loading="lazy" allow="autoplay; picture-in-picture" allowfullscreen="true"></iframe>`;
         } 
         else if (item.type === 'promo-cta') {
           gridElement.className = 'grid-item promo-cta';
