@@ -73,7 +73,7 @@
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1.5rem;
       margin-bottom: 1.5rem;
-      align-items: start; /* Align items to the top */
+      align-items: start;
     }
     
     .mosaic-item {
@@ -85,7 +85,6 @@
       background: #f1f3f5;
     }
     
-    /* Images and CTAs - fixed aspect ratio */
     .mosaic-item.image-tile::before,
     .mosaic-item.cta-tile::before {
       content: "";
@@ -106,30 +105,37 @@
       object-fit: cover;
     }
     
-    /* MODIFICATION: Centered CTA graphics */
     .mosaic-item .graphic {
       position: absolute;
       top: 50%;
       left: 50%;
       width: 100%;
       height: auto;
-      transform: translate(-50%, -50%); /* Center the image */
+      transform: translate(-50%, -50%);
       object-fit: contain;
-      padding: 2rem; /* Add some space from the edges */
-      box-sizing: border-box; /* Include padding in width calculation */
+      padding: 2rem;
+      box-sizing: border-box;
     }
 
-    /* MODIFICATION: Video container now respects iframe aspect ratio */
     .mosaic-item.video-tile {
-      line-height: 0; /* Removes extra space below iframe */
+      line-height: 0;
     }
 
     .mosaic-item iframe {
       width: 100%;
-      height: auto; /* Allow height to be automatic */
-      aspect-ratio: 16 / 9; /* Or your video's ratio, e.g., 9/16 for vertical */
+      height: auto;
       border: 0;
-      display: block; /* Removes extra space */
+      display: block;
+    }
+
+    /* MODIFICATION: Default aspect ratio for horizontal videos */
+    .mosaic-item.video-tile iframe {
+      aspect-ratio: 16 / 9;
+    }
+    
+    /* MODIFICATION: Specific aspect ratio for vertical videos */
+    .mosaic-item.vertical-video iframe {
+      aspect-ratio: 9 / 16;
     }
     
     .mosaic-item a {
@@ -188,23 +194,16 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Age verification logic
+      // [Age verification logic remains unchanged]
       const ageGate = document.querySelector('.age-gate-overlay');
       const enterButton = document.getElementById('enter-button');
-
-      if (!sessionStorage.getItem('isVerified')) {
-          ageGate.classList.remove('hidden');
-      } else {
-          ageGate.style.display = 'none';
-      }
-
+      if (!sessionStorage.getItem('isVerified')) { ageGate.classList.remove('hidden'); } 
+      else { ageGate.style.display = 'none'; }
       enterButton.addEventListener('click', function(e) {
           e.preventDefault();
           sessionStorage.setItem('isVerified', 'true');
           ageGate.classList.add('hidden');
-          setTimeout(() => {
-              ageGate.style.display = 'none';
-          }, 300);
+          setTimeout(() => { ageGate.style.display = 'none'; }, 300);
       });
       
       const content = [
@@ -227,6 +226,9 @@
         { type: 'cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', background: 'linear-gradient(45deg, #0d58ee, #1f9ce1)' },
         { type: 'video', src: 'https://iframe.mediadelivery.net/embed/478680/3eafe472-73f2-40a2-86cd-a720e440ea7d' },
       ];
+      
+      // MODIFICATION: Add the specific IDs of vertical videos here
+      const verticalVideoIds = ['c85f141c-4ab5-47a2-88c6-d029b4d079fe', '3eafe472-73f2-40a2-86cd-a720e440ea7d'];
 
       const mainContainer = document.getElementById('main-content');
       const grid = document.createElement('div');
@@ -247,6 +249,13 @@
         }
         else if (item.type === 'video') {
           tile.className = 'mosaic-item video-tile';
+          
+          // MODIFICATION: Check if the video is vertical
+          const isVertical = verticalVideoIds.some(id => item.src.includes(id));
+          if (isVertical) {
+            tile.classList.add('vertical-video');
+          }
+          
           const videoSrc = `${item.src}?autoplay=true&loop=true&muted=true&preload=true&responsive=true`;
           tile.innerHTML = `<iframe src="${videoSrc}" loading="lazy" allow="autoplay; picture-in-picture" allowfullscreen="true"></iframe>`;
         }
@@ -254,7 +263,7 @@
         grid.appendChild(tile);
       });
 
-      // Floating icons code
+      // [Floating icons code remains unchanged]
       const icons = ['🌶️', '🍑', '🍒', '💦', '😈', '💋'];
       for (let i = 0; i < 15; i++) {
         const iconEl = document.createElement('div');
