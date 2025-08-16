@@ -144,8 +144,8 @@
       transform: scale(1.03);
       z-index: 10;
     }
-
-    /* === STYLES FOR GRID MEDIA (REVISED) === */
+    
+    /* === STYLES FOR GRID MEDIA (FINAL) === */
     .grid-item img,
     .grid-item iframe {
       position: absolute;
@@ -158,16 +158,6 @@
 
     .grid-item img {
       object-fit: cover;
-    }
-
-    .grid-item.video-item {
-      /* Sets a black background for video tiles for a smoother look */
-      background: #000;
-    }
-
-    .grid-item iframe {
-      /* This is the key: It scales the video up to fill the space, hiding black bars */
-      transform: scale(1.5);
     }
     
     .grid-item::before {
@@ -270,9 +260,10 @@
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/20210622_193205.jpg' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/20210622_193346.jpg' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/photo_2025-08-16_13-09-01.jpg' },
-        { type: 'video', src: 'https://iframe.mediadelivery.net/play/478680/fd4a6a15-debb-4974-b3eb-270ee0f558c8' },
-        { type: 'video', src: 'https://iframe.mediadelivery.net/play/478680/53b2a01e-243d-481f-86aa-a123db98377f' },
-        { type: 'video', src: 'https://iframe.mediadelivery.net/play/478680/3eafe472-73f2-40a2-86cd-a720e440ea7d' },
+        // **FIX:** Using the /embed/ URL for videos
+        { type: 'video', src: 'https://iframe.mediadelivery.net/embed/478680/fd4a6a15-debb-4974-b3eb-270ee0f558c8' },
+        { type: 'video', src: 'https://iframe.mediadelivery.net/embed/478680/53b2a01e-243d-481f-86aa-a123db98377f' },
+        { type: 'video', src: 'https://iframe.mediadelivery.net/embed/478680/3eafe472-73f2-40a2-86cd-a720e440ea7d' },
       ];
 
       const ctaItems = [
@@ -301,8 +292,8 @@
         } 
         else if (item.type === 'video') {
           gridElement.className = 'grid-item video-item';
-          const videoSrc = `${item.src}?autoplay=true&loop=true&muted=true&preload=true`;
-          // (FIXED) Removed the 'muted' attribute from the tag, which was breaking autoplay.
+          // **FIX:** Added the 'responsive=true' parameter
+          const videoSrc = `${item.src}?autoplay=true&loop=true&muted=true&preload=true&responsive=true`;
           gridElement.innerHTML = `<iframe src="${videoSrc}" loading="lazy" allow="autoplay; picture-in-picture" allowfullscreen="true"></iframe>`;
         } 
         else if (item.type === 'promo-cta') {
