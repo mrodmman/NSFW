@@ -73,9 +73,9 @@
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1.5rem;
       margin-bottom: 1.5rem;
+      align-items: start; /* Align items to the top */
     }
     
-    /* Consistent tile sizing */
     .mosaic-item {
       position: relative;
       overflow: hidden;
@@ -93,26 +93,43 @@
       padding-top: 125%; /* 4:5 ratio */
     }
     
-    /* Videos - natural aspect ratio */
-    .mosaic-item.video-tile {
-      min-height: 300px; /* Minimum height */
-    }
-    
-    /* CTA styling for visibility */
     .mosaic-item.cta-tile {
       background: linear-gradient(45deg, #e11f8c, #0d58ee);
     }
     
-    .mosaic-item img,
-    .mosaic-item .graphic,
-    .mosaic-item iframe {
+    .mosaic-item img {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+    
+    /* MODIFICATION: Centered CTA graphics */
+    .mosaic-item .graphic {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: auto;
+      transform: translate(-50%, -50%); /* Center the image */
+      object-fit: contain;
+      padding: 2rem; /* Add some space from the edges */
+      box-sizing: border-box; /* Include padding in width calculation */
+    }
+
+    /* MODIFICATION: Video container now respects iframe aspect ratio */
+    .mosaic-item.video-tile {
+      line-height: 0; /* Removes extra space below iframe */
+    }
+
+    .mosaic-item iframe {
+      width: 100%;
+      height: auto; /* Allow height to be automatic */
+      aspect-ratio: 16 / 9; /* Or your video's ratio, e.g., 9/16 for vertical */
       border: 0;
+      display: block; /* Removes extra space */
     }
     
     .mosaic-item a {
@@ -145,7 +162,17 @@
 </head>
 <body>
 
-  <!-- [Age Gate content remains unchanged] -->
+  <!-- [Age Gate HTML remains unchanged] -->
+  <div class="age-gate-overlay">
+    <div class="age-gate-modal">
+        <h2>Age Verification</h2>
+        <p>You must be 18 years of age or older to enter this site. Please confirm your age.</p>
+        <div class="age-gate-buttons">
+            <a href="#" class="age-gate-button primary" id="enter-button">I am 18 or older</a>
+            <a href="https://google.com" class="age-gate-button secondary">I am under 18</a>
+        </div>
+    </div>
+  </div>
 
   <div class="site-wrapper">
     <header class="site-header">
@@ -161,7 +188,24 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // [Age verification code remains unchanged]
+      // Age verification logic
+      const ageGate = document.querySelector('.age-gate-overlay');
+      const enterButton = document.getElementById('enter-button');
+
+      if (!sessionStorage.getItem('isVerified')) {
+          ageGate.classList.remove('hidden');
+      } else {
+          ageGate.style.display = 'none';
+      }
+
+      enterButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          sessionStorage.setItem('isVerified', 'true');
+          ageGate.classList.add('hidden');
+          setTimeout(() => {
+              ageGate.style.display = 'none';
+          }, 300);
+      });
       
       const content = [
         // Grid 1
@@ -210,7 +254,18 @@
         grid.appendChild(tile);
       });
 
-      // [Floating icons code remains unchanged]
+      // Floating icons code
+      const icons = ['🌶️', '🍑', '🍒', '💦', '😈', '💋'];
+      for (let i = 0; i < 15; i++) {
+        const iconEl = document.createElement('div');
+        iconEl.className = 'floating-icon';
+        iconEl.style.left = `${Math.random() * 100}vw`;
+        iconEl.style.animationDuration = `${5 + Math.random() * 10}s`;
+        iconEl.style.animationDelay = `${Math.random() * 5}s`;
+        iconEl.style.fontSize = `${20 + Math.random() * 20}px`;
+        iconEl.textContent = icons[Math.floor(Math.random() * icons.length)];
+        document.body.appendChild(iconEl);
+      }
     });
   </script>
 </body>
