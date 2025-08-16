@@ -67,16 +67,14 @@
     }
     .action-button:hover { transform: scale(1.05); text-decoration: none; filter: brightness(1.1); }
     
-    /* --- Mosaic Grid Styles --- */
-    .mosaic-grid {
+    /* --- Image Grid Styles --- */
+    .grid-container {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       gap: 1.5rem;
       margin-bottom: 1.5rem;
     }
-    
-    /* Consistent tile sizing */
-    .mosaic-item {
+    .grid-item {
       position: relative;
       overflow: hidden;
       border-radius: 16px;
@@ -84,68 +82,49 @@
       transition: transform 0.2s ease-in-out;
       background: #f1f3f5;
     }
-    
-    /* Images and CTAs - fixed aspect ratio */
-    .mosaic-item.image-tile::before,
-    .mosaic-item.cta-tile::before {
-      content: "";
-      display: block;
-      padding-top: 125%; /* 4:5 ratio */
-    }
-    
-    /* Videos - natural aspect ratio */
-    .mosaic-item.video-tile {
-      min-height: 300px; /* Minimum height */
-    }
-    
-    /* CTA styling for visibility */
-    .mosaic-item.cta-tile {
-      background: linear-gradient(45deg, #e11f8c, #0d58ee);
-    }
-    
-    .mosaic-item img,
-    .mosaic-item .graphic,
-    .mosaic-item iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+    .grid-item:hover { transform: scale(1.03); z-index: 10; }
+    .grid-item::before { content: ""; display: block; padding-top: 125%; }
+    .grid-item img, .grid-item .graphic {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%; border: 0;
       object-fit: cover;
-      border: 0;
     }
-    
-    .mosaic-item a {
-      position: absolute;
-      top: 0;
-      left: 0;
+     .grid-item a {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;
+    }
+
+    /* --- Video Block Styles --- */
+    .video-container {
+      position: relative;
       width: 100%;
-      height: 100%;
-      z-index: 1;
+      padding-top: 177.77%; 
+      margin: 1.5rem 0;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
     }
-    
-    .mosaic-item:hover {
-      transform: scale(1.03);
-      z-index: 10;
+    .video-container iframe {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%; border: 0;
     }
 
     /* --- Responsive --- */
-    @media (max-width: 768px) {
-      .mosaic-grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .mosaic-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+    @media (max-width: 900px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .grid-container { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 
-  <!-- [Age Gate content remains unchanged] -->
+  <div id="ageGate" class="age-gate-overlay">
+    <div class="age-gate-modal">
+      <h2>Age Verification</h2>
+      <p>This website may contain age-restricted materials. By entering, you affirm that you are 18 years of age or older.</p>
+      <div class="age-gate-buttons">
+        <div id="enterButton" class="age-gate-button primary">I am 18 or Older</div>
+        <div id="leaveButton" class="age-gate-button secondary">No, I'm not 18</div>
+      </div>
+    </div>
+  </div>
 
   <div class="site-wrapper">
     <header class="site-header">
@@ -161,57 +140,114 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // [Age verification code remains unchanged]
+      
+      // **FIX:** Restored the original, working age gate script
+      const ageGate = document.getElementById('ageGate');
+      const enterButton = document.getElementById('enterButton');
+      const leaveButton = document.getElementById('leaveButton');
+
+      if (sessionStorage.getItem('ageVerified') === 'true') {
+        ageGate.classList.add('hidden');
+      } else {
+        ageGate.classList.remove('hidden');
+      }
+
+      enterButton.addEventListener('click', function() {
+        sessionStorage.setItem('ageVerified', 'true');
+        ageGate.classList.add('hidden');
+      });
+
+      leaveButton.addEventListener('click', function() {
+        window.location.href = 'https://www.google.com';
+      });
+
+      const ctaItems = [
+        { type: 'promo-cta', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you', graphic: 'https://nsfwpicz.b-cdn.net/Untitled%20design%20(2).png', background: 'linear-gradient(45deg, #e11f8c, #0d58ee)' },
+        { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', background: 'linear-gradient(45deg, #0d58ee, #1f9ce1)' },
+        { type: 'promo-cta', link: 'https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(1).png', background: 'linear-gradient(45deg, #1f9ce1, #e11f8c)' },
+        { type: 'promo-cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', background: 'linear-gradient(45deg, #0d58ee, #1f9ce1)' }
+      ];
       
       const content = [
-        // Grid 1
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/photo_2025-08-16_12-45-58.jpg' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/photo_2025-08-16_12-45-46.jpg' },
-        { type: 'cta', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you', graphic: 'https://nsfwpicz.b-cdn.net/Untitled%20design%20(2).png', background: 'linear-gradient(45deg, #e11f8c, #0d58ee)' },
+        ctaItems[0],
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/photo_2025-08-16_12-45-21.jpg' },
         { type: 'video', src: 'https://iframe.mediadelivery.net/embed/478680/57d228de-2e85-471e-856b-59c9b18af261' },
-        // Grid 2
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/out-0%20(5).webp' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/photo_2025-08-16_12-46-28.jpg' },
-        { type: 'cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', background: 'linear-gradient(45deg, #0d58ee, #1f9ce1)' },
+        ctaItems[1],
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/20210622_193205.jpg' },
         { type: 'video', src: 'https://iframe.mediadelivery.net/embed/478680/c85f141c-4ab5-47a2-88c6-d029b4d079fe' },
-        // Grid 3
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/20210622_193346.jpg' },
-        { type: 'cta', link: 'https://lp.mydirtyhobby.com/14/?traffic=de&lang=en&ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MSwiZSI6MTA1MjIsInAiOjJ9', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(1).png', background: 'linear-gradient(45deg, #1f9ce1, #e11f8c)' },
+        ctaItems[2],
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/photo_2025-08-16_13-09-01.jpg' },
-        { type: 'cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', background: 'linear-gradient(45deg, #0d58ee, #1f9ce1)' },
+        ctaItems[3],
         { type: 'video', src: 'https://iframe.mediadelivery.net/embed/478680/3eafe472-73f2-40a2-86cd-a720e440ea7d' },
       ];
 
       const mainContainer = document.getElementById('main-content');
-      const grid = document.createElement('div');
-      grid.className = 'mosaic-grid';
-      mainContainer.appendChild(grid);
+      let currentGrid = null;
 
+      function createNewGrid() {
+          const grid = document.createElement('div');
+          grid.className = 'grid-container';
+          mainContainer.appendChild(grid);
+          return grid;
+      }
+      
       content.forEach(item => {
-        const tile = document.createElement('div');
-        
-        if (item.type === 'image') {
-          tile.className = 'mosaic-item image-tile';
-          tile.innerHTML = `<img src="${item.src}" alt="Content" loading="lazy">`;
+        if (item.type === 'image' || item.type === 'promo-cta') {
+          if (!currentGrid || currentGrid.parentElement !== mainContainer) {
+            currentGrid = createNewGrid();
+          }
+          const gridElement = document.createElement('div');
+          gridElement.className = 'grid-item';
+          
+          if(item.type === 'promo-cta') {
+            gridElement.style.background = item.background;
+            gridElement.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener noreferrer"></a><img src="${item.graphic}" class="graphic" alt="Promotion">`;
+          } else {
+            gridElement.innerHTML = `<img src="${item.src}" alt="Content" loading="lazy">`;
+          }
+          currentGrid.appendChild(gridElement);
         } 
-        else if (item.type === 'cta') {
-          tile.className = 'mosaic-item cta-tile';
-          tile.style.background = item.background;
-          tile.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener noreferrer"></a><img src="${item.graphic}" class="graphic" alt="Promotion">`;
-        }
         else if (item.type === 'video') {
-          tile.className = 'mosaic-item video-tile';
+          currentGrid = null; 
+          const videoContainer = document.createElement('div');
+          videoContainer.className = 'video-container';
           const videoSrc = `${item.src}?autoplay=true&loop=true&muted=true&preload=true&responsive=true`;
-          tile.innerHTML = `<iframe src="${videoSrc}" loading="lazy" allow="autoplay; picture-in-picture" allowfullscreen="true"></iframe>`;
+          videoContainer.innerHTML = `<iframe src="${videoSrc}" loading="lazy" allow="autoplay; picture-in-picture" allowfullscreen="true"></iframe>`;
+          mainContainer.appendChild(videoContainer);
         }
-        
-        grid.appendChild(tile);
       });
 
-      // [Floating icons code remains unchanged]
+      const customIconUrls = [
+        'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(2).png',
+        'https://nsfwpicz.b-cdn.net/Untitled%20design%20(3).png'
+      ];
+
+      if (!customIconUrls || customIconUrls.length === 0) { return; }
+
+      const iconCount = 20; 
+      const body = document.querySelector('body');
+      
+      for (let i = 0; i < iconCount; i++) {
+        const randomIconUrl = customIconUrls[Math.floor(Math.random() * customIconUrls.length)];
+        const iconWrapper = document.createElement('div');
+        iconWrapper.className = 'floating-icon';
+        iconWrapper.innerHTML = `<img src="${randomIconUrl}" alt="">`;
+        
+        const size = Math.random() * 60 + 40;
+        iconWrapper.style.width = `${size}px`;
+        iconWrapper.style.height = `${size}px`;
+        iconWrapper.style.left = `${Math.random() * 100}%`;
+        iconWrapper.style.animationDelay = `${Math.random() * 15}s`;
+        iconWrapper.style.animationDuration = `${Math.random() * 10 + 10}s`;
+        body.appendChild(iconWrapper);
+      }
     });
   </script>
+
 </body>
 </html>
