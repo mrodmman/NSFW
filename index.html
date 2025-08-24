@@ -84,8 +84,6 @@
       background: #f1f3f5;
       min-height: 0; 
       display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     .mosaic-item.image-tile::before,
@@ -106,6 +104,8 @@
     /* CTA styling */
     .mosaic-item.cta-tile {
       background: linear-gradient(45deg, #e11f8c, #0d58ee);
+      align-items: center;
+      justify-content: center;
     }
     .mosaic-item.cta-tile .graphic {
       max-width: 70%; max-height: 70%; margin: auto; display: block;
@@ -148,41 +148,40 @@
     
     /* --- STYLES FOR PLACEHOLDER TILES --- */
     .mosaic-item.placeholder-tile {
-        background: linear-gradient(135deg, #4b6cb7, #182848);
+        background: linear-gradient(135deg, #4b6cb7, #182848); 
         color: #fff;
+    }
+    /* THIS IS THE NEW WRAPPER THAT FIXES CENTERING */
+    .placeholder-content-wrapper {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Vertical Center */
+        align-items: center;     /* Horizontal Center */
         text-align: center;
         padding: 1rem;
         box-sizing: border-box;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
     }
-
-    .placeholder-tile .placeholder-icon, .placeholder-tile .placeholder-text {
-        position: relative;
-        z-index: 2;
-    }
-
     .placeholder-tile .placeholder-icon {
         font-size: 4.5rem;
         font-weight: bold;
         line-height: 1;
         opacity: 0.8;
         margin-bottom: 1rem;
-        display: flex;
-        justify-content: center;
+        display: flex; /* Helps center the image inside */
         align-items: center;
     }
-
-    .placeholder-tile .placeholder-icon img {
-        position: static; /* This overrides the absolute positioning from the general rule */
-        transform: none; /* This resets the transform */
+     .placeholder-tile .placeholder-icon img {
+        position: static; /* Let the flexbox control it */
+        transform: none;
         max-width: 80%;
         max-height: 120px;
+        object-fit: contain;
         width: auto;
         height: auto;
     }
-
     .placeholder-tile .placeholder-text {
         font-size: 1.1rem;
         line-height: 1.4;
@@ -295,10 +294,13 @@
         }
         else if (item.type === 'placeholder') {
             tile.className = 'mosaic-item placeholder-tile';
+            // THIS HTML STRUCTURE IS THE KEY TO THE FIX
             tile.innerHTML = `
                 <a href="${item.link}" target="_blank" rel="noopener noreferrer"></a>
-                <div class="placeholder-icon">${item.icon}</div>
-                <div class="placeholder-text">${item.text}</div>
+                <div class="placeholder-content-wrapper">
+                  <div class="placeholder-icon">${item.icon}</div>
+                  <div class="placeholder-text">${item.text}</div>
+                </div>
             `;
         }
         
