@@ -148,41 +148,45 @@
     
     /* --- STYLES FOR PLACEHOLDER TILES --- */
     .mosaic-item.placeholder-tile {
-        background: linear-gradient(135deg, #4b6cb7, #182848); 
+        background: linear-gradient(135deg, #4b6cb7, #182848);
         color: #fff;
         text-align: center;
-        padding: 1.5rem;
-        box-sizing: border-box; 
+        padding: 1rem;
+        box-sizing: border-box;
         flex-direction: column;
-        justify-content: center; /* THIS IS THE NEW LINE FOR VERTICAL CENTERING */
+        justify-content: center;
+        align-items: center;
     }
+
+    .placeholder-tile .placeholder-icon, .placeholder-tile .placeholder-text {
+        position: relative;
+        z-index: 2;
+    }
+
     .placeholder-tile .placeholder-icon {
         font-size: 4.5rem;
         font-weight: bold;
         line-height: 1;
         opacity: 0.8;
-        position: relative; 
-        z-index: 2;
         margin-bottom: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-     .placeholder-tile .placeholder-icon img {
-        position: relative; /* Overrides absolute positioning from general .mosaic-item img */
-        transform: none;
-        top: 0;
-        left: 0;
+
+    .placeholder-tile .placeholder-icon img {
+        position: static; /* This overrides the absolute positioning from the general rule */
+        transform: none; /* This resets the transform */
         max-width: 80%;
         max-height: 120px;
-        object-fit: contain;
         width: auto;
         height: auto;
-        display: inline-block;
     }
+
     .placeholder-tile .placeholder-text {
         font-size: 1.1rem;
         line-height: 1.4;
         font-weight: 500;
-        position: relative; 
-        z-index: 2;
     }
     /* --- END OF NEW STYLES --- */
 
