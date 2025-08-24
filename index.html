@@ -75,8 +75,7 @@
     }
 
     .mosaic-item.image-tile::before,
-    .mosaic-item.cta-tile::before,
-    .mosaic-item.placeholder-tile::before {
+    .mosaic-item.cta-tile::before {
       content: "";
       display: block;
       padding-top: 125%; /* 4:5 ratio */
@@ -114,7 +113,7 @@
     /* --- Custom Text Tiles (Below Grid) --- */
     .custom-tiles-container {
       display: flex; flex-direction: column; gap: 1.5rem;
-      margin: 2.5rem auto;
+      margin: 2.5rem auto; /* Creates space between grid and button */
       max-width: 900px; 
     }
     .custom-tile {
@@ -127,48 +126,6 @@
     .custom-tile p { margin: 0; font-size: 1rem; opacity: 0.9; line-height: 1.5; }
     .custom-tile.rate-pic { background: linear-gradient(45deg, #e11f8c, #833ab4); }
     .custom-tile.lipstick-name { background: linear-gradient(45deg, #833ab4, #0d58ee); }
-    
-    /* --- STYLES FOR PLACEHOLDER TILES --- */
-    .mosaic-item.placeholder-tile { background: linear-gradient(135deg, #2c3e50, #182848); }
-    
-    .placeholder-content-wrapper {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center; /* Vertical Centering */
-        align-items: center;     /* Horizontal Centering */
-        padding: 1rem;
-        box-sizing: border-box;
-        text-align: center;
-        color: #fff;
-    }
-    .placeholder-icon {
-        font-size: 3.5rem;
-        font-weight: bold;
-        line-height: 1;
-        opacity: 0.8;
-    }
-    .placeholder-icon img {
-        position: static; /* Let flexbox handle positioning */
-        transform: none;
-        max-width: 80%;
-        max-height: 100px;
-        object-fit: contain;
-        width: auto;
-        height: auto;
-        display: inline-block;
-    }
-    .placeholder-text {
-        margin-top: 1rem;
-        font-size: 1rem;
-        line-height: 1.4;
-        font-weight: 500;
-    }
-    /* --- END OF NEW STYLES --- */
 
     /* --- Responsive --- */
     @media (max-width: 768px) {
@@ -196,10 +153,11 @@
     </header>
     <main id="main-content"></main>
 
+    <!-- CUSTOM CTA TILES ARE PLACED HERE -->
     <div class="custom-tiles-container">
       <a href="https://fansly.com/post/816088638474432512" target="_blank" rel="noopener noreferrer" class="custom-tile rate-pic">
         <h2>Send Me a Dick Pic & I'll Rate It</h2>
-        <p>True daddies only: tip and I'll post your Dick pic and rating here on my page.</p>
+        <p>True daddies only: tip and I'll post your Dick Pic and rating here on my page.</p>
       </a>
       <a href="https://fansly.com/post/816091021300494336" target="_blank" rel="noopener noreferrer" class="custom-tile lipstick-name">
         <h2>Get Your Name on My Body</h2>
@@ -213,48 +171,23 @@
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // 12 items for a perfectly balanced grid
       const content = [
         // Grid 1
         { type: 'cta', link: 'https://chaturbate.com/in/?tour=Limj&campaign=8Kcon&track=default&signup_notice=1&b=mrod_you', graphic: 'https://nsfwpicz.b-cdn.net/Untitled%20design%20(2).png', background: 'linear-gradient(45deg, #e11f8c, #0d58ee)' },
-        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/photo_2025-08-16_12-45-58.jpg' }, // REMINDER: Incorrect URL
-        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/photo_2025-08-16_12-45-46.jpg' }, // REMINDER: Incorrect URL
-        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/photo_2025-08-16_12-45-21.jpg' }, // REMINDER: Incorrect URL
+        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/photo_2025-08-16_12-45-58.jpg' }, // REMINDER: You still need to fix these '2025' URLs
+        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/photo_2025-08-16_12-45-46.jpg' },
+        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/photo_2025-08-16_12-45-21.jpg' },
         // Grid 2
         { type: 'video', src: 'https://iframe.mediadelivery.net/embed/478680/57d228de-2e85-471e-856b-59c9b18af261' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/out-0%20(5).webp' },
-        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/photo_2025-08-16_12-46-28.jpg' }, // REMINDER: Incorrect URL
+        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/photo_2025-08-16_12-46-28.jpg' },
         { type: 'cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', background: 'linear-gradient(45deg, #0d58ee, #1f9ce1)' },
         // Grid 3
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/20210622_193205.jpg' },
         { type: 'cta', link: 'https://www.fanvue.com/f_bell/fv-1', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(1).png', background: 'linear-gradient(45deg, #1f9ce1, #e11f8c)' },
-        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/photo_2025-08-16_13-09-01.jpg' }, // REMINDER: Incorrect URL
+        { type: 'image', src: 'https://nsfwpicz.b-cdn.net/photo_2025-08-16_13-09-01.jpg' },
         { type: 'video', src: 'https://iframe.mediadelivery.net/embed/478680/3eafe472-73f2-40a2-86cd-a720e440ea7d' },
-        
-        // --- 4 PLACEHOLDER TILES ---
-        { 
-          type: 'placeholder', 
-          link: 'https://fansly.com/post/816088638474432512', 
-          icon: '?', 
-          text: 'Your Rating Here?' 
-        },
-        { 
-          type: 'placeholder', 
-          link: 'https://fansly.com/post/816091021300494336', 
-          icon: '?', 
-          text: "Me with Daddy's name on my body, waiting for you to claim it" 
-        },
-        { 
-          type: 'placeholder', 
-          link: 'https://fansly.com/3rd-wheel-Poly?r=Tm',
-          icon: '<img src="https://nsfwpicz.b-cdn.net/Fairy%20Bell.png" alt="Fairy Bell Logo">', 
-          text: "True fans only"
-        },
-        { 
-          type: 'placeholder', 
-          link: 'https://fansly.com/f_bell/tip', // Example link, change if needed
-          icon: '💡', 
-          text: "Custom Request? DM Me Your Idea!" 
-        }
       ];
 
       const mainContainer = document.getElementById('main-content');
@@ -278,16 +211,6 @@
           tile.className = 'mosaic-item video-tile';
           const videoSrc = `${item.src}?autoplay=true&loop=true&muted=true&preload=true`;
           tile.innerHTML = `<iframe src="${videoSrc}" loading="lazy" allow="autoplay; picture-in-picture" allowfullscreen="true"></iframe>`;
-        }
-        else if (item.type === 'placeholder') {
-            tile.className = 'mosaic-item placeholder-tile';
-            tile.innerHTML = `
-                <a href="${item.link}" target="_blank" rel="noopener noreferrer"></a>
-                <div class="placeholder-content-wrapper">
-                    <div class="placeholder-icon">${item.icon}</div>
-                    <div class="placeholder-text">${item.text}</div>
-                </div>
-            `;
         }
         
         grid.appendChild(tile);
