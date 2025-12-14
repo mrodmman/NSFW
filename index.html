@@ -107,6 +107,43 @@
       align-items: center;
       justify-content: center;
     }
+    .mosaic-item.cta-tile .cta-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+      z-index: 2;
+      width: 90%;
+      text-shadow: 
+        0 0 10px rgba(218, 112, 214, 0.8),
+        0 0 20px rgba(218, 112, 214, 0.6),
+        0 0 30px rgba(218, 112, 214, 0.4),
+        0 0 40px rgba(147, 51, 234, 0.3),
+        0 2px 5px rgba(0,0,0,0.5);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0%, 100% { 
+        text-shadow: 
+          0 0 10px rgba(218, 112, 214, 0.8),
+          0 0 20px rgba(218, 112, 214, 0.6),
+          0 0 30px rgba(218, 112, 214, 0.4),
+          0 0 40px rgba(147, 51, 234, 0.3),
+          0 2px 5px rgba(0,0,0,0.5);
+      }
+      50% { 
+        text-shadow: 
+          0 0 15px rgba(236, 72, 153, 0.9),
+          0 0 25px rgba(236, 72, 153, 0.7),
+          0 0 35px rgba(168, 85, 247, 0.5),
+          0 0 45px rgba(147, 51, 234, 0.4),
+          0 2px 5px rgba(0,0,0,0.5);
+      }
+    }
     .mosaic-item.cta-tile .graphic {
       max-width: 70%; max-height: 70%; margin: auto; display: block;
       position: relative; left: 0; top: 0; transform: translate(0%,0%);
@@ -216,21 +253,21 @@
     <main id="main-content"></main>
 
     <div class="action-buttons">
-      <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" target="_blank" class="action-button">Follow</a>
+      <a href="https://fansly.com/3rd-wheel-Poly?r=Tm" target="_blank" class="action-button" style="background-image: linear-gradient(45deg, #2d1b3d, #0a0a0a);">Follow Me</a>
     </div>
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const content = [
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/IMG_7090.jpg' },
-        { type: 'cta', link: 'https://www.camsoda.com/toritinkerbell?id=toritinkerbell', graphic: 'https://nsfwpicz.b-cdn.net/Untitled%20design%20(2).png', background: 'linear-gradient(45deg, #e11f8c, #0d58ee)' },
+        { type: 'cta', link: 'https://www.camsoda.com/toritinkerbell?id=toritinkerbell', text: 'Live Shows', background: 'linear-gradient(45deg, #1a0321, #4a0e4e)' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/IMG_8993.png' },
-        { type: 'cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', background: 'linear-gradient(45deg, #833ab4, #e11f8c)' },
+        { type: 'cta', link: 'https://fansly.com/3rd-wheel-Poly?r=Tm', text: 'Fansly', background: 'linear-gradient(45deg, #0a0a0a, #2d1b3d)' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/photo_2025-12-13_15-19-37.jpg' },
-        { type: 'cta', link: 'https://onlyfans.com/deviilbabyy', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used%20(1).png', background: 'linear-gradient(45deg, #0d58ee, #1f9ce1)' },
-        { type: 'cta', link: 'https://www.mydirtyhobby.de/?ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MiwiZSI6ODYwLCJwIjoyfQ==', graphic: 'https://nsfwpicz.b-cdn.net/Untitled%20design%20(2).png', background: 'linear-gradient(45deg, #1f9ce1, #e11f8c)' },
+        { type: 'cta', link: 'https://onlyfans.com/deviilbabyy', text: 'OnlyFans', background: 'linear-gradient(45deg, #4a0e4e, #8b1538)' },
+        { type: 'cta', link: 'https://www.mydirtyhobby.de/?ats=eyJhIjoxMjI2MDE1LCJjIjo2MzQzNjQwMiwibiI6MjEsInMiOjI0MiwiZSI6ODYwLCJwIjoyfQ==', text: 'Exclusive Content', background: 'linear-gradient(45deg, #1c1c3a, #0a0a0a)' },
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/photo_2025-12-13_15-23-14.jpg' },
-        { type: 'cta', link: 'https://www.fanvue.com/f_bell/fv-1', graphic: 'https://nsfwpicz.b-cdn.net/Lumios%20Typewriter%20Used.png', background: 'linear-gradient(45deg, #e11f8c, #833ab4)' }
+        { type: 'cta', link: 'https://www.fanvue.com/f_bell/fv-1', text: 'Chat With Me', background: 'linear-gradient(45deg, #2d1b3d, #6b0f1a)' }
       ];
 
       const mainContainer = document.getElementById('main-content');
@@ -248,7 +285,7 @@
         else if (item.type === 'cta') {
           tile.className = 'mosaic-item cta-tile';
           tile.style.background = item.background;
-          tile.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener noreferrer"></a><img src="${item.graphic}" class="graphic" alt="Promotion">`;
+          tile.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener noreferrer"></a><div class="cta-text">${item.text}</div>`;
         }
         else if (item.type === 'video') {
           tile.className = 'mosaic-item video-tile';
