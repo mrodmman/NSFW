@@ -19,39 +19,56 @@
     /* --- Age Gate --- */
     .age-gate-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
       z-index: 1000; display: flex; justify-content: center; align-items: center; transition: opacity 0.3s ease;
     }
     .age-gate-modal {
-      background: #ffffff; color: #333333; padding: 2.5rem; border-radius: 20px; text-align: center;
-      max-width: 400px; margin: 1rem; box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+      background: linear-gradient(135deg, #1a0321, #2d1b3d); 
+      color: #ffffff; 
+      padding: 2.5rem; 
+      border-radius: 20px; 
+      text-align: center;
+      max-width: 400px; 
+      margin: 1rem; 
+      box-shadow: 0 0 30px rgba(147, 51, 234, 0.4), 0 5px 25px rgba(0,0,0,0.5);
+      border: 1px solid rgba(147, 51, 234, 0.3);
     }
-    .age-gate-modal h2 { margin-top: 0; font-size: 1.8rem; }
-    .age-gate-modal p { color: #555555; margin-bottom: 2rem; font-size: 1rem; line-height: 1.5; }
+    .age-gate-modal h2 { 
+      margin-top: 0; 
+      font-size: 1.8rem;
+      text-shadow: 0 0 20px rgba(218, 112, 214, 0.6);
+    }
+    .age-gate-modal p { 
+      color: #d1c4e9; 
+      margin-bottom: 2rem; 
+      font-size: 1rem; 
+      line-height: 1.5; 
+    }
     .age-gate-buttons { display: flex; flex-direction: column; gap: 0.8rem; }
     .age-gate-button {
       display: block; padding: 0.8rem 1.5rem; text-decoration: none; font-weight: bold;
       border-radius: 25px; cursor: pointer; transition: all 0.2s ease; border: none;
+      font-size: 1rem;
     }
     .age-gate-button.primary {
-      background-color: #e11f8c; background-image: linear-gradient(45deg, #e11f8c, #0d58ee); color: white;
+      background-image: linear-gradient(45deg, #4a0e4e, #8b1538); 
+      color: white;
+      box-shadow: 0 0 20px rgba(147, 51, 234, 0.4);
     }
-    .age-gate-button.primary:hover { transform: scale(1.05); filter: brightness(1.1); }
-    .age-gate-button.secondary { background-color: #e9ecef; color: #495057; }
-    .age-gate-button.secondary:hover { background-color: #ced4da; }
+    .age-gate-button.primary:hover { 
+      transform: scale(1.05); 
+      filter: brightness(1.2);
+      box-shadow: 0 0 30px rgba(147, 51, 234, 0.6);
+    }
+    .age-gate-button.secondary { 
+      background-color: rgba(255, 255, 255, 0.1); 
+      color: #d1c4e9;
+      border: 1px solid rgba(147, 51, 234, 0.3);
+    }
+    .age-gate-button.secondary:hover { 
+      background-color: rgba(255, 255, 255, 0.15); 
+    }
     .hidden { opacity: 0; pointer-events: none; }
-
-    /* --- Floating Icons --- */
-    @keyframes float {
-      0% { transform: translateY(0px); opacity: 0; }
-      10%, 90% { opacity: 0.8; }
-      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-    }
-    .floating-icon {
-      position: fixed; z-index: -1; animation: float 15s linear infinite;
-      bottom: -150px; pointer-events: none;
-    }
-    .floating-icon img { width: 100%; height: 100%; opacity: 0.5; }
 
     /* --- Main Layout --- */
     .site-wrapper { max-width: 1400px; margin: 0 auto; padding: 1.5rem; }
@@ -87,18 +104,10 @@
     }
 
     .mosaic-item.image-tile::before,
-    .mosaic-item.cta-tile::before,
-    .mosaic-item.placeholder-tile::before {
+    .mosaic-item.cta-tile::before {
       content: "";
       display: block;
       padding-top: 125%; /* 4:5 ratio */
-    }
-    .mosaic-item.video-tile {
-      min-height: 300px;
-      height: 100%;
-      display: flex;
-      align-items: stretch;
-      justify-content: stretch;
     }
 
     /* CTA styling */
@@ -144,20 +153,12 @@
           0 2px 5px rgba(0,0,0,0.5);
       }
     }
-    .mosaic-item.cta-tile .graphic {
-      max-width: 70%; max-height: 70%; margin: auto; display: block;
-      position: relative; left: 0; top: 0; transform: translate(0%,0%);
-    }
     .mosaic-item.cta-tile a { z-index: 2; }
 
-    .mosaic-item img, .mosaic-item .graphic {
+    .mosaic-item img {
       position: absolute; top: 50%; left: 50%;
       width: 100%; height: 100%; object-fit: cover;
       border: 0; transform: translate(-50%,-50%);
-    }
-    .mosaic-item.cta-tile img.graphic {
-      object-fit: contain; width: 70%; height: 70%;
-      left: 50%; top: 50%; transform: translate(-50%,-50%); position: absolute;
     }
 
     .mosaic-item a {
@@ -166,86 +167,28 @@
     }
     .mosaic-item:hover { transform: scale(1.03); z-index: 10; }
 
-    /* --- Custom Text Tiles (Below Grid) --- */
-    .custom-tiles-container {
-      display: flex; flex-direction: column; gap: 1.5rem;
-      margin: 2.5rem auto;
-      max-width: 900px; 
-    }
-    .custom-tile {
-      display: block; padding: 2rem 1.5rem; border-radius: 16px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); text-align: center;
-      color: #fff; text-decoration: none; transition: transform 0.2s ease-in-out, filter 0.2s ease-in-out;
-    }
-    .custom-tile:hover { transform: scale(1.03); filter: brightness(1.1); }
-    .custom-tile h2 { margin-top: 0; margin-bottom: 0.5rem; font-size: 1.6rem; }
-    .custom-tile p { margin: 0; font-size: 1rem; opacity: 0.9; line-height: 1.5; }
-    .custom-tile.rate-pic { background: linear-gradient(45deg, #e11f8c, #833ab4); }
-    .custom-tile.lipstick-name { background: linear-gradient(45deg, #833ab4, #0d58ee); }
-    
-    /* --- STYLES FOR PLACEHOLDER TILES --- */
-    .mosaic-item.placeholder-tile {
-        background: linear-gradient(135deg, #4b6cb7, #182848); 
-        color: #fff;
-    }
-    /* THIS IS THE NEW WRAPPER THAT FIXES CENTERING */
-    .placeholder-content-wrapper {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center; /* Vertical Center */
-        align-items: center;     /* Horizontal Center */
-        text-align: center;
-        padding: 1rem;
-        box-sizing: border-box;
-    }
-    .placeholder-tile .placeholder-icon {
-        font-size: 4.5rem;
-        font-weight: bold;
-        line-height: 1;
-        opacity: 0.8;
-        margin-bottom: 1rem;
-        display: flex; /* Helps center the image inside */
-        align-items: center;
-    }
-     .placeholder-tile .placeholder-icon img {
-        position: static; /* Let the flexbox control it */
-        transform: none;
-        max-width: 80%;
-        max-height: 120px;
-        object-fit: contain;
-        width: auto;
-        height: auto;
-    }
-    .placeholder-tile .placeholder-text {
-        font-size: 1.1rem;
-        line-height: 1.4;
-        font-weight: 500;
-    }
-    /* --- END OF NEW STYLES --- */
-
     /* --- Responsive --- */
     @media (max-width: 768px) {
       .mosaic-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
     }
     @media (max-width: 480px) {
       .mosaic-grid { grid-template-columns: 1fr; }
-      .custom-tile h2 { font-size: 1.4rem; }
-      .custom-tile p { font-size: 0.9rem; }
-    }
-
-    /* Video fixes */
-    .mosaic-item.video-tile iframe {
-      position: absolute; top: 0; left: 0;
-      width: 100%; height: 100%; border: 0; object-fit: cover;
-      min-height: 300px; aspect-ratio: 4/5;
-      background: #000; z-index: 0; display: block;
     }
   </style>
 </head>
 <body>
+  <!-- Age Gate -->
+  <div id="age-gate" class="age-gate-overlay">
+    <div class="age-gate-modal">
+      <h2>Enter If You Dare</h2>
+      <p>This site contains adult content. You must be 18 years or older to enter.</p>
+      <div class="age-gate-buttons">
+        <button class="age-gate-button primary" onclick="enterSite()">I'm 18 or Older ✨</button>
+        <a href="https://www.google.com" class="age-gate-button secondary">I'm Under 18</a>
+      </div>
+    </div>
+  </div>
+
   <div class="site-wrapper">
     <header class="site-header">
       <img src="https://nsfwpicz.b-cdn.net/Shlop.png" alt="Shlop Title" class="main-title">
@@ -257,6 +200,18 @@
     </div>
   </div>
   <script>
+    // Age Gate functionality
+    function enterSite() {
+      const ageGate = document.getElementById('age-gate');
+      ageGate.classList.add('hidden');
+      localStorage.setItem('ageVerified', 'true');
+    }
+
+    // Check if user already verified age
+    if (localStorage.getItem('ageVerified') === 'true') {
+      document.getElementById('age-gate').classList.add('hidden');
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
       const content = [
         { type: 'image', src: 'https://nsfwpicz.b-cdn.net/IMG_7090.jpg' },
@@ -286,21 +241,6 @@
           tile.className = 'mosaic-item cta-tile';
           tile.style.background = item.background;
           tile.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener noreferrer"></a><div class="cta-text">${item.text}</div>`;
-        }
-        else if (item.type === 'video') {
-          tile.className = 'mosaic-item video-tile';
-          const videoSrc = `${item.src}?autoplay=true&loop=true&muted=true&preload=true`;
-          tile.innerHTML = `<iframe src="${videoSrc}" loading="lazy" allow="autoplay; picture-in-picture" allowfullscreen="true"></iframe>`;
-        }
-        else if (item.type === 'placeholder') {
-            tile.className = 'mosaic-item placeholder-tile';
-            tile.innerHTML = `
-                <a href="${item.link}" target="_blank" rel="noopener noreferrer"></a>
-                <div class="placeholder-content-wrapper">
-                  <div class="placeholder-icon">${item.icon}</div>
-                  <div class="placeholder-text">${item.text}</div>
-                </div>
-            `;
         }
         
         grid.appendChild(tile);
